@@ -3,9 +3,153 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="ascii"/>
-<title>Test article</title>
+<style>
+	nav {
+		border-style: solid none;
+		padding: 8px 8px 8px 0px;
+	}
+	ul {
+		margin: 0;
+	}
+</style>
+<title>A rant about standards</title>
 </head>
 <body>
-This is original content
+<p><i>Content warning: Rant, Opinion.</i></p>
+<nav> <!-- TODO: autogen nav + use counters for auto id + shared style sheet -->
+<ul>
+<li><a href=#1>What makes a good standard?</a></li>
+<li><a href=#2>What makes a good standard criticism?</a></li>
+<li><a href=#3>Common problems with standards.</a></li>
+<ul>
+<li><a href=#3.1>Informality.</a></li>
+<li><a href=#3.2>Status quo.</a></li>
+<li><a href=#3.3>Competing standards multiplication.</a></li>
+<li><a href=#3.4>Human readable formats.</a></li>
+</ul>
+<li><a href=#4>Some standard I have grievances with.</a></li>
+<ul>
+<li><a href=#4.1>ASCII and its inheritance.</a></li>
+<li><a href=#4.2>IEEE754 a.k.a floating point numbers.</a></li>
+<li><a href=#4.3>Verilog and SystemVerilog.</a></li>
+</ul>
+</ul>
+</nav>
+<p>
+A standard is a set of rules explicitely specified.
+Standards are everywhere.
+Some are appreciated, some are criticised, some are followed and some aren't.
+I myself love and hate my fair share of standards.
+The problem I have with most of the one I hate stem from how we view standard.
+That is why in this post I write about the concept of standard and some specific ones.
+</p>
+<h3 id=1>What makes a good standard?</h3>
+<p>
+A good standard is made of mostly good rules consistent with each other and the goal of the standard.
+A good rule is actionable, makes immediate sense or is justified.<br/>
+An example of good rule is the signed binary representation of numbers: it is ensured by all computer systems, unambiguous, usual operations are consistent for positive and negative numbers.
+It is part of the good standard of binary number representation: all group operations are consistent, no case are needed, the bit count can easily be extended.
+</p>
+<h3 id=2>What makes a good standard criticism?</h3>
+<p>
+A bad standard violates several principles of good standards.
+Criticisms of standards should hence focus on violations of these rules.
+Otherwise the critics are either not relevant or do not demonstrate a problem in the standard.
+In particular valid critics about the fitness of a standard to an application do not point to a problem in the standard but in the use of that standard for that application.
+The exception is when the application in question is the only application of the standard, because without application the standard has no goal left to fulfill.<br/>
+Example of bad criticism are: there are competing standards, this competing standard is better fit to X application, X is not specified, it doesn't fit well with this other standard.
+</p>
+<h3 id=3>Common problems with standards.</h3>
+<h4 id=3.1>Informality.</h4>
+<p>
+Standards are often specified in a very informal way.
+Informality leads to unclear specifications, undecidable/uncomputable properties, or worse, inconsistencies.
+On top of that verifying conformance is complicated, so people tend to approximate or straight out ignore them.<br/>
+Sometimes I wish for a language to write standards, a language in which definitions and properties can be expressed in a computable manner.
+This language would allow for means to prove conformance to the properties and isomorphism with defined objects.
+Theorem provers and SMT checkers are close to what I wish for.
+</p>
+<h4 id=3.2>Status quo.</h4>
+<p>
+Some standards are so prevalent in some applications that they become practically immutable.
+If the application is also immutable then it is not a problem, but there is no guarantee of that.
+These standard also tend to bleed into applications where they do not fit.
+When a standard is adapted to an application it no longer/does not fit, it often leads to bloated mess with regards to the new application.
+These standards monsters are not necessarily bad standard when considered through the lense of retro-compatibility, but often are through all other lenses.
+Another problem caused by these standards is the impossibility to move to another standard.<br/>
+Sometimes I wish for a language to write standard, a language in which a new standard could define a conversion to and from another standard.
+This conversion would help move to better suited standards and it would be what we call retro-compatibility.
+It's a thing people do in software with compatibility layers, I just wish it could be done in a more systematic way while ensuring full compliance.
+</p>
+<h4 id=3.3>Competing standards multiplication.</h4>
+<p>
+When many standards fill the same niche and compete, some choices have to be made.
+This leads to a fractured landscape where each choice is made at least once and nothing is consistent.
+There is interest in competing standards, I do not argue against that, and I also admit that sometimes nothing can be done to unify the landscape.
+But this shouldn't justify having no solution for unification when something can be done.<br/>
+Sometimes I wish for a language to write standards, and you get it by now, standard conversion would be best effort to solve the fracture.
+</p>
+<h4 id=3.4>Human readable formats.</h4>
+<p>
+What worse choice for efficiency than adapting a standard for it's minoritary user.
+Human readable format make sense for almost exclusively human written and read information and user interface, because the primary user is human.
+However they do not make sense anywhere else because we can write user interfaces to convert them between human readable and efficient representation.
+In these cases they take an horrendous cost in size (probably arround 15x), speed (because of parsing), complexity if no human end up reading, and worst of all energy consumption (do less, climat change ain't fix itself).
+For any such given human readable format in a standard, an alternative more efficient standard can be made by changing that format to normal human representation and using another representation for the format.<br/>
+If you think you can solve the problem by compressing then you are wrong.
+Compression will reduce size but decrease speed, increase complexity and energy consumption.
+If you want that trade-off you can still compress the non-human readable format and it will give you even smaller results than the human redable one for a lower decrease in speed and energy consumption.<br/>
+Examples of such standards: HTML, CSS, JSON, XML, all interpreted languages including JIT, SMTP.
+</p>
+<h3 id=4>Some standard I have grievances with.</h3>
+<h4 id=4.1>ASCII and its inheritance.</h4>
+<p>
+ASCII is a standard for transmitting english textual information on telegraph lines and teleprinters.
+Today it also happens to be widely used to give a number to characters, and retro-compatibility gave us the lower part of the unicode table.
+ASCII encodes all numbers, english letters, control caracters and the transmission protocol.
+It is not a terrible standard for its original purpose, but it is not fit for character representation.
+A sign of that is that it achives the feat of being at the same time incomplete, bloated, and stupid.
+<dl>
+<dt>ASCII is incomplete:</dt>
+<dd>This may come as a surprise but the english alphabet is not the only one in the world. Most of the characters are missing.</dd>
+<dt>ASCII is bloated:</dt>
+<dd>
+It contains control caracters, the transmission protocol, and capital letters.
+Capital letters appear between 2% and 4% of the time, there was no need to include them in the first place or giving them more than a modifier.
+A derivative could use these numbers to change character table or other common caracter in an attempt to fix the incompleteness, but that is not what was chosen because it's not retro-compatibile.
+</dd>
+<dt>ASCII is stupid:</dt>
+<dd>
+Capital letters are not letters on their own, they are alternative representations, just like cursive, blackletter and calligraphy.
+Ever wondered if "Alfred" is lexicographically smaller than "abacus"? Well you can't easily do that in ASCII.
+Ever tried to extract a number from its textual hexadecimal representation? Well you can't easily do that in ASCII.
+</dd>
+</dl>
+I wish ASCII would be phased out for a 6 bits character standard:<br/>
+0-9 -> '0'-'9', 10-XX -> alphabet, XX-YY -> punctuation, YY-ZZ -> diacritics, 63 -> symbol table change.<br/>
+It would render all textual stuff that much more efficient, except maybe the conversion between 3*8 bits and 4*6 bits.
+</p>
+<h4 id=4.2>IEEE754 a.k.a floating point numbers.</h4>
+<p>
+Floating point numbers are the scientific notation of computers.
+Their range is locally linear and globally exponential.
+It is a great standard for application in which the value represented can span several order of magnitude but precision and efficiency are still required.
+Today it also happens to be used to represent any non integer number and sometimes integer numbers too (like currency with cents).
+The rule of thumb shold be that if you are not doing modelling, applied statistics (including the ill called artificial intelligence / machine learning, it should be called statistical models) or an idle game then floating point numbers are likely not the right solution.<br/>
+The right solution is likely affine integers (including fixed-point) but can also be logarithmic numbers, big numbers, fractions and symbolic expressions.
+Affine integers is a term that I invented for the integer set scaled by a fixed affine transformation.
+Scaled integer computations are faster, more precise and their range can be distorted to fit your needs.
+Their speed come from the use of integer operations and lack of special values and ranges.
+Affine integers operations are predictable, unlike the non-associative floating point addition and the floating point equality.
+The only downside is that until people understand their greatness and implement automatic typing for them in compilers, the programmer has to think in order to use them.
+</p>
+<h4 id=4.3>Verilog and SystemVerilog.</h4>
+<p>
+That is just personal grievances because I have to work with them.
+These standard are stupid, include ambiguous syntax, break and ensuring retro-compatibility in places they shouldn't.
+<a href="https://doi.org/10.1109/MEMOCODE57689.2022.9954591">Andreas Loow even found that the semantics is broken.</a>
+I do not want to talk more about these standards in this blog post.
+</p>
+MORE TO COME?
 </body>
 </html>
