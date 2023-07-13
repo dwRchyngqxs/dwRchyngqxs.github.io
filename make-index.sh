@@ -8,3 +8,4 @@ done
 echo '@' >> sed-command
 sed --file=sed-command index.template > index.html
 rm sed-command
+git add index.html
