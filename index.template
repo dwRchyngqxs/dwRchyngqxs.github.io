@@ -3,6 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="ascii"/>
+<link rel="stylesheet" href="minimalism.css"/>
 <style>
 	body {
 		margin: 8px;
@@ -31,7 +32,7 @@ I work on HLS and fuzzing stuff.
 </ol>
 </div>
 <footer><div><hr/>
-	This web 3.0 responsive page was made with intent using <a href="https://github.com/lichray/nvi2">nvi2</a>.
+	This web 3.0 responsive page uses no cookies. It was made with intent using <a href="https://github.com/lichray/nvi2">nvi2</a>.
 </div></footer>
 </body>
 </html>

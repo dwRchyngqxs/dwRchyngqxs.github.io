@@ -9,23 +9,6 @@
 <body>
 <p><i>Content warning: Rant, Opinion.</i></p>
 <nav>
-<ul>
-<li><a href="#0">What makes a good standard?</a></li>
-<li><a href="#1">What makes a good standard criticism?</a></li>
-<li><a href="#2">Common problems with standards.</a></li>
-<ul>
-<li><a href="#3">Informality.</a></li>
-<li><a href="#4">Status quo.</a></li>
-<li><a href="#5">Competing standards multiplication.</a></li>
-<li><a href="#6">Human readable formats.</a></li>
-</ul>
-<li><a href="#7">Some standard I have grievances with.</a></li>
-<ul>
-<li><a href="#8">ASCII and its inheritance.</a></li>
-<li><a href="#9">IEEE754 a.k.a floating point numbers.</a></li>
-<li><a href="#10">Verilog and SystemVerilog.</a></li>
-</ul>
-</ul>
 </nav>
 <p>
 A standard is a set of rules explicitely specified.
@@ -35,14 +18,14 @@ I myself love and hate my fair share of standards.
 The problem I have with most of the one I hate stem from how we view standard.
 That is why in this post I write about the concept of standard and some specific ones.
 </p>
-<h3 id="0">What makes a good standard? <a href="#0">#</a></h3>
+<h3>What makes a good standard?</h3>
 <p>
 A good standard is made of mostly good rules consistent with each other and the goal of the standard.
 A good rule is actionable, makes immediate sense or is justified.<br/>
 An example of good rule is the signed binary representation of numbers: it is ensured by all computer systems, unambiguous, usual operations are consistent for positive and negative numbers.
 It is part of the good standard of binary number representation: all group operations are consistent, no case are needed, the bit count can easily be extended.
 </p>
-<h3 id="1">What makes a good standard criticism? <a href="#1">#</a></h3>
+<h3>What makes a good standard criticism?</h3>
 <p>
 A bad standard violates several principles of good standards.
 Criticisms of standards should hence focus on violations of these rules.
@@ -51,8 +34,8 @@ In particular valid critics about the fitness of a standard to an application do
 The exception is when the application in question is the only application of the standard, because without application the standard has no goal left to fulfill.<br/>
 Example of bad criticism are: there are competing standards, this competing standard is better fit to X application, X is not specified, it doesn't fit well with this other standard.
 </p>
-<h3 id="2">Common problems with standards. <a href="#2">#</a></h3>
-<h4 id="3">Informality. <a href="#3">#</a></h4>
+<h3>Common problems with standards.</h3>
+<h4>Informality.</h4>
 <p>
 Standards are often specified in a very informal way.
 Informality leads to unclear specifications, undecidable/uncomputable properties, or worse, inconsistencies.
@@ -61,7 +44,7 @@ Sometimes I wish for a language to write standards, a language in which definiti
 This language would allow for means to prove conformance to the properties and isomorphism with defined objects.
 Theorem provers and SMT checkers are close to what I wish for.
 </p>
-<h4 id="4">Status quo. <a href="#4">#</a></h4>
+<h4>Status quo.</h4>
 <p>
 Some standards are so prevalent in some applications that they become practically immutable.
 If the application is also immutable then it is not a problem, but there is no guarantee of that.
@@ -73,7 +56,7 @@ Sometimes I wish for a language to write standard, a language in which a new sta
 This conversion would help move to better suited standards and it would be what we call retro-compatibility.
 It's a thing people do in software with compatibility layers, I just wish it could be done in a more systematic way while ensuring full compliance.
 </p>
-<h4 id="5">Competing standards multiplication. <a href="#5">#</a></h4>
+<h4>Competing standards multiplication.</h4>
 <p>
 When many standards fill the same niche and compete, some choices have to be made.
 This leads to a fractured landscape where each choice is made at least once and nothing is consistent.
@@ -81,7 +64,7 @@ There is interest in competing standards, I do not argue against that, and I als
 But this shouldn't justify having no solution for unification when something can be done.<br/>
 Sometimes I wish for a language to write standards, and you get it by now, standard conversion would be best effort to solve the fracture.
 </p>
-<h4 id="6">Human readable formats. <a href="#6">#</a></h4>
+<h4>Human readable formats.</h4>
 <p>
 What worse choice for efficiency than adapting a standard for it's minoritary user.
 Human readable format make sense for almost exclusively human written and read information and user interface, because the primary user is human.
@@ -93,8 +76,8 @@ Compression will reduce size but decrease speed, increase complexity and energy 
 If you want that trade-off you can still compress the non-human readable format and it will give you even smaller results than the human redable one for a lower decrease in speed and energy consumption.<br/>
 Examples of such standards: HTML, CSS, JSON, XML, all interpreted languages including JIT, SMTP.
 </p>
-<h3 id="7">Some standard I have grievances with. <a href="#7">#</a></h3>
-<h4 id="8">ASCII and its inheritance. <a href="#8">#</a></h4>
+<h3>Some standard I have grievances with.</h3>
+<h4>ASCII and its inheritance.</h4>
 <p>
 ASCII is a standard for transmitting english textual information on telegraph lines and teleprinters.
 Today it also happens to be widely used to give a number to characters, and retro-compatibility gave us the lower part of the unicode table.
@@ -121,7 +104,7 @@ I wish ASCII would be phased out for a 6 bits character standard:<br/>
 0-9 -> '0'-'9', 10-XX -> alphabet, XX-YY -> punctuation, YY-ZZ -> diacritics, 63 -> symbol table change.<br/>
 It would render all textual stuff that much more efficient, except maybe the conversion between 3*8 bits and 4*6 bits.
 </p>
-<h4 id="9">IEEE754 a.k.a floating point numbers. <a href="#9">#</a></h4>
+<h4>IEEE754 a.k.a floating point numbers.</h4>
 <p>
 Floating point numbers are the scientific notation of computers.
 Their range is locally linear and globally exponential.
@@ -135,7 +118,7 @@ Their speed come from the use of integer operations and lack of special values a
 Affine integers operations are predictable, unlike the non-associative floating point addition and the floating point equality.
 The only downside is that until people understand their greatness and implement automatic typing for them in compilers, the programmer has to think in order to use them.
 </p>
-<h4 id="10">Verilog and SystemVerilog. <a href="#10">#</a></h4>
+<h4>Verilog and SystemVerilog.</h4>
 <p>
 That is just personal grievances because I have to work with them.
 These standard are stupid, include ambiguous syntax, break and ensuring retro-compatibility in places they shouldn't.
