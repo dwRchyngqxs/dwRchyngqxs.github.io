@@ -12,10 +12,7 @@
 		flex-direction: column;
 	}
 	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-		flex-grow: 1;
+		margin-top: auto;
 	}
 </style>
 <title>Quentin Corradi Professional Webpage</title>
@@ -31,8 +28,9 @@ I work on HLS and fuzzing stuff.
 <!-- Insert dynamic content here -->
 </ol>
 </div>
-<footer><div><hr/>
-	This web 3.0 responsive page uses no cookies. It was made with intent using <a href="https://github.com/lichray/nvi2">nvi2</a>.
-</div></footer>
+<footer>
+<hr/>
+This web 3.0 responsive page uses no cookies. It was made with intent using <a href="https://github.com/lichray/nvi2">nvi2</a>.
+</footer>
 </body>
 </html>

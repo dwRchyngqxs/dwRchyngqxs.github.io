@@ -29,15 +29,15 @@ def processarticle(f):
 		for x in l:
 			fd.write(x)
 			if x == "<nav>\n":
-				ol = m - 1
-				for i, (l, t) in enumerate(sections):
-					for _ in range(ol, l):
+				oh = m - 1
+				for i, (h, t) in enumerate(sections):
+					for _ in range(oh, h):
 						fd.write("<ul>\n")
-					for _ in range(l, ol):
+					for _ in range(h, oh):
 						fd.write("</ul>\n")
-					ol = l
+					oh = h
 					fd.write(f'<li><a href="#{i}">{t}</a></li>\n')
-				for _ in range(m - 1, l):
+				for _ in range(m - 1, oh):
 					fd.write("</ul>\n")
 	return (f, tit)
 
