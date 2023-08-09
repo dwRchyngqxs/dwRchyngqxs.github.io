@@ -4,33 +4,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="ascii"/>
 <link rel="stylesheet" href="minimalism.css"/>
+<script type="text/javascript">
+	function IFrameScroll(link){
+		window.article_frame.location=link; 
+		window.location.hash='article_frame';
+		return false;
+	}
+</script>
 <style>
 	body {
 		margin: 8px;
-		min-height: calc(100vh - 16px);
-		display: flex;
-		flex-direction: column;
-	}
-	footer {
-		margin-top: auto;
 	}
 </style>
 <title>Quentin Corradi Professional Webpage</title>
 </head>
 <body>
-<div>
+<p>
 I am Quentin Corradi, a PhD student at Imperial College London.<br/>
 I work on HLS and fuzzing stuff.
-</div>
-<div>
-<h1>BLOG!!!1!!!111!!!</h1>
+More specifically I am currently working on <a href=https://github.com/ymherklotz/verismith>Verismith</a>.
+</p>
+Example of previous work:
+<ul>
+<li><a href=presentation.pdf>A golden presentation on an article I remember nothing about</a></li>
+<li>Pull requests accepted for <a href=https://github.com/danielyxie/bitburner/pull/2881>bitburner</a>, <a href=https://github.com/zachjs/sv2v/pull/237>sv2v</a></li>
+</ul>
+<h1 id=blog>BLOG!!!1!!!111!!!</h1>
 <ol reversed>
 <!-- Insert dynamic content here -->
 </ol>
-</div>
+<iframe id=article_frame style="height: calc(100vh - 4px)" name=article_frame title="Article view" width=100%></iframe>
+<a href=#blog>Back to article list</a> <a href=#article_frame>Center article viewer</a> <a href="about:blank" target=article_frame>Clear frame</a>
 <footer>
 <hr/>
-This web 3.0 responsive page uses no cookies. It was made with intent using <a href="https://github.com/lichray/nvi2">nvi2</a>.
+This web 3.0 responsive page uses no cookie.
+It uses javascript but you can read it all and the site won't break if it is disabled.
+In short it was made with love and intent using <a href="https://github.com/lichray/nvi2">nvi2</a>.
 </footer>
 </body>
 </html>

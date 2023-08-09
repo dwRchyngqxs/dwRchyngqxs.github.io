@@ -7,7 +7,7 @@
 <title>A rant about standards</title>
 </head>
 <body>
-<p><i>Content warning: Rant, Opinion.</i></p>
+<p><i>Content warning: Rant, Opinion, IT.</i></p>
 <nav>
 </nav>
 <p>
@@ -104,7 +104,7 @@ Ever tried to extract a number from its textual hexadecimal representation? Well
 </dd>
 </dl>
 I wish ASCII would be phased out for a 6 bits character standard:<br/>
-0-9 -> '0'-'9', 10-XX -> alphabet, XX-YY -> punctuation, YY-ZZ -> diacritics, 63 -> symbol table change.<br/>
+0-9 -> '0'-'9', 10-XX -> alphabet, XX-YY -> punctuation, YY-63 -> diacritics<br/>
 It would render all textual stuff that much more efficient, except maybe the conversion between 3*8 bits and 4*6 bits.
 </p>
 <h4>IEEE754 a.k.a floating point numbers.</h4>
@@ -121,17 +121,53 @@ Their speed come from the use of integer operations and lack of special values a
 Affine integers operations are predictable, unlike the non-associative floating point addition and the floating point equality.
 The only downside is that until people understand their greatness and implement automatic typing for them in compilers, the programmer has to think in order to use them.
 </p>
-<h4>Makefiles.</h4>
+<h4>Makefiles and Autotools.</h4>
 <p>
-TODO
-<!-- TODO -->
+Makefiles is a system to build programs.
+There are several competing systems to achieve the same task (build automation) such as editor specific project files, CMake, meson, scons, ninja, autotools, and many others.
+The user provides a list of file to compile and compile options for anyone to build the project on their computer, sometimes while exposing some choices to the user.
+When the build system is called it checks which files need to be compiled or recompiled because they changed since the last time, build a dependency graph and calls in parallel the compiler in a sensible order.
+This is a case where human readable format would be acceptable as these build scripts should be small.<br/>
+Except Makefiles aren't small because they need a lot of code to tackle their shortcomings.
+Indeed, Makefiles fail in several ways that differentiate it from other better build systems.
+These fails include (in no particular order):
+Changing the build script do not cause the entire project to be rebuilt;
+Gathering the dependencies is not a simple task and sometimes needs to dynamically alter the build rules;
+There is no integrated system to change the files to build depending on some options or the specific machine the project is built on;
+Other uses cases described <a href=https://www.gnu.org/software/automake/manual/html_node/Use-Cases.html>here</a>.<br/>
+Many projects do not use Makefiles directly but use autotools to generate humongous build scripts.
+You read correctly, instead of fixing the standard autotools creators built tools to generate files in a broken standard.
+This broken standard also happend to be a human readable format and as they do not want the user to edit the unreadable generated script content, autotools include a header stating that the file is machine generated and shouldn't be edited.
+They could have used autotools interface to generate a build program or interpret autotools scripts directly but instead they chose the worst option.<br/>
+The result is a slow confusing mess of programs.
+Nobody knows if, when and in what order the programs should be called.
+People fetching the project to build it don't know where and how to specify the build options.
+The script generation takes ages, the build takes ages, and it still doesn't solve some issues it aims to improve like portability issues.
+When there are portability issues, incompatibles options or other problems the debbuging process is as pleasurable as denailing.<br/>
+I don't know where to start to get informations about what went wrong.
+When I try using a debugging option it is useless, or if it shows that there at some point I don't know where the problem come from.
+If I try to fix the problem at the place I see it, it is not taken into account or the file I modified is re-generated.
+If it works I don't know where I should put the fix so that it is applied to all the files, or so that I can contribute to the project.
 </p>
 <h4>Verilog and SystemVerilog.</h4>
 <p>
 That is just personal grievances because I have to work with them.
-These standard are stupid, include ambiguous syntax, break and ensuring retro-compatibility in places they shouldn't.
-<a href="https://doi.org/10.1109/MEMOCODE57689.2022.9954591">Andreas Loow even found that the semantics is broken.</a>
-I do not want to talk more about these standards in this blog post.
+These standards are stupid, sometimes they break retro-compatibility in places they shouldn't, sometimes they ensure it in places it would have been better not to.
+<a href="https://doi.org/10.1109/MEMOCODE57689.2022.9954591">Andreas Loow found that the semantics is broken.</a>
+Escaped identifiers break the preprocessor.
+Annotations in comments cannot be preserved and are tool specific.
+Macros can be substituted by arbitrarily long sequences of tokens almost anywhere, meaning preprocessing is mandatory for any code manipulation, adding up with the previous point to render lossless code transformation impossible.
+Attributes creep everywhere.
+Sequential primitives feature 2 syntaxes that look like the initialisation of a single bit memory cell, but only one of them has an actual semantics, the other is not even mentionned outside of the formal syntax.
+Validating the syntax require keeping track of information over arbitrarily long lookahead and keeping track of several categories of identifiers.
+System timing checks are a special breed of parasites from hell.
+Do you really want the two kind of specify path delays declarations to be that similar for so long with similar optional elements at different places and then suddenly differ?
+Pathpulse are ambiguous, module declaration syntax is ambiguous, primitive and module instantiation are ambiguous.
+Why is there a special case for the if else-if else construct when it's already covered by the syntax.
+One line comment must be ended by newline, but in practice it's not the case at the end of a file.
+<b>Any_ASCII_character</b> REALLY?
+Escaped identifiers need to be terminated by a space or a newline, nice, I guess I will leave trailing whitespaces when prettyprinting.
+Wait, ANY identifier can be an escaped identifier, SUCH A PAIN IN THE ASS.
 </p>
 MORE TO COME?
 </body>

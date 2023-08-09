@@ -42,12 +42,12 @@ def processarticle(f):
 	return (f, tit)
 
 l = list(pathlib.Path().glob("article-*.template"))
-l.sort()
+l.sort(reverse=True)
 l = map(processarticle, l)
 with open("index.template") as fin, open("index.html", "w") as fout:
 	for x in fin:
 		if x == "<!-- Insert dynamic content here -->\n":
 			for p, t in l:
-				fout.write(f'<li><a href="{p}">{t}</a></li>\n')
+				fout.write(f'<li><a href="{p}" onclick="return IFrameScroll(this);">{t}</a></li>\n')
 			continue
 		fout.write(x)
