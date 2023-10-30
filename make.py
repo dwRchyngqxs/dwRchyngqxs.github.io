@@ -49,5 +49,13 @@ with open("index.template") as fin, open("index.html", "w") as fout:
 		if x == "<!-- Insert dynamic content here -->\n":
 			for p, t in l:
 				fout.write(f'<li><a href="{p}" onclick="return IFrameScroll(this);">{t}</a></li>\n')
-			continue
-		fout.write(x)
+		else:
+			fout.write(x)
+
+with open("countdown.template") as fin, open("countdown.html", "w") as fout:
+	for x in fin:
+		if x == "<!-- Insert dynamic content here -->\n":
+			for p in pathlib.Path().glob("soundz/*.mp3"):
+				fout.write(f'\t\t"{p}",\n')
+		else:
+			fout.write(x)

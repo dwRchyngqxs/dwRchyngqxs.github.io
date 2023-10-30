@@ -170,6 +170,16 @@ One line comment must be ended by newline, but in practice it's not the case at 
 Escaped identifiers need to be terminated by a space or a newline, nice, I guess I will leave trailing whitespaces when prettyprinting.
 Wait, ANY identifier can be an escaped identifier, SUCH A PAIN IN THE ASS.
 </p>
-MORE TO COME?
+<h4>Haskell.</h4>
+<p>
+Haskell is a functional programming language that is very good for experimenting with programming language concepts.
+In that sense it is not a bad standard, but people should stop trying to use if for things it is bad at.
+From the perspective of a user wanting to develop a real world project, Haskell fails as a programming language in a fundamental way:
+Contrarily to mathematics, programming cares about being able to contruct object in a reasonable time using a reasonable amount of memory.<br/>
+Haskell's lazy evaluation strategy obfuscates to oblivion time and memory cost of computations, hence it should not be used as a programming language for non experimentational projects.
+An symptom of Haskell's obfuscated memory cost is the Writer monad, one of the main monads of Haskell's core library written by developpers that are very experienced and that care about making good efficient code.
+Until a few years ago, the Writer monad used linear memory instead of constant memory, a problem that can easily affect anyone in Haskell if they are not constantly very careful about the internals of Haskell's evaluation strategy.
+If the most experienced Haskell users still fall in that trap, it should be no surprise that the code of the casual user is plagued with time and memory sinks.
+</p>
 </body>
 </html>

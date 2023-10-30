@@ -16,7 +16,7 @@
 		margin: 8px;
 	}
 </style>
-<title>Quentin Corradi Professional Webpage</title>
+<title>Quentin Corradi (very) Professional Webpage</title>
 </head>
 <body>
 <p>
@@ -29,6 +29,8 @@ Example of previous work:
 <li><a href=presentation.pdf>A golden presentation on an article I remember nothing about</a></li>
 <li>Pull requests accepted for <a href=https://github.com/danielyxie/bitburner/pull/2881>bitburner</a>, <a href=https://github.com/zachjs/sv2v/pull/237>sv2v</a></li>
 </ul>
+<h2>Non professional stuff</h2>
+<a href=countdown.html>The CAS meeting short and long update countdowns</a>
 <h1 id=blog>BLOG!!!1!!!111!!!</h1>
 <ol reversed>
 <!-- Insert dynamic content here -->

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="ascii"/>
+<script type="text/javascript">
+	let speaker_timer = null;
+	let question_timer = null;
+	let time_elapsed = 0;
+	let update_timer = null;
+	let current_audio = new Audio();
+	const interrupt_sounds = [
+<!-- Insert dynamic content here -->
+		];
+	function setup() {
+		if (document.URL.endsWith("#")) reset();
+		else {
+			open("countdown.html#", "_blank",
+				`popup,width=${document.body.offsetWidth + 8},height=${document.body.offsetHeight + 8}`);
+			close();
+			document.body.innerText = "You can close this window";
+		}
+	}
+	function stop_speaker_timer() {
+		if (speaker_timer !== null) {
+			clearTimeout(speaker_timer);
+			speaker_timer = null;
+		}
+	}
+	function stop_timers() {
+		stop_speaker_timer();
+		if (question_timer !== null) {
+			clearTimeout(question_timer);
+			question_timer = null;
+		}
+		if (update_timer !== null) {
+			clearInterval(update_timer);
+			update_timer = null;
+		}
+	}
+	function reset() {
+		stop_timers();
+		document.getElementById("start").removeAttribute("hidden");
+		document.getElementById("skip or cancel").setAttribute("hidden", true);
+		document.getElementById("cancel").setAttribute("hidden", true);
+		document.getElementById("time elapsed").setAttribute("hidden", true);
+		time_elapsed = 0;
+	}
+	function start(speaker, questions) {
+		document.getElementById("start").setAttribute("hidden", true);
+		document.getElementById("skip or cancel").removeAttribute("hidden");
+		document.getElementById("time elapsed").removeAttribute("hidden");
+		document.getElementById("time elapsed").innerText = "0:00";
+		speaker_timer = setTimeout(end_speaker, speaker * 1000);
+		question_timer = setTimeout(end_update, (speaker + questions) * 1000);
+		update_timer = setInterval(update_elapsed, 1000);
+	}
+	function skip_speaker() {
+		stop_speaker_timer();
+		document.getElementById("skip or cancel").setAttribute("hidden", true);
+		document.getElementById("cancel").removeAttribute("hidden");
+	}
+	function update_elapsed() {
+		time_elapsed += 1;
+		document.getElementById("time elapsed").innerText
+			= `${Math.floor(time_elapsed/60)}:${(time_elapsed%60).toString().padStart(2, "0")}`;
+	}
+	function end_speaker() {
+		question_timer = null;
+		skip_speaker();
+		random_sound();
+	}
+	function end_update() {
+		question_timer = null;
+		random_sound();
+		setTimeout(reset, 1000);
+	}
+	function random_sound() {
+		current_audio.src = interrupt_sounds[Math.floor(Math.random()*interrupt_sounds.length)];
+		current_audio.play();
+	}
+</script>
+<title>My first webpage</title>
+</head>
+<body onload="setup()" style="width: fit-content; margin: 4px;">
+<div id="start" hidden>
+	<button onclick="start(90, 90)">Start short update</button>
+	<button onclick="start(480, 120)">Start long update</button>
+</div>
+<div id="skip or cancel">
+	<button onclick="skip_speaker()">Skip speaker interruption</button>
+	<button onclick="reset()">Cancel timer</button>
+</div>
+<div id="cancel" hidden>
+	<button onclick="reset()">Cancel timer</button>
+</div>
+<h1 id="time elapsed">0:00</h1>
+</body>
+</html>
