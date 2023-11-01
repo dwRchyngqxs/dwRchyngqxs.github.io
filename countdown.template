@@ -13,30 +13,32 @@
 <!-- Insert dynamic content here -->
 		];
 	function setup() {
-		if (document.URL.endsWith("#")) reset();
-		else {
-			open("countdown.html#", "_blank",
+		if (document.URL.endsWith("#")) {
+			if (opener !== null) opener.postMessage(null);
+			reset();
+		} else {
+			document.body.innerText
+				= "Please allow the popup then you can close this page";
+			onmessage = terminate;
+			let nw = open("countdown.html#", "_blank",
 				`popup,width=${document.body.offsetWidth + 8},height=${document.body.offsetHeight + 8}`);
-			close();
-			document.body.innerText = "You can close this window";
+			if (nw !== null) terminate();
 		}
 	}
+	function terminate() {
+		close();
+		document.body.innerText = "You can close this page";
+	}
 	function stop_speaker_timer() {
-		if (speaker_timer !== null) {
-			clearTimeout(speaker_timer);
-			speaker_timer = null;
-		}
+		clearTimeout(speaker_timer);
+		speaker_timer = null;
 	}
 	function stop_timers() {
 		stop_speaker_timer();
-		if (question_timer !== null) {
-			clearTimeout(question_timer);
-			question_timer = null;
-		}
-		if (update_timer !== null) {
-			clearInterval(update_timer);
-			update_timer = null;
-		}
+		clearTimeout(question_timer);
+		question_timer = null;
+		clearInterval(update_timer);
+		update_timer = null;
 	}
 	function reset() {
 		stop_timers();
