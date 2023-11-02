@@ -6,32 +6,40 @@
 <script type="text/javascript">
 	let speaker_timer = null;
 	let question_timer = null;
+	let update_timer = null; // updates the timer every second
 	let time_elapsed = 0;
-	let update_timer = null;
 	let current_audio = new Audio();
 	const interrupt_sounds = [
 <!-- Insert dynamic content here -->
 		];
+	current_audio.oncanplaythrough = () => { current_audio.play() }; // Autoplay sound
+	current_audio.onended = skip_speaker; // Disable skip button when sound ends
+
 	function setup() {
+		// We know we are a popup if there is a # at the end of the URL
 		if (document.URL.endsWith("#")) {
+			// If the popup is not blocked the opener closes immediately and is null, otherwise notify it
 			if (opener !== null) opener.postMessage(null);
 			reset();
 		} else {
 			document.body.innerText
 				= "Please allow the popup then you can close this page";
 			onmessage = terminate;
+			// The default layout should be the biggest one, it is used to size the popup window
 			let nw = open("countdown.html#", "_blank",
 				`popup,width=${document.body.offsetWidth + 8},height=${document.body.offsetHeight + 8}`);
 			if (nw !== null) terminate();
 		}
 	}
 	function terminate() {
-		close();
+		close(); // Fails if JS did not open the tab
 		document.body.innerText = "You can close this page";
 	}
+
 	function stop_speaker_timer() {
 		clearTimeout(speaker_timer);
 		speaker_timer = null;
+		current_audio.src = null;
 	}
 	function stop_timers() {
 		stop_speaker_timer();
@@ -40,46 +48,47 @@
 		clearInterval(update_timer);
 		update_timer = null;
 	}
+	function random_sound() {
+		current_audio.src = interrupt_sounds[Math.floor(Math.random()*interrupt_sounds.length)];
+	}
+
+	// Reset does not completely reset the interface
+	// This is intentional to allow insepcting the HTML after cancelling the timer
 	function reset() {
 		stop_timers();
 		document.getElementById("start").removeAttribute("hidden");
-		document.getElementById("skip or cancel").setAttribute("hidden", true);
-		document.getElementById("cancel").setAttribute("hidden", true);
-		document.getElementById("time elapsed").setAttribute("hidden", true);
-		time_elapsed = 0;
+		document.getElementById("timer").setAttribute("hidden", true);
 	}
 	function start(speaker, questions) {
+		// We cannot delay resetting the interface anymore, we need to use it now
 		document.getElementById("start").setAttribute("hidden", true);
-		document.getElementById("skip or cancel").removeAttribute("hidden");
-		document.getElementById("time elapsed").removeAttribute("hidden");
+		document.getElementById("timer").removeAttribute("hidden");
+		document.getElementById("skip").removeAttribute("disabled");
 		document.getElementById("time elapsed").innerText = "0:00";
+		document.getElementById("time elapsed").style.removeProperty("color");
+		time_elapsed = 0;
 		speaker_timer = setTimeout(end_speaker, speaker * 1000);
 		question_timer = setTimeout(end_update, (speaker + questions) * 1000);
 		update_timer = setInterval(update_elapsed, 1000);
 	}
 	function skip_speaker() {
 		stop_speaker_timer();
-		document.getElementById("skip or cancel").setAttribute("hidden", true);
-		document.getElementById("cancel").removeAttribute("hidden");
+		document.getElementById("skip").setAttribute("disabled", true);
 	}
+
 	function update_elapsed() {
 		time_elapsed += 1;
 		document.getElementById("time elapsed").innerText
 			= `${Math.floor(time_elapsed/60)}:${(time_elapsed%60).toString().padStart(2, "0")}`;
 	}
 	function end_speaker() {
-		question_timer = null;
-		skip_speaker();
+		speaker_timer = null;
 		random_sound();
 	}
 	function end_update() {
 		question_timer = null;
 		random_sound();
-		setTimeout(reset, 1000);
-	}
-	function random_sound() {
-		current_audio.src = interrupt_sounds[Math.floor(Math.random()*interrupt_sounds.length)];
-		current_audio.play();
+		document.getElementById("time elapsed").style.color = "red";
 	}
 </script>
 <title>My first webpage</title>
@@ -89,13 +98,10 @@
 	<button onclick="start(90, 90)">Start short update</button>
 	<button onclick="start(480, 120)">Start long update</button>
 </div>
-<div id="skip or cancel">
-	<button onclick="skip_speaker()">Skip speaker interruption</button>
+<div id="timer">
+	<button id="skip" onclick="skip_speaker()">Skip speaker interruption</button>
 	<button onclick="reset()">Cancel timer</button>
+	<h1 id="time elapsed">0:00</h1>
 </div>
-<div id="cancel" hidden>
-	<button onclick="reset()">Cancel timer</button>
-</div>
-<h1 id="time elapsed">0:00</h1>
 </body>
 </html>
