@@ -82,7 +82,8 @@
 	}
 
 	function update_elapsed() {
-		let time_elapsed = Math.floor((new Date().getTime() - update_start) / 1000);
+		// Rounds time to 1/10 of a second (period of update) to simulate double the refresh rate
+		let time_elapsed = Math.floor((new Date().getTime() - update_start + 50) / 1000);
 		document.getElementById("time elapsed").innerText
 			= `${Math.floor(time_elapsed/60)}:${(time_elapsed%60).toString().padStart(2, "0")}`;
 	}
