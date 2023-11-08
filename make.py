@@ -54,8 +54,11 @@ with open("index.template") as fin, open("index.html", "w") as fout:
 
 with open("countdown.template") as fin, open("countdown.html", "w") as fout:
 	for x in fin:
-		if x == "<!-- Insert dynamic content here -->\n":
-			for p in pathlib.Path().glob("soundz/*.mp3"):
+		if x == "<!-- Insert short sounds here -->\n":
+			for p in pathlib.Path().glob("short_sounds/*.mp3"):
+				fout.write(f'\t\t"{p}",\n')
+		elif x == "<!-- Insert long sounds here -->\n":
+			for p in pathlib.Path().glob("long_sounds/*.mp3"):
 				fout.write(f'\t\t"{p}",\n')
 		else:
 			fout.write(x)

@@ -43,7 +43,7 @@ jobs:
             -cvf "$RUNNER_TEMP/artifact.tar" \
             --exclude=.git \
             --exclude=.github \
-            ./*.html ./*.css ./*.pdf ./soundz/*.mp3
+            ./*.html ./*.css ./*.pdf ./*/*.mp3
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
