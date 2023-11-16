@@ -5,3 +5,10 @@ nav {
 ul {
 	margin: 0;
 }
+tr, td {
+	border: 1px solid;
+	padding: 2pt;
+}
+table {
+	border-collapse: collapse;
+}

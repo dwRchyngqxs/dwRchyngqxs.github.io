@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="ascii"/>
+<link rel="stylesheet" href="minimalism.css"/>
+<title>Cultural three by three</title>
+</head>
+<body>
+<nav>
+</nav>
+<p>
+A three by three is a concept I saw in the Japanese animation community.
+The concept is simple: Nine cells organised without order in a three by three grid, each cell is a show.
+It is used to communicate one's taste in Japanese animation, not by putting all the preferred shows in, but rather by displaying the top shows in a variety of genres.
+It is a useful tool to prevent the hour long conversation about someone Japanese animation taste that inevitably follows the question "I heard you like anime, what kind of anime do you like?".<br/>
+I wanted to adapt this format for all cultural domains.
+</p>
+<h3>Japanese animation</h3>
+<table>
+<tr>
+	<td>Ascendence of a bookworm</td>
+	<td>Monogatari series</td>
+	<td>Made in abyss</td>
+</tr>
+<tr>
+	<td>Ore, twintail ni narimasu</td>
+	<td>Houseki no kuni</td>
+	<td>Cheeky angel</td>
+</tr>
+<tr>
+	<td>A certain scientific Railgun</td>
+	<td>Majo no tabitabi</td>
+	<td>Eve no jikan</td>
+</tr>
+</table>
+<h3>Music albums</h3>
+<table>
+<tr>
+	<td>The Quick Brown Fox - SPEEDKORE 4 KIDZ!</td>
+	<td>Leprous - Bilateral</td>
+	<td>Circus Maximus - Isolate</td>
+</tr>
+<tr>
+	<td>Blind Guardian - Beyond the red mirror</td>
+	<td>Sakuzyo - AngelFalse</td>
+	<td>Epica - The Quantum Enigma</td>
+</tr>
+<tr>
+	<td>Symphony X - The Damnation Game</td>
+	<td>Igorrr - Nostril</td>
+	<td>In Mourning - Garden of Storms</td>
+</tr>
+</table>
+<h3>Video games</h3>
+<table>
+<tr>
+	<td>Ace attorney</td>
+	<td>Disgaea</td>
+	<td>bitburner</td>
+</tr>
+<tr>
+	<td>Slay the spire</td>
+	<td>TIS-100</td>
+	<td>HacknetOS</td>
+</tr>
+<tr>
+	<td>Chrono trigger</td>
+	<td>osu</td>
+	<td>endless-sky</td>
+</tr>
+</table>
+</body>
+</html>

@@ -11,7 +11,7 @@
 <nav>
 </nav>
 <p>
-A standard is a set of rules explicitely specified.
+A standard is a set of rules explicitly specified.
 Standards are everywhere.
 Some are appreciated, some are criticised, some are followed and some aren't.
 I myself love and hate my fair share of standards.
@@ -50,7 +50,7 @@ Some standards are so prevalent in some applications that they become practicall
 If the application is also immutable then it is not a problem, but there is no guarantee of that.
 These standard also tend to bleed into applications where they do not fit.
 When a standard is adapted to an application it no longer/does not fit, it often leads to bloated mess with regards to the new application.
-These standards monsters are not necessarily bad standard when considered through the lense of retro-compatibility, but often are through all other lenses.
+These standards monsters are not necessarily bad standard when considered through the lenses of retro-compatibility, but often are through all other lenses.
 Another problem caused by these standards is the impossibility to move to another standard.<br/>
 Sometimes I wish for a language to write standard, a language in which a new standard could define a conversion to and from another standard.
 This conversion would help move to better suited standards and it would be what we call retro-compatibility.
@@ -68,37 +68,37 @@ Sometimes I wish for a language to write standards, and you get it by now, stand
 <p>
 Human readable formats are ways of representing information so that a human can extract information directly from the representation.
 They only make sense for communication with humans and between humans, because the primary users are human.
-In other cases the format incurs a cost in size (probably arround 15x), speed (because of parsing), complexity, and worst of all energy consumption (do less, climat change ain't fix itself).
+In other cases the format incurs a cost in size (probably around 15x), speed (because of parsing), complexity, and worst of all energy consumption (do less, climate change ain't fix itself).
 If there is a need for human interaction but they are not the primary users of the information, building a user interfaces to perform the conversion between an efficient format and its human readable version is possible.
 Building a user interface, even if the cost in complexity can be higher than the one incurred by the human readable format is actually preferable for three reasons.
-The first reason is accessibility is percieved as a concern when building an user interface, unlike human readable formats.
+The first reason is accessibility is perceived as a concern when building an user interface, unlike human readable formats.
 The second reason is the cost of the human readable format is paid any new tool using the format, including alternative interfaces.
 The third reason is the specification of the format is more likely to be followed because it is not replaced by intuitions based on limited interactions with a human readable format.<br/>
 If you think you can solve the problem by compressing then you are wrong.
 Compression will reduce size but decrease speed, increase complexity and energy consumption.
-If you want that trade-off you can still compress the efficient format and it will give you even smaller results than the human redable one for a lower decrease in speed and energy consumption.<br/>
-Examples of such standards: HTML, CSS, JSON, XML, all languages that are exclusivelt interpreted including JIT, SMTP.
+If you want that trade-off you can still compress the efficient format and it will give you even smaller results than the human readable one for a lower decrease in speed and energy consumption.<br/>
+Examples of such standards: HTML, CSS, JSON, XML, all languages that are exclusively interpreted including JIT, SMTP.
 </p>
 <h3>Some standard I have grievances with.</h3>
 <h4>ASCII and its inheritance.</h4>
 <p>
-ASCII is a standard for transmitting english textual information on telegraph lines and teleprinters.
-Today it also happens to be widely used to give a number to characters, and retro-compatibility gave us the lower part of the unicode table.
-ASCII encodes all numbers, english letters, control caracters and the transmission protocol.
+ASCII is a standard for transmitting English textual information on telegraph lines and teleprinters.
+Today it also happens to be widely used to give a number to characters, and retro-compatibility gave us the lower part of the Unicode table.
+ASCII encodes all numbers, English letters, control characters and the transmission protocol.
 It is not a terrible standard for its original purpose, but it is not fit for character representation.
-A sign of that is that it achives the feat of being at the same time incomplete, bloated, and stupid.
+A sign of that is that it achieves the feat of being at the same time incomplete, bloated, and stupid.
 <dl>
 <dt>ASCII is incomplete:</dt>
-<dd>This may come as a surprise but the english alphabet is not the only one in the world. Most of the characters are missing.</dd>
+<dd>This may come as a surprise but the English alphabet is not the only one in the world. Most of the characters are missing.</dd>
 <dt>ASCII is bloated:</dt>
 <dd>
-It contains control caracters, the transmission protocol, and capital letters.
+It contains control characters, the transmission protocol, and capital letters.
 Capital letters appear between 2% and 4% of the time, there was no need to include them in the first place or giving them more than a modifier.
-A derivative could use these numbers to change character table or other common caracter in an attempt to fix the incompleteness, but that is not what was chosen because it's not retro-compatibile.
+A derivative could use these numbers to change character table or other common character in an attempt to fix the incompleteness, but that is not what was chosen because it's not retro-compatible.
 </dd>
 <dt>ASCII is stupid:</dt>
 <dd>
-Capital letters are not letters on their own, they are alternative representations, just like cursive, blackletter and calligraphy.
+Capital letters are not letters on their own, they are alternative representations, just like cursive, black-letter and calligraphy.
 Ever wondered if "Alfred" is lexicographically smaller than "abacus"? Well you can't easily do that in ASCII.
 Ever tried to extract a number from its textual hexadecimal representation? Well you can't easily do that in ASCII.
 </dd>
@@ -113,7 +113,7 @@ Floating point numbers are the scientific notation of computers.
 Their range is locally linear and globally exponential.
 It is a great standard for application in which the value represented can span several order of magnitude but precision and efficiency are still required.
 Today it also happens to be used to represent any non integer number and sometimes integer numbers too (like currency with cents).
-The rule of thumb shold be that if you are not doing modelling, applied statistics (including the ill called artificial intelligence / machine learning, it should be called statistical models) or an idle game then floating point numbers are likely not the right solution.<br/>
+The rule of thumb should be that if you are not doing modelling, applied statistics (including the ill called artificial intelligence / machine learning, it should be called statistical models) or an idle game then floating point numbers are likely not the right solution.<br/>
 The right solution is likely affine integers (including fixed-point) but can also be logarithmic numbers, big numbers, fractions and symbolic expressions.
 Affine integers is a term that I invented for the integer set scaled by a fixed affine transformation.
 Scaled integer computations are faster, more precise and their range can be distorted to fit your needs.
@@ -124,7 +124,7 @@ The only downside is that until people understand their greatness and implement 
 <h4>Makefiles and Autotools.</h4>
 <p>
 Makefiles is a system to build programs.
-There are several competing systems to achieve the same task (build automation) such as editor specific project files, CMake, meson, scons, ninja, autotools, and many others.
+There are several competing systems to achieve the same task (build automation) such as editor specific project files, CMake, meson, SCons, ninja, autotools, and many others.
 The user provides a list of file to compile and compile options for anyone to build the project on their computer, sometimes while exposing some choices to the user.
 When the build system is called it checks which files need to be compiled or recompiled because they changed since the last time, build a dependency graph and calls in parallel the compiler in a sensible order.
 This is a case where human readable format would be acceptable as these build scripts should be small.<br/>
@@ -137,14 +137,14 @@ There is no integrated system to change the files to build depending on some opt
 Other uses cases described <a href=https://www.gnu.org/software/automake/manual/html_node/Use-Cases.html>here</a>.<br/>
 Many projects do not use Makefiles directly but use autotools to generate humongous build scripts.
 You read correctly, instead of fixing the standard autotools creators built tools to generate files in a broken standard.
-This broken standard also happend to be a human readable format and as they do not want the user to edit the unreadable generated script content, autotools include a header stating that the file is machine generated and shouldn't be edited.
+This broken standard also happens to be a human readable format and as they do not want the user to edit the unreadable generated script content, autotools include a header stating that the file is machine generated and shouldn't be edited.
 They could have used autotools interface to generate a build program or interpret autotools scripts directly but instead they chose the worst option.<br/>
 The result is a slow confusing mess of programs.
 Nobody knows if, when and in what order the programs should be called.
 People fetching the project to build it don't know where and how to specify the build options.
 The script generation takes ages, the build takes ages, and it still doesn't solve some issues it aims to improve like portability issues.
-When there are portability issues, incompatibles options or other problems the debbuging process is as pleasurable as denailing.<br/>
-I don't know where to start to get informations about what went wrong.
+When there are portability issues, incompatibles options or other problems the debugging process is as pleasurable as denailing.<br/>
+I don't know where to start to get information about what went wrong.
 When I try using a debugging option it is useless, or if it shows that there at some point I don't know where the problem come from.
 If I try to fix the problem at the place I see it, it is not taken into account or the file I modified is re-generated.
 If it works I don't know where I should put the fix so that it is applied to all the files, or so that I can contribute to the project.
@@ -159,15 +159,15 @@ Escaped identifiers break the preprocessor.<br/>
 Annotations in comments cannot be preserved and are tool specific.<br/>
 Macros can be substituted by arbitrarily long sequences of tokens almost anywhere, meaning preprocessing is mandatory for any code manipulation, adding up with the previous point to render lossless code transformation impossible.<br/>
 Attributes creep everywhere.<br/>
-Sequential primitives feature 2 syntaxes that look like the initialisation of a single bit memory cell, but only one of them has an actual semantics, the other is not even mentionned outside of the formal syntax.<br/>
-Validating the syntax require arbitrarily long lookahead and keeping track of several categories of identifiers.<br/>
+Sequential primitives feature 2 syntax that look like the initialisation of a single bit memory cell, but only one of them has an actual semantics, the other is not even mentioned outside of the formal syntax.<br/>
+Validating the syntax require arbitrarily long look-ahead and keeping track of several categories of identifiers.<br/>
 System timing checks are a special breed of parasites from hell.<br/>
 Do you really want the two kind of specify path delays declarations to be that similar for so long with similar optional elements at different places and then suddenly differ?<br/>
-Pathpulse are ambiguous, module declaration syntax is ambiguous, primitive and module instantiation are ambiguous.<br/>
+Pathpulse are ambiguous, module declaration syntax is ambiguous, primitive and module instantiations are ambiguous.<br/>
 Why is there a special case for the if else-if else construct when it's already covered by the syntax?<br/>
 One line comment must be ended by newline, but in practice it's not the case at the end of a file.<br/>
-<b>Any_ASCII_character</b> REALLY?<br/>
-Escaped identifiers need to be terminated by a space or a newline, nice, I guess I will leave trailing whitespaces when prettyprinting.
+<b>Any_printable_ASCII_character</b> is allowed in escaped identifiers, REALLY?<br/>
+Escaped identifiers need to be terminated by a space or a newline, nice, I guess I will leave trailing white-spaces when pretty-printing.
 Wait, ANY identifier can be an escaped identifier, SUCH A PAIN IN THE ASS.
 </p>
 <h4>Haskell.</h4>
@@ -175,9 +175,9 @@ Wait, ANY identifier can be an escaped identifier, SUCH A PAIN IN THE ASS.
 Haskell is a functional programming language that is very good for experimenting with programming language concepts.
 In that sense it is not a bad standard, but people should stop trying to use if for things it is bad at.
 From the perspective of a user wanting to develop a real world project, Haskell fails as a programming language in a fundamental way:
-Contrarily to mathematics, programming cares about being able to contruct object in a reasonable time using a reasonable amount of memory.<br/>
-Haskell's lazy evaluation strategy obfuscates to oblivion time and memory cost of computations, hence it should not be used as a programming language for non experimentational projects.
-An symptom of Haskell's obfuscated memory cost is the Writer monad, one of the main monads of Haskell's core library written by developpers that are very experienced and that care about making good efficient code.
+Contrarily to mathematics, programming cares about being able to construct object in a reasonable time using a reasonable amount of memory.<br/>
+Haskell's lazy evaluation strategy obfuscates to oblivion time and memory cost of computations, hence it should not be used as a programming language for non experimental projects.
+An symptom of Haskell's obfuscated memory cost is the Writer monad, one of the main monads of Haskell's core library written by developers that are very experienced and that care about making good efficient code.
 Until a few years ago, the Writer monad used linear memory instead of constant memory, a problem that can easily affect anyone in Haskell if they are not constantly very careful about the internals of Haskell's evaluation strategy.
 If the most experienced Haskell users still fall in that trap, it should be no surprise that the code of the casual user is plagued with time and memory sinks.
 </p>
