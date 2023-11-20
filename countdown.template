@@ -3,6 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="ascii"/>
+<!-- TODO: add a button to continue a timer in case it was cancelled by mistake -->
 <script type="text/javascript">
 	let speaker_timer = null;
 	let nmq_timer = null; // NO MORE QUESTIONS
@@ -18,6 +19,9 @@
 		];
 	current_audio.oncanplaythrough = () => { current_audio.play() }; // Autoplay sound
 	current_audio.onended = () => {
+		if (question_timer === null) {
+			document.getElementById("cancel").setAttribute("disabled", true);
+		}
 		document.getElementById("skip").setAttribute("disabled", true);
 	};
 
@@ -26,7 +30,7 @@
 		if (document.URL.endsWith("#")) {
 			// If the popup is not blocked the opener closes immediately and is null, otherwise notify it
 			if (opener !== null) opener.postMessage(null);
-			reset();
+			document.getElementById("message").setAttribute("hidden", true);
 		} else {
 			document.body.innerText
 				= "Please allow the popup then you can close this page";
@@ -41,53 +45,49 @@
 		close(); // Fails if JS did not open the tab
 		document.body.innerText = "You can close this page";
 	}
-
-	function stop_speaker_timer() {
-		clearTimeout(speaker_timer);
-		speaker_timer = null;
-		current_audio.src = null;
-	}
 	function random_sound(arr) {
 		current_audio.src = arr[Math.floor(Math.random()*arr.length)];
 	}
 
-	// Reset does not completely reset the interface
-	// This is intentional to allow insepcting the HTML after cancelling the timer
-	function reset() {
-		stop_speaker_timer();
-		clearTimeout(question_timer);
-		question_timer = null;
-		clearTimeout(nmq_timer);
-		nmq_timer = null;
-		clearInterval(update_timer);
-		update_timer = null;
-		document.getElementById("start").removeAttribute("hidden");
-		document.getElementById("timer").setAttribute("hidden", true);
-	}
 	function start(speaker, questions) {
-		// We cannot delay resetting the interface anymore, we need to use it now
-		document.getElementById("start").setAttribute("hidden", true);
-		document.getElementById("timer").removeAttribute("hidden");
+		current_audio.src = null;
+		// Reset the interface
 		document.getElementById("skip").removeAttribute("disabled");
-		document.getElementById("qt head").setAttribute("hidden", true);
-		document.getElementById("nmq head").setAttribute("hidden", true);
-		document.getElementById("time elapsed").innerText = "0:00";
-		document.getElementById("time elapsed").style.removeProperty("color");
+		document.getElementById("cancel").removeAttribute("disabled");
+		let msg = document.getElementById("message");
+		msg.setAttribute("hidden", true);
+		msg.innerText = "question time";
+		let te = document.getElementById("time elapsed");
+		te.innerText = "0:00";
+		te.style.removeProperty("color");
+		// Start timers
+		update_start = new Date().getTime();
+		clearTimeout(speaker_timer);
 		speaker_timer = setTimeout(end_speaker, speaker * 1000);
+		clearTimeout(nmq_timer);
 		nmq_timer = setTimeout(nmq, (speaker + questions) * 1000 - 10000);
+		clearTimeout(question_timer);
 		question_timer = setTimeout(end_update, (speaker + questions) * 1000);
 		// setInterval delay is not reliable, the actual delay tend to be slighly above what we want
 		// this means the display updates tend to get out of sync.
 		// To avoid seconds changing too late (may disturb people looking at the time)
 		// we update the display at more 1Hz.
 		// A bigger frequency makes the issue less noticeable
-		update_start = new Date().getTime();
+		clearInterval(update_timer);
 		update_timer = setInterval(update_elapsed, 99);
 	}
 	function skip_speaker() {
-		stop_speaker_timer();
+		clearTimeout(speaker_timer);
+		speaker_timer = null;
+		current_audio.src = null;
 		document.getElementById("skip").setAttribute("disabled", true);
-		document.getElementById("qt head").removeAttribute("hidden");
+		document.getElementById("message").removeAttribute("hidden");
+	}
+	function cancel() {
+		skip_speaker();
+		clearTimeout(question_timer);
+		question_timer = null;
+		document.getElementById("cancel").setAttribute("disabled", true);
 	}
 
 	function update_elapsed() {
@@ -99,12 +99,11 @@
 	function end_speaker() {
 		speaker_timer = null;
 		random_sound(short_interrupts);
-		document.getElementById("qt head").removeAttribute("hidden");
+		document.getElementById("message").removeAttribute("hidden");
 	}
 	function nmq() {
 		nmq_timer = null;
-		document.getElementById("qt head").setAttribute("hidden", true);
-		document.getElementById("nmq head").removeAttribute("hidden");
+		document.getElementById("message").innerText = "no more questions";
 	}
 	function end_update() {
 		question_timer = null;
@@ -115,16 +114,16 @@
 <title>My first webpage</title>
 </head>
 <body onload="setup()" style="width: fit-content; margin: 4px;">
-<div id="start" hidden>
-	<button title="Starts a timer and schedule two interrupt sounds, one at 1:30 min and the other at 3 min" onclick="start(90, 90)">Start short update</button>
-	<button title="Starts a timer and schedule two interrupt sounds, one at 8 min and the other at 20 min" onclick="start(480, 720)">Start long update</button>
+<div>
+<button title="Starts a timer and schedule two interrupt sounds, one at 1:30 min and the other at 3 min" onclick="start(90, 90)">Short update</button>
+<button title="Starts a timer and schedule two interrupt sounds, one at 8 min and the other at 20 min" onclick="start(480, 720)">Long update</button>
 </div>
-<div id="timer" style="text-align: center;">
-	<button title="Skip the first sound notifying the end of the speaker allocated time for the update" id="skip" onclick="skip_speaker()">Skip speaker interruption</button>
-	<button title="Skip both sounds, stops the timer and resets the interface" onclick="reset()">Cancel timer</button>
-	<div id="qt head" style="font-size: 20pt;" hidden>question time</div>
-	<div id="nmq head" style="font-size: 20pt;">no more questions</div>
-	<div title="How much time passed since the start of the update" id="time elapsed" style="font-size: 30pt; font-weight: bold;">0:00</div>
+<div>
+<button title="Skip the sound notifying the start of questions and start questions" id="skip" onclick="skip_speaker()"
+disabled>Start questions</button>
+<button title="Skip all sounds" id="cancel" onclick="cancel()" disabled>Skip sounds</button>
 </div>
+<div id="message" style="font-size: 20pt;">no more questions</div>
+<div title="How much time passed since the start of the update" id="time elapsed" style="font-size: 30pt; font-weight: bold;">0:00</div>
 </body>
 </html>
