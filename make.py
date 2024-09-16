@@ -5,8 +5,10 @@ import re
 
 title = re.compile(r"^<title>(.*)</title>")
 section = re.compile(r"^<h(.)>(.*)</h.>")
+buildpath = pathlib.Path("static")
 
 def processarticle(f):
+	print("Processing", f)
 	tit = "No title found"
 	sections = []
 	l = []
@@ -25,7 +27,7 @@ def processarticle(f):
 			sections.append((h, ms.group(2)))
 			l[i] = section.sub(f'<h\\1 id="{j}">\\2 <a href="#{j}">#</a></h\\1>', x, 1)
 	f = f.with_suffix(".html")
-	with open(f, "w") as fd:
+	with open(buildpath / f, "w") as fd:
 		for x in l:
 			fd.write(x)
 			if x == "<nav>\n":
@@ -44,7 +46,8 @@ def processarticle(f):
 l = list(pathlib.Path().glob("article-*.template"))
 l.sort(reverse=True)
 l = map(processarticle, l)
-with open("index.template") as fin, open("index.html", "w") as fout:
+with open("index.template") as fin, open("static/index.html", "w") as fout:
+	print("Processing index")
 	for x in fin:
 		if x == "<!-- Insert dynamic content here -->\n":
 			for p, t in l:
@@ -52,7 +55,8 @@ with open("index.template") as fin, open("index.html", "w") as fout:
 		else:
 			fout.write(x)
 
-with open("countdown.template") as fin, open("countdown.html", "w") as fout:
+with open("countdown.template") as fin, open("static/countdown.html", "w") as fout:
+	print("Processing countdown")
 	for x in fin:
 		if x == "<!-- Insert short sounds here -->\n":
 			for p in pathlib.Path().glob("short_sounds/*.mp3"):
@@ -62,3 +66,5 @@ with open("countdown.template") as fin, open("countdown.html", "w") as fout:
 				fout.write(f'\t\t"{p}",\n')
 		else:
 			fout.write(x)
+
+print("Done")

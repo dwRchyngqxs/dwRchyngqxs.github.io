@@ -152,19 +152,21 @@ If it works I don't know where I should put the fix so that it is applied to all
 <h4>Verilog and SystemVerilog.</h4>
 <p>
 That is just personal grievances because I have to work with these standards.
-These standards are stupid, sometimes they break retro-compatibility in places they shouldn't, sometimes they ensure it in places it would have been better not to.
+These standards are stupid, sometimes they break retro-compatibility in places they shouldn't ($width, supply1, supply0, looking at you), sometimes they ensure it in places it would have been better not to.
 <a href="https://doi.org/10.1109/MEMOCODE57689.2022.9954591">Andreas Loow found that the semantics is broken</a>.
 Anyway, here is an absolutely non-exhaustive list of my worst nightmares:<br/>
 Escaped identifiers break the preprocessor.<br/>
 Annotations in comments cannot be preserved and are tool specific.<br/>
 Macros can be substituted by arbitrarily long sequences of tokens almost anywhere, meaning preprocessing is mandatory for any code manipulation, adding up with the previous point to render lossless code transformation impossible.<br/>
-Attributes creep everywhere.<br/>
+Attributes and compiler directives creep everywhere.<br/>
+$fread has optional expression which is not consistent with the BNF.<br/>
 Sequential primitives feature 2 syntax that look like the initialisation of a single bit memory cell, but only one of them has an actual semantics, the other is not even mentioned outside of the formal syntax.<br/>
 Validating the syntax require arbitrarily long look-ahead and keeping track of several categories of identifiers.<br/>
 System timing checks are a special breed of parasites from hell.<br/>
 Do you really want the two kind of specify path delays declarations to be that similar for so long with similar optional elements at different places and then suddenly differ?<br/>
 Pathpulse are ambiguous, module declaration syntax is ambiguous, primitive and module instantiations are ambiguous.<br/>
 Why is there a special case for the if else-if else construct when it's already covered by the syntax?<br/>
+System function types are not specified clearly.<br/>
 One line comment must be ended by newline, but in practice it's not the case at the end of a file.<br/>
 <b>Any_printable_ASCII_character</b> is allowed in escaped identifiers, REALLY?<br/>
 Escaped identifiers need to be terminated by a space or a newline, nice, I guess I will leave trailing white-spaces when pretty-printing.
