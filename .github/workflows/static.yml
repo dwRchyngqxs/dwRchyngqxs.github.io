@@ -30,12 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
       - name: Build pages
         run: |
           ./make.py
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@main
       - name: Archive artifact
         run: |
           tar \
@@ -45,7 +45,7 @@ jobs:
             --exclude=.github \
             ./*.html ./*.css ./*.pdf ./*/*.mp3
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: github-pages
           path: ${{ runner.temp }}/artifact.tar
@@ -53,4 +53,4 @@ jobs:
           if-no-files-found: error
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@main
