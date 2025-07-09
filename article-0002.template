@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="ascii"/>
+<link rel="stylesheet" href="minimalism.css"/>
+<script type="text/javascript">
+	function start_quizz(ans) {
+		if (ans) document.getElementById("q0").hidden = true;
+		for (e of document.getElementsByClassName("qmain"))
+			e.hidden = false;
+	}
+	function pwnd() {
+		alert("Heh, you can't uncheck this and withdraw your consent. You got gotten got real good here.");
+	}
+	function faesth() {
+		document.getElementById("qaesth").hidden = false;
+	}
+	function ensurenumeric(ke) {
+		if (!(ke.key in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])) {
+			ke.preventDefault();
+			alert("You can only use number keys when this field is focused. Did you read the tooltip?");
+		}
+	}
+	let drowntimer;
+	function underwater(el) {
+		if (el.checked)
+			drowntimer = setTimeout(drown, 600000);
+		else clearTimeout(drowntimer);
+	}
+	function drown() {
+		document.getElementById("qdrown").hidden = false;
+	}
+	function mgenre(el) {
+		if (el.selectedIndex == 376)
+			document.getElementById("demisent").hidden = false;
+		if (el.selectedIndex == 423)
+			document.getElementById("qporn").hidden = false;
+	}
+	function checksumm(el) {
+		el.open = !el.open;
+		let unfolded = true;
+		for (e of document.getElementsByTagName("details")) {
+			if (!e.open) {
+				unfolded = false;
+				break;
+			}
+		}
+		if (unfolded) document.getElementById("qdetails").hidden = false;
+		el.open = !el.open;
+	}
+	function brownie(el) {
+		if (el.value == "10")
+			document.getElementById("qfurry").hidden = false;
+	}
+	function makeastep(el) {
+		el.outerHTML = "<input value='step on me daddy' disabled/>";
+	}
+	let lies = 0;
+	function truth() {
+		lies = 0;
+		document.getElementById("dlie1").hidden = true;
+		document.getElementById("lie1").checked = false;
+		document.getElementById("dlie2").hidden = true;
+		document.getElementById("lie2").checked = false;
+		document.getElementById("dlie3").hidden = true;
+		document.getElementById("lie3").checked = false;
+		document.getElementById("dlie4").hidden = true;
+		document.getElementById("lie4").checked = false;
+		document.getElementById("dlie5").hidden = true;
+		document.getElementById("lie5").checked = false;
+		document.getElementById("dlie6").hidden = true;
+		document.getElementById("lie6").checked = false;
+		document.getElementById("dlie7").hidden = true;
+		document.getElementById("lie7").checked = false;
+		document.getElementById("dlie8").hidden = true;
+		document.getElementById("lie8").checked = false;
+	}
+	function lie(ev) {
+		if (lies == 0) {
+			lies += 1;
+			document.getElementById("dlie1").hidden = false;
+			ev.preventDefault();
+		} else if (lies < 8) {
+			if (document.getElementById("lie" + lies).checked) {
+				lies += 1;
+				document.getElementById("dlie" + lies).hidden = false;
+			} else alert("Please certify that you are not lying.");
+			ev.preventDefault();
+		} else {
+			for (let i = 1; i <= 8; i += 1) {
+				if (!document.getElementById("lie" + lies).checked) {
+					alert("LIAR!");
+					break;
+				}
+			}
+		}
+	}
+	// TODO: use hidden inputs instead of booleans so that they do not reset on refresh
+	let absurdclick = false;
+	let rrclick = false;
+	let sexclick = false;
+	function computeres() {
+		const total = 26;
+		let ans = 0;
+		let form = document.forms["form"];
+
+		ans += form["q0"].value != "";
+		ans += form["hyp"].value != "";
+		ans += form["crawl"].checked || form["stroke"].checked || form["corkscrew"].checked || form["spin"].checked;
+		ans += form["aesth"].value != "";
+		ans += form["aesm"].checked || form["aesy"].checked || form["aesn"].checked;
+		let cookies = document.getElementsByName("cookies");
+		ans += cookies[0].checked || cookies[1].checked;
+		ans += form["final"].value != "";
+		ans += form["gender"].value != "";
+		ans += form["qmgenre"].selectedIndex != 0; 
+		ans += form["pgenre"].selectedIndex != 0;
+		ans += form["genex"].value != "";
+		ans += form["meth"].value != ""
+		ans += form["name"].value != "";
+		ans += form["enterom"].checked + form["enteriw"].checked + form["enterow"].checked + form["enterim"].checked + form["entern"].checked + form["enterb"].checked == 2 || form["enteriw"].checked;
+		ans += absurdclick;
+		ans += form["what"].value != "";
+		ans += rrclick;
+		ans += form["gayjesus"].value != "";
+		// ans += ; sub / woke / cgt / cchg / sci / money / feet / secu / cake / prosel / music / sexclass / usbc / kitch / soak / sounding / lsd / authority / nurture / nature / comm / selfcon / empath / charisma / teenspirit / intel
+		ans += form["stra"].value != "" && form["slia"].value != "" && form["neut"].value != "" && form["slid"].value != "" && form["strd"].value != "";
+		let loss0 = 0;
+		for (let i = 0; i <= 3; i += 1)
+			for (let j = 0; j <= 6; j += 1)
+				loss0 = loss0 << 1 | document.getElementById(("loss" + i) + j).checked;
+		let loss1 = 0;
+		for (let i = 4; i <= 6; i += 1)
+			for (let j = 0; j <= 6; j += 1)
+				loss1 = loss1 << 1 | document.getElementById(("loss" + i) + j).checked;
+		ans += loss0 == 76108416 && loss1 == 1387095;
+		ans += sexclick;
+		let hoyf = document.getElementById("hobby").files;
+		ans += hoyf.length != 0;
+		// ans += ; (rate stuff) TODO
+		ans += form["fur"].value != "";
+		let ess = document.getElementById("essay");
+		ans += ess.value != "";
+
+		let res = document.getElementById("result");
+		if (ans == total) {
+			// await crypto.subtle.digest("SHA-1", new ArrayBuffer(6));
+			res.innerText = "You completed the quiz, thank you for your participation in this study. Results computation is WIP, come back later. You can now print this webpage and frame them, or use them as wallpaper, or print them on toilet paper.";
+		} else {
+			ess.value = "";
+			res.innerText = "You did not answer all questions, you only answered " + ans + " / " + total + " questions.";
+		}
+	}
+</script>
+<title>LGBTQIA+ identity/existential crisis quizz</title>
+</head>
+<body>
+<nav>
+</nav>
+
+<h2>Questions</h2>
+
+<form id="form"></form>
+<ol>
+<li value="0" id="q0">
+	<b>What are your pronouns?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Your pronouns are required to display you sentences with correct grammatical gender agreement, and correct pronouns whenever the second person is used.
+	</details></small>
+	<label><input form="form" type="radio" name="q0" onclick="start_quizz(true)" value="0"/>They</label><br/>
+	<label><input form="form" type="radio" name="q0" onclick="start_quizz(true)" value="0"/>Them</label><br/>
+	<label><input form="form" type="radio" name="q0" onclick="start_quizz(true)" value="1"/>I don't use pronouns</label><br/>
+	</form>
+	<p><button onclick="start_quizz(false)">Start quizz</button></p>
+</li>
+
+<li class="qmain" hidden>
+	<b>Suppose you are with your friends at the pool.
+	One of your friends pretends they can hear you underwater.
+	In disbelief you challenge them to repeat to you what you say underwater.
+	You and your friend go underwater and you initiate the challenge "I never told you before, I am gay.".
+	Your friend, up to the task, says in response "blblblblblblblblbl" or that is what you think they said because you are both still under water.
+	Dissatisfied by your friend trickery you pest "Haha funny, how about you say it outside the water".
+	To that your friend replies "blblblblblblblbl" because you are both still under water.
+	Are you good at dealing with hypotheticals?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	This is a default question of the quizz, it is always asked.
+	It is of crucial importance to know whether you are able to read and comprehend what hypotheticals and counterfactual situations are for the rest of this quizz.
+	</details></small>
+	<label><input form="form" type="radio" name="hyp" value="0"/>Yes I am</label><br/>
+	<label><input form="form" type="radio" name="hyp" value="1"/>Supposedly, no I am not</label><br/>
+	<label><input form="form" type="radio" name="hyp" value="2" onclick="underwater(this)"/>blblblblblblbl</label><br/>
+	<label><input form="form" type="radio" name="hyp" value="3"/>Answer D (there is no correct answer)</label><br/>
+	<br/>
+</li>
+
+<li id="qdrown" hidden>
+	<b>Do you know how to swim?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	You and your friend stayed underwater for too long. In short, you drowned.
+	</details></small>
+	<label><input form="form" type="checkbox" name="crawl"/>I know how to crawl</label><br/>
+	<label><input form="form" type="checkbox" name="stroke"/>I know how to stroke</label><br/>
+	<label><input form="form" type="checkbox" name="corkscrew"/>I know how to corkscrew</label><br/>
+	<label><input form="form" type="checkbox" name="spin" onclick="window.open('https://youtu.be/PGNiXGX2nLU', '_blank')"/>I know how to meatspin</label><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>Are you aesthetically attracted to</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Wait a bit there, the question wasn't asked yet.
+	</details></small>
+	<b>Men?</b><br/>
+	<label><input form="form" type="radio" name="aesth" onclick="faesth()" value="0"/>Yes</label><br/>
+	<label><input form="form" type="radio" name="aesth" onclick="faesth()" value="1"/>No</label><br/>
+	<b>Women?</b><br/>
+	<label><input form="form" type="radio" name="aesth" onclick="faesth()" value="2"/>Yes</label><br/>
+	<label><input form="form" type="radio" name="aesth" onclick="faesth()" value="3"/>No</label><br/>
+	<br/>
+</li>
+
+<li id="qaesth" hidden>
+	<b>Do you know what aesthetic attraction is?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Just making sure you didn't answer nonsense at the previous question.
+	</details></small>
+	<label><input form="form" type="checkbox" name="aesm" onclick="window.open('https://en.wikipedia.org/wiki/Physical_attractiveness', '_blank')"/>Maybe</label><br/>
+	<label><input form="form" type="checkbox" name="aesy"/>Yes</label><br/>
+	<label><input form="form" type="checkbox" name="aesn"/>No</label><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>How are you?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	You are allright, please tell you are allright.
+	</details></small>
+	<label><input type="radio" name="cookies" onclick="pwnd()"/>Yes, I consent to cookies and collection of my personal data for commercial purposes.</label><br/>
+	<div id="demisent" hidden><label><input type="radio" name="cookies"/>Because I know you better I started feeling things for you. So here is your "No, I do not consent to the above".</label><br/></div>
+	<br/>
+</li>
+
+<li id="qdetails" hidden>
+	<b>Why am I being asked this question?</b><br/>
+	<input form="form" name="final" size="60" placeholder="A quiz is made of questions, what did you expect?"/><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>What is the gender you identify with?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Gender identity is the personal sense of one's own gender. Gender identity can correlate with a person's assigned sex or can differ from it. In most individuals, the various biological determinants of sex are congruent and consistent with the individual's gender identity. Gender expression typically reflects a person's gender identity, but this is not always the case. While a person may express behaviors, attitudes, and appearances consistent with a particular gender role, such expression may not necessarily reflect their gender identity. The term gender identity was coined by psychiatry professor Robert J. Stoller in 1964 and popularized by psychologist John Money.<br/>
+	In most societies, there is a basic division between gender attributes associated with males and females, a gender binary to which most people adhere and which includes expectations of masculinity and femininity in all aspects of sex and gender: biological sex, gender identity, gender expression, and sexual orientation. Some people do not identify with some, or all, of the aspects of gender associated with their biological sex; some of those people are transgender, non-binary, or genderqueer. Some societies have third gender categories.<br/>
+	The 2012 book Introduction to Behavioral Science in Medicine says that with exceptions, "Gender identity develops surprisingly rapidly in the early childhood years, and in the majority of instances appears to become at least partially irreversible by the age of 3 or 4". The Endocrine Society has stated "Considerable scientific evidence has emerged demonstrating a durable biological element underlying gender identity. Individuals may make choices due to other factors in their lives, but there do not seem to be external forces that genuinely cause individuals to change gender identity." Social constructivists argue that gender identity, or the way it is expressed, are socially constructed, determined by cultural and social influences. Constructivism of this type is not necessarily incompatible with the existence of an innate gender identity, since it may be the expression of that gender that varies by culture.
+	</details></small>
+	<input form="form" type="password" name="gender" placeholder="Pearl necklace"/><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>What is your favorite music genre?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Music taste is often a big part of a person's identity. Several different music genre are strongly associated with subcultures and clothing styles. The quizz believes that music taste is a good predictor, according to all science on the topic, whether independent or industrially funded, of other parts of a person's identity in particular the main thing we are trying to get by making you answer this question, that is your favorite music genre.
+	</details></small>
+	<select form="form" name="qmgenre" onchange="mgenre(this)">
+	<option></option>
+	<option>A cappella</option>
+	<option>Absolute music</option>
+	<option>Acid house</option>
+	<option>Acid jazz</option>
+	<option>Acid rock</option>
+	<option>Acid techno</option>
+	<option>Acid trance</option>
+	<option>Acousmatic music</option>
+	<option>Acoustic music</option>
+	<option>Adult contemporary music</option>
+	<option>African-American music</option>
+	<option>African heavy metal</option>
+	<option>African hip hop</option>
+	<option>Afrobeat</option>
+	<option>Afrobeats</option>
+	<option>Afro-Cuban jazz</option>
+	<option>Afro house</option>
+	<option>Afroswing</option>
+	<option>Afro tech</option>
+	<option>Afro trap</option>
+	<option>African popular music</option>
+	<option>Aguinaldo</option>
+	<option>Alaskan hip-hop</option>
+	<option>Aleatoric music</option>
+	<option>Alternative country</option>
+	<option>Alternative dance</option>
+	<option>Alternative hip hop</option>
+	<option>Alternative metal</option>
+	<option>Alternative R&B</option>
+	<option>Alternative reggaeton</option>
+	<option>Alternative rock</option>
+	<option>Ambient music</option>
+	<option>Ambient house</option>
+	<option>Ambient pop</option>
+	<option>Ambient techno</option>
+	<option>Ambrosian chant</option>
+	<option>American folk music</option>
+	<option>American folk-music revival</option>
+	<option>Americana</option>
+	<option>Anarcho-punk</option>
+	<option>Ancient music</option>
+	<option>Anglican chant</option>
+	<option>Anatolian rock</option>
+	<option>Anti-folk</option>
+	<option>Apala</option>
+	<option>Appalachian music</option>
+	<option>Arabesque</option>
+	<option>Arabic pop music</option>
+	<option>Arena rock</option>
+	<option>Argentine rock</option>
+	<option>Armenian chant</option>
+	<option>Ars antiqua</option>
+	<option>Ars nova</option>
+	<option>Ars subtilior</option>
+	<option>Art pop</option>
+	<option>Art punk</option>
+	<option>Art rock</option>
+	<option>Ashik</option>
+	<option>Assyrian folk/pop music</option>
+	<option>Atlanta hip-hop</option>
+	<option>Australian country music</option>
+	<option>Australian hip hop</option>
+	<option>Avant-funk</option>
+	<option>Avant-garde music</option>
+	<option>Avant-garde jazz</option>
+	<option>Avant-garde metal</option>
+	<option>Avant-pop</option>
+	<option>Avant-prog</option>
+	<option>Avant-punk</option>
+	<option>Axé</option>
+	<option>Azonto</option>
+	<option>Bachata</option>
+	<option>Baggy</option>
+	<option>Baião</option>
+	<option>Bakersfield sound</option>
+	<option>Baila</option>
+	<option>Baisha xiyue</option>
+	<option>Bajourou</option>
+	<option>Bal-musette</option>
+	<option>Balakadri</option>
+	<option>Balinese Gamelan</option>
+	<option>Balearic beat</option>
+	<option>Balearic trance</option>
+	<option>Balkan brass</option>
+	<option>Ballad</option>
+	<option>Ballata</option>
+	<option>Ballet</option>
+	<option>Baltimore club</option>
+	<option>Bambuco</option>
+	<option>Banda music</option>
+	<option>Bangladeshi hip-hop</option>
+	<option>Bangsawan</option>
+	<option>Bantowbol</option>
+	<option>Barbershop music</option>
+	<option>Barcarolle</option>
+	<option>Bard (Soviet Union)</option>
+	<option>Barn dance</option>
+	<option>Baroque music</option>
+	<option>Baroque pop</option>
+	<option>Barynya</option>
+	<option>Bassline</option>
+	<option>Batá-rumba</option>
+	<option>Batucada</option>
+	<option>Baul</option>
+	<option>Beach music</option>
+	<option>Beatdown hardcore</option>
+	<option>Beat music</option>
+	<option>Beatboxing</option>
+	<option>Beatlesque</option>
+	<option>Beautiful music</option>
+	<option>Bebop</option>
+	<option>Beguine/Biguine</option>
+	<option>Beiguan music</option>
+	<option>Bel canto</option>
+	<option>Bend-skin</option>
+	<option>Beneventan chant</option>
+	<option>Benga music</option>
+	<option>Bent edge</option>
+	<option>Berlin School of electronic music</option>
+	<option>Bhajan</option>
+	<option>Bhangra</option>
+	<option>Bhangragga</option>
+	<option>Bhangraton (Indian hip-hop)</option>
+	<option>Big band</option>
+	<option>Big beat</option>
+	<option>Big room house</option>
+	<option>Biguine</option>
+	<option>Bihu</option>
+	<option>Biker metal</option>
+	<option>Biomusic</option>
+	<option>Bitpop</option>
+	<option>Blackened death metal</option>
+	<option>Black metal</option>
+	<option>Blackgaze</option>
+	<option>Black MIDI</option>
+	<option>Bluegrass music</option>
+	<option>Blue-eyed soul</option>
+	<option>Blues</option>
+	<option>Blues ballad</option>
+	<option>Blues rock</option>
+	<option>Boi</option>
+	<option>Bongo Flava</option>
+	<option>Boogie</option>
+	<option>Boogie rock</option>
+	<option>Boogie-woogie</option>
+	<option>Boogaloo</option>
+	<option>Boom bap</option>
+	<option>Bollywood songs</option>
+	<option>Bosnian root music</option>
+	<option>Bossa Nova</option>
+	<option>Bothy Ballad</option>
+	<option>Bounce music</option>
+	<option>Bouncy techno</option>
+	<option>Brass</option>
+	<option>Breakbeat</option>
+	<option>Breakbeat hardcore</option>
+	<option>Breakcore</option>
+	<option>Breakstep</option>
+	<option>Brega</option>
+	<option>Breton</option>
+	<option>Brill Building Sound</option>
+	<option>Brit funk</option>
+	<option>Britpop</option>
+	<option>British blues</option>
+	<option>British folk rock</option>
+	<option>British Invasion</option>
+	<option>British hip hop</option>
+	<option>British rhythm and blues</option>
+	<option>British rock music</option>
+	<option>British rock and roll</option>
+	<option>Broken beat</option>
+	<option>Brooklyn drill</option>
+	<option>Brostep</option>
+	<option>Brown-eyed soul</option>
+	<option>Brukdown</option>
+	<option>Bubblegum pop</option>
+	<option>Buddhist music</option>
+	<option>Bullerengue</option>
+	<option>Bikutsi</option>
+	<option>Bulerías</option>
+	<option>Bunraku</option>
+	<option>Burger-highlife</option>
+	<option>Burgundian School</option>
+	<option>Bush ballad</option>
+	<option>Byzantine music</option>
+	<option>Ca din tulnic</option>
+	<option>Ca trù</option>
+	<option>Cabaret</option>
+	<option>Cadence-lypso</option>
+	<option>Cadence rampa</option>
+	<option>Cải lương</option>
+	<option>Cajun music</option>
+	<option>Cakewalk</option>
+	<option>Calinda</option>
+	<option>Čalgija</option>
+	<option>Calypso music</option>
+	<option>Calypso-style baila</option>
+	<option>Campursari</option>
+	<option>Can Can</option>
+	<option>Canadian blues</option>
+	<option>Candombe</option>
+	<option>Canon</option>
+	<option>Cantata</option>
+	<option>Cante chico</option>
+	<option>Cante jondo</option>
+	<option>Canterbury scene</option>
+	<option>Cantiñas</option>
+	<option>Cantiga</option>
+	<option>Canto livre</option>
+	<option>Cantopop</option>
+	<option>Cantu a tenore</option>
+	<option>Canzone Napoletana</option>
+	<option>Cape Breton fiddling</option>
+	<option>Capoeira music</option>
+	<option>Carimbó</option>
+	<option>Cariso</option>
+	<option>Carnatic music</option>
+	<option>Carol</option>
+	<option>Cartageneras</option>
+	<option>Carnavalito</option>
+	<option>Celempungan</option>
+	<option>Cello rock</option>
+	<option>Celtic chant</option>
+	<option>Celtic fusion</option>
+	<option>Celtic metal</option>
+	<option>Celtic music</option>
+	<option>Celtic punk</option>
+	<option>Celtic reggae</option>
+	<option>Celtic rock</option>
+	<option>Cha-cha-cha</option>
+	<option>Chacarera</option>
+	<option>Chakacha</option>
+	<option>Chalga</option>
+	<option>Chamamé</option>
+	<option>Chamarrita</option>
+	<option>Chamber music</option>
+	<option>Chamber jazz</option>
+	<option>Chamber pop</option>
+	<option>Champeta</option>
+	<option>Changüí</option>
+	<option>Chanson</option>
+	<option>Chant</option>
+	<option>Chap hop</option>
+	<option>Charanga</option>
+	<option>Charanga-vallenata</option>
+	<option>Charikawi</option>
+	<option>Charleston (dance)</option>
+	<option>Chastushka</option>
+	<option>Chầu văn</option>
+	<option>Chèo</option>
+	<option>Chicano rock</option>
+	<option>Chicago blues</option>
+	<option>Chicago house</option>
+	<option>Chicago soul</option>
+	<option>Chicano rap</option>
+	<option>Chicken scratch</option>
+	<option>Children's music</option>
+	<option>Chill-out music</option>
+	<option>Chillwave</option>
+	<option>Chinese music</option>
+	<option>Chinese rock</option>
+	<option>Chiptune</option>
+	<option>Chopped and screwed</option>
+	<option>Chopper</option>
+	<option>Choro</option>
+	<option>Chouval bwa</option>
+	<option>Chowtal</option>
+	<option>Christmas carol</option>
+	<option>Christmas music</option>
+	<option>Christian alternative rock</option>
+	<option>Christian country music</option>
+	<option>Christian hardcore</option>
+	<option>Christian hip hop</option>
+	<option>Christian metal</option>
+	<option>Christian music</option>
+	<option>Christian punk</option>
+	<option>Christian rock</option>
+	<option>Christian ska</option>
+	<option>Chylandyk</option>
+	<option>Chula</option>
+	<option>Chumba</option>
+	<option>Church music</option>
+	<option>Chut-kai-pang</option>
+	<option>Chutney music</option>
+	<option>Chutney Soca</option>
+	<option>Cifra</option>
+	<option>Chap hop</option>
+	<option>Circus music</option>
+	<option>Classic country</option>
+	<option>Classic rock</option>
+	<option>Classic female blues</option>
+	<option>Classical music</option>
+	<option>Classical period</option>
+	<option>Close harmony</option>
+	<option>Cloud rap</option>
+	<option>Coladeira</option>
+	<option>Coldwave</option>
+	<option>College rock</option>
+	<option>Combined rhythm</option>
+	<option>Comedy music</option>
+	<option>Comedy rap</option>
+	<option>Comedy rock</option>
+	<option>Comic opera</option>
+	<option>Compas</option>
+	<option>Complextro</option>
+	<option>Concerto</option>
+	<option>Concerto grosso</option>
+	<option>Conga</option>
+	<option>Conjunto</option>
+	<option>Contemporary Christian music</option>
+	<option>Conscious hip hop</option>
+	<option>Contemporary folk music</option>
+	<option>Contemporary laïka</option>
+	<option>Contemporary R&B</option>
+	<option>Contradanza</option>
+	<option>Cool jazz</option>
+	<option>Coon song</option>
+	<option>Coptic music</option>
+	<option>Corrido</option>
+	<option>Country music</option>
+	<option>Country blues</option>
+	<option>Country folk</option>
+	<option>Country pop</option>
+	<option>Country rap</option>
+	<option>Country rock</option>
+	<option>Country trap</option>
+	<option>Coupé-Décalé</option>
+	<option>Cowpunk</option>
+	<option>Crabcore</option>
+	<option>Creole music</option>
+	<option>Cretan</option>
+	<option>Crossover thrash</option>
+	<option>Crunk</option>
+	<option>Crunkcore</option>
+	<option>Crust punk</option>
+	<option>Csárdás</option>
+	<option>Cuarteto</option>
+	<option>Cueca</option>
+	<option>Cumbia</option>
+	<option>Cumbia villera</option>
+	<option>Currulao</option>
+	<option>Cyber Metal</option>
+	<option>Czech bluegrass</option>
+	<option>Dabke</option>
+	<option>Dadra</option>
+	<option>Daina</option>
+	<option>Daina</option>
+	<option>Dance music</option>
+	<option>Dance-pop</option>
+	<option>Dance-punk</option>
+	<option>Dance-rock</option>
+	<option>Dancehall</option>
+	<option>Dangdut</option>
+	<option>Danger music</option>
+	<option>Dansband</option>
+	<option>Danza</option>
+	<option>Danzón</option>
+	<option>Dappankuthu</option>
+	<option>Dark ambient</option>
+	<option>Dark cabaret</option>
+	<option>Darkcore</option>
+	<option>Darkstep</option>
+	<option>Dark wave</option>
+	<option>De dragoste</option>
+	<option>Deathcore</option>
+	<option>Deathgrind</option>
+	<option>Death industrial</option>
+	<option>Death metal</option>
+	<option>Death-doom</option>
+	<option>Death rock</option>
+	<option>Décima</option>
+	<option>Deconstructed club</option>
+	<option>Delta blues</option>
+	<option>Deep funk</option>
+	<option>Deep house</option>
+	<option>Demitone</option>
+	<option>Descarga</option>
+	<option>Desi</option>
+	<option>Desi hip-hop</option>
+	<option>Detroit blues</option>
+	<option>Detroit drill</option>
+	<option>Detroit techno</option>
+	<option>Dhamar</option>
+	<option>Dhrupad</option>
+	<option>Dhun</option>
+	<option>Diablada</option>
+	<option>Digital hardcore</option>
+	<option>Dirge</option>
+	<option>Dirty rap</option>
+	<option>Disco</option>
+	<option>Disco polo</option>
+	<option>Diva house</option>
+	<option>Dixieland</option>
+	<option>Djent</option>
+	<option>Doina</option>
+	<option>Dolewave</option>
+	<option>Dondang Sayang</option>
+	<option>Donegal fiddle tradition</option>
+	<option>Dongjing</option>
+	<option>Donk</option>
+	<option>Doo-wop</option>
+	<option>Doom metal</option>
+	<option>Downtempo</option>
+	<option>Dream pop</option>
+	<option>Dream trance</option>
+	<option>Drift phonk</option>
+	<option>Drill music</option>
+	<option>Drill 'n' bass</option>
+	<option>Drone metal</option>
+	<option>Drone music</option>
+	<option>Drum and bass</option>
+	<option>Drumstep</option>
+	<option>Dub music</option>
+	<option>Dub techno</option>
+	<option>Dubtronica</option>
+	<option>Dubstep</option>
+	<option>Dubstyle</option>
+	<option>Dungeon synth</option>
+	<option>Dunun</option>
+	<option>Dunedin Sound</option>
+	<option>Dutch jazz</option>
+	<option>Early music</option>
+	<option>Earrape</option>
+	<option>East Coast hip hop</option>
+	<option>Easy listening</option>
+	<option>Electric blues</option>
+	<option>Electro</option>
+	<option>Electro backbeat</option>
+	<option>Electrogrind</option>
+	<option>Electro house</option>
+	<option>Electro-industrial</option>
+	<option>Electro swing</option>
+	<option>Electroacoustic music</option>
+	<option>Electroclash</option>
+	<option>Electronic body music</option>
+	<option>Electronic dance music</option>
+	<option>Electronic music</option>
+	<option>Electronic rock</option>
+	<option>Electronica</option>
+	<option>Electronicore</option>
+	<option>Electropop</option>
+	<option>Electropunk</option>
+	<option>Emo</option>
+	<option>Emo hip hop</option>
+	<option>Emo pop</option>
+	<option>English folk music</option>
+	<option>Enka</option>
+	<option>Epic Metal</option>
+	<option>Eremwu eu</option>
+	<option>Ethereal wave</option>
+	<option>Extratone</option>
+	<option>Ethiopian chant</option>
+	<option>Eurobeat</option>
+	<option>Eurodance</option>
+	<option>Euro disco</option>
+	<option>Euro house</option>
+	<option>Europop</option>
+	<option>Euro reggae</option>
+	<option>Eurotrance</option>
+	<option>Exotica</option>
+	<option>Experimental music</option>
+	<option>Experimental pop</option>
+	<option>Experimental rock</option>
+	<option>Expressionist music</option>
+	<option>Extempo</option>
+	<option>Extreme metal</option>
+	<option>Fado</option>
+	<option>Falak music</option>
+	<option>Fandango</option>
+	<option>Farruca</option>
+	<option>Festejo</option>
+	<option>Fife and drum blues</option>
+	<option>Filk music</option>
+	<option>Film score</option>
+	<option>Filmi</option>
+	<option>Filmi-ghazal</option>
+	<option>Fingerstyle</option>
+	<option>Flamenco</option>
+	<option>Flashcore</option>
+	<option>Florida breaks</option>
+	<option>Folk jazz</option>
+	<option>Folk metal</option>
+	<option>Folk</option>
+	<option>Folk pop</option>
+	<option>Folk punk</option>
+	<option>Folk rock</option>
+	<option>Folktronica</option>
+	<option>Forró</option>
+	<option>Foxtrot</option>
+	<option>Fuji</option>
+	<option>Freakbeat</option>
+	<option>Freak folk</option>
+	<option>Free improvisation</option>
+	<option>Free jazz</option>
+	<option>Free tekno</option>
+	<option>Freestyle music</option>
+	<option>French house</option>
+	<option>Frevo</option>
+	<option>Fuji music</option>
+	<option>Full-on</option>
+	<option>Funaná</option>
+	<option>Funeral doom</option>
+	<option>Funeral march</option>
+	<option>Funk</option>
+	<option>Funk carioca</option>
+	<option>Funk melody</option>
+	<option>Funk metal</option>
+	<option>Funk ostentação</option>
+	<option>Funk ousadia</option>
+	<option>Funk rock</option>
+	<option>Funky house</option>
+	<option>Furniture music</option>
+	<option>Future bass</option>
+	<option>Future Funk</option>
+	<option>Future garage</option>
+	<option>Future soul</option>
+	<option>Futurepop</option>
+	<option>G-funk</option>
+	<option>Gaana</option>
+	<option>Gabber</option>
+	<option>Gagaku</option>
+	<option>Ghana</option>
+	<option>Gaita Zuliana</option>
+	<option>Galant</option>
+	<option>Gallican chant</option>
+	<option>Gamelan</option>
+	<option>Gamelan bebonangan</option>
+	<option>Gamelan degung</option>
+	<option>Gamelan gong kebyar</option>
+	<option>Gamelan salendro</option>
+	<option>Gamelan selunding</option>
+	<option>Gamelan semar pegulingan</option>
+	<option>Gammaldans</option>
+	<option>Gandrung</option>
+	<option>Gangsta rap</option>
+	<option>Gar</option>
+	<option>Garba</option>
+	<option>Garage house</option>
+	<option>Garage rock</option>
+	<option>Garage rock revival</option>
+	<option>Gato</option>
+	<option>Gavotte</option>
+	<option>Gender wayang</option>
+	<option>Geek rock</option>
+	<option>Gelineau psalmody</option>
+	<option>German folk</option>
+	<option>Ghazal</option>
+	<option>Ghettotech</option>
+	<option>Girl group</option>
+	<option>Glam metal</option>
+	<option>Glam punk</option>
+	<option>Glam rock</option>
+	<option>Glitch</option>
+	<option>Gnawa music</option>
+	<option>Go-go</option>
+	<option>Goa trance</option>
+	<option>Gong chime</option>
+	<option>Goombay</option>
+	<option>Goregrind</option>
+	<option>Goshu ondo</option>
+	<option>Gospel music</option>
+	<option>Gospel blues</option>
+	<option>Gothic country</option>
+	<option>Gothic metal</option>
+	<option>Gothic rock</option>
+	<option>Gothabilly</option>
+	<option>Gqom</option>
+	<option>Gqom trap</option>
+	<option>Grebo</option>
+	<option>Gregorian chant</option>
+	<option>Grime</option>
+	<option>Grindcore</option>
+	<option>Grindie</option>
+	<option>Griot</option>
+	<option>Groove metal</option>
+	<option>Group Sounds</option>
+	<option>Grunge</option>
+	<option>Grupera</option>
+	<option>Guarania</option>
+	<option>Guajira</option>
+	<option>Gumbe</option>
+	<option>Gunchei</option>
+	<option>Gunka</option>
+	<option>Guoyue</option>
+	<option>Gwo ka</option>
+	<option>Gwo ka moderne</option>
+	<option>Gypsy jazz</option>
+	<option>Gypsy punk</option>
+	<option>Habanera</option>
+	<option>Halling</option>
+	<option>Hambo</option>
+	<option>Hamburger Schule</option>
+	<option>Happy hardcore</option>
+	<option>Haqibah</option>
+	<option>Harawi</option>
+	<option>Hard bop</option>
+	<option>Hard house</option>
+	<option>Hard rock</option>
+	<option>Hard trance</option>
+	<option>Hardcore hip hop</option>
+	<option>Hardcore punk</option>
+	<option>Hardcore</option>
+	<option>Hardstep</option>
+	<option>Hardstyle</option>
+	<option>Hardvapour</option>
+	<option>Hardwave</option>
+	<option>Hasapiko</option>
+	<option>Hát tuồng (Hát bôi)</option>
+	<option>Heartland rock</option>
+	<option>Heavy hardcore</option>
+	<option>Heavy metal music</option>
+	<option>Hi-NRG</option>
+	<option>Hill country blues</option>
+	<option>Highlife</option>
+	<option>Hiplife</option>
+	<option>Hip hop production</option>
+	<option>Hip hop music</option>
+	<option>Hip house</option>
+	<option>Hip-hop soul</option>
+	<option>Hindustani classical music</option>
+	<option>Hiragasy</option>
+	<option>Hoerspiel</option>
+	<option>Honky-tonk</option>
+	<option>Hokum</option>
+	<option>Honkyoku</option>
+	<option>Hookah rap</option>
+	<option>Hora</option>
+	<option>Hora lungă</option>
+	<option>Hornpipe</option>
+	<option>Horrorcore</option>
+	<option>Horror punk</option>
+	<option>House music</option>
+	<option>Huayño</option>
+	<option>Hula</option>
+	<option>Humppa</option>
+	<option>Hunguhungu</option>
+	<option>Hyangak</option>
+	<option>Hymn</option>
+	<option>Hyperpop</option>
+	<option>Hyphy</option>
+	<option>Icaro</option>
+	<option>IDM</option>
+	<option>Igbo music</option>
+	<option>Illbient</option>
+	<option>Impressionist music</option>
+	<option>Improvised</option>
+	<option>Incidental music</option>
+	<option>Indian rock</option>
+	<option>Indietronica</option>
+	<option>Indie folk</option>
+	<option>Independent music</option>
+	<option>Indie pop</option>
+	<option>Indie rock</option>
+	<option>Indigenous music of North America</option>
+	<option>Indigenous rock</option>
+	<option>Indo jazz</option>
+	<option>Industrial death metal</option>
+	<option>Industrial hip hop</option>
+	<option>Industrial music</option>
+	<option>Industrial musical</option>
+	<option>Industrial metal</option>
+	<option>Industrial rock</option>
+	<option>Industrial thrash metal</option>
+	<option>Instrumental</option>
+	<option>Instrumental hip hop</option>
+	<option>Instrumental rock</option>
+	<option>Inuit music</option>
+	<option>Irish traditional music</option>
+	<option>Irish rebel music</option>
+	<option>Isicathamiya</option>
+	<option>Islamic music</option>
+	<option>Italo dance</option>
+	<option>Italo disco</option>
+	<option>Italo house</option>
+	<option>J-pop</option>
+	<option>Jaipongan</option>
+	<option>Jam band</option>
+	<option>Jam session</option>
+	<option>Jamaican folk music</option>
+	<option>Jamrieng samai</option>
+	<option>Jangle</option>
+	<option>Japanese rock</option>
+	<option>Japanoise</option>
+	<option>Jarana yucateca</option>
+	<option>Jarocho</option>
+	<option>Jawaiian</option>
+	<option>Jazz</option>
+	<option>Jazzcore</option>
+	<option>Jazz improvisation</option>
+	<option>Jazz-funk</option>
+	<option>Jazz fusion</option>
+	<option>Jazz rap</option>
+	<option>Jazz rock</option>
+	<option>Jegog</option>
+	<option>Jenkka</option>
+	<option>Jersey club</option>
+	<option>Jersey club rap/drill</option>
+	<option>Jesus music</option>
+	<option>Jewish</option>
+	<option>Jig</option>
+	<option>Jing ping</option>
+	<option>Jingle</option>
+	<option>Jit</option>
+	<option>Jitterbug</option>
+	<option>Jive</option>
+	<option>Joged</option>
+	<option>Joged bumbung</option>
+	<option>Joik</option>
+	<option>Joropo</option>
+	<option>Jota</option>
+	<option>Jug band</option>
+	<option>Jùjú music</option>
+	<option>Juke</option>
+	<option>Jump blues</option>
+	<option>Jumpstyle</option>
+	<option>Jungle music</option>
+	<option>Junkanoo</option>
+	<option>K-pop</option>
+	<option>Kabuki</option>
+	<option>Kagok</option>
+	<option>Kaiso</option>
+	<option>Kalamatianó</option>
+	<option>Kan ha diskan</option>
+	<option>Kanikapila</option>
+	<option>Kansas City blues</option>
+	<option>Kantrum</option>
+	<option>Kargyraa</option>
+	<option>Kaseko</option>
+	<option>Kachāshī</option>
+	<option>Kawachi ondo</option>
+	<option>Kawaii metal</option>
+	<option>Kawaii future bass (also known simply as kawaii bass)</option>
+	<option>Kayōkyoku</option>
+	<option>Kecak</option>
+	<option>Kacapi suling</option>
+	<option>Kertok</option>
+	<option>Khaleeji</option>
+	<option>Khene</option>
+	<option>Khyal</option>
+	<option>Kievan chant</option>
+	<option>Kirtan</option>
+	<option>Kiwi rock</option>
+	<option>Kizomba</option>
+	<option>Klapa</option>
+	<option>Klasik</option>
+	<option>Klezmer</option>
+	<option>Kolomyjka</option>
+	<option>Komagaku</option>
+	<option>Kpanlogo</option>
+	<option>Krakowiak</option>
+	<option>Krautrock</option>
+	<option>Kriti</option>
+	<option>Kroncong</option>
+	<option>Kuduro</option>
+	<option>Kulintang</option>
+	<option>Kundiman</option>
+	<option>Kvæði</option>
+	<option>Kwaito</option>
+	<option>Kwassa kwassa</option>
+	<option>Kwela</option>
+	<option>Laiko</option>
+	<option>Lambada</option>
+	<option>Landó</option>
+	<option>Latin alternative</option>
+	<option>Latin hip hop</option>
+	<option>Latin jazz</option>
+	<option>Latin metal</option>
+	<option>Latin music</option>
+	<option>Latin pop</option>
+	<option>Latino punk</option>
+	<option>Latin R&B</option>
+	<option>Latin rock</option>
+	<option>Latin soul</option>
+	<option>Latin trap</option>
+	<option>Lavani</option>
+	<option>Legényes</option>
+	<option>Letkajenkka</option>
+	<option>Lhamo</option>
+	<option>Lied</option>
+	<option>Light Metal music</option>
+	<option>Light music</option>
+	<option>Liquid funk</option>
+	<option>Lo-fi music</option>
+	<option>Logobi</option>
+	<option>Loncomeo</option>
+	<option>Long song</option>
+	<option>Louisiana blues</option>
+	<option>Lounge music</option>
+	<option>Lovers rock</option>
+	<option>Lowercase</option>
+	<option>Lubbock sound</option>
+	<option>Luk Krung</option>
+	<option>Luk thung</option>
+	<option>Lullaby</option>
+	<option>Lundu</option>
+	<option>M-Base</option>
+	<option>Madchester</option>
+	<option>Madrigal</option>
+	<option>Mafioso rap</option>
+	<option>Mahori</option>
+	<option>Mainstream hardcore</option>
+	<option>Makossa</option>
+	<option>Malhun</option>
+	<option>Mallsoft</option>
+	<option>Maloya</option>
+	<option>Malambo</option>
+	<option>Mambo</option>
+	<option>Manaschi</option>
+	<option>Mandopop</option>
+	<option>Manele</option>
+	<option>Mangue bit</option>
+	<option>Manila Sound</option>
+	<option>Mapouka</option>
+	<option>Marabi</option>
+	<option>Maracatu</option>
+	<option>March</option>
+	<option>Mariachi</option>
+	<option>Marrabenta</option>
+	<option>Martial industrial</option>
+	<option>Martial music</option>
+	<option>Maskanda</option>
+	<option>Marinera</option>
+	<option>Martinetes</option>
+	<option>Mashup</option>
+	<option>Mass</option>
+	<option>Matamuerte</option>
+	<option>Mathcore</option>
+	<option>Math rock</option>
+	<option>Maxixe</option>
+	<option>Mazurka</option>
+	<option>Mbalax</option>
+	<option>Mbube</option>
+	<option>Meditation music</option>
+	<option>Medieval folk rock</option>
+	<option>Medieval metal</option>
+	<option>Medieval music</option>
+	<option>Mejoranera</option>
+	<option>Malhun</option>
+	<option>Melam</option>
+	<option>Melisma</option>
+	<option>Melodic hardcore</option>
+	<option>Melodic metalcore</option>
+	<option>Melodic music</option>
+	<option>Memphis blues</option>
+	<option>Memphis rap</option>
+	<option>Memphis soul</option>
+	<option>Mento</option>
+	<option>Merengue music</option>
+	<option>Merengue típico</option>
+	<option>Méringue</option>
+	<option>Metal music</option>
+	<option>Metalcore</option>
+	<option>Mexican rock music</option>
+	<option>Meykhana</option>
+	<option>Mezwed</option>
+	<option>Miami bass</option>
+	<option>Microhouse</option>
+	<option>Microsound</option>
+	<option>Middle Eastern music</option>
+	<option>Mini-jazz</option>
+	<option>Minuet</option>
+	<option>Milonga</option>
+	<option>Min'yō</option>
+	<option>Minimal music</option>
+	<option>Minimal techno</option>
+	<option>Minstrel</option>
+	<option>Minneapolis sound</option>
+	<option>Modal jazz</option>
+	<option>Modinha</option>
+	<option>Modern rock</option>
+	<option>Morenada</option>
+	<option>Mor lam</option>
+	<option>Mor lam sing</option>
+	<option>Moombahton</option>
+	<option>Moombahcore</option>
+	<option>Motown</option>
+	<option>Montuno</option>
+	<option>Morna</option>
+	<option>Mozambique</option>
+	<option>Mozarabic chant</option>
+	<option>Mugham</option>
+	<option>Mumble rap</option>
+	<option>Murga</option>
+	<option>Musette</option>
+	<option>Mushroom Jazz</option>
+	<option>Music drama</option>
+	<option>Music hall</option>
+	<option>Música criolla</option>
+	<option>Musica llanero</option>
+	<option>Música popular brasileira</option>
+	<option>Musique concrète</option>
+	<option>Muwashshah</option>
+	<option>Muzak</option>
+	<option>Nagauta</option>
+	<option>Nakasi</option>
+	<option>Nangma</option>
+	<option>Nanguan music</option>
+	<option>Narcocorrido</option>
+	<option>Nardcore</option>
+	<option>Narodna muzika</option>
+	<option>Nasheed</option>
+	<option>Nashville sound</option>
+	<option>National Socialist black metal</option>
+	<option>Nazi punk</option>
+	<option>Nederpop</option>
+	<option>Neoclassical</option>
+	<option>Neoclassical dark wave</option>
+	<option>Neo-classical metal</option>
+	<option>Neoclassical new age</option>
+	<option>Neo kyma</option>
+	<option>Neofolk</option>
+	<option>Neo-Medieval music</option>
+	<option>Neo-prog</option>
+	<option>Neo-psychedelia</option>
+	<option>Neo soul</option>
+	<option>Neotraditional country</option>
+	<option>Nepalese hip-hop</option>
+	<option>Nerdcore</option>
+	<option>Neue Deutsche Härte</option>
+	<option>Neue Deutsche Welle</option>
+	<option>Neue Deutsche Todeskunst</option>
+	<option>Neurofunk</option>
+	<option>New-age music</option>
+	<option>New Beat</option>
+	<option>New jack swing</option>
+	<option>New Mexico music</option>
+	<option>New Orleans blues</option>
+	<option>New Orleans rhythm and blues</option>
+	<option>New prog</option>
+	<option>New rave</option>
+	<option>New school hip hop</option>
+	<option>New Taiwanese Song</option>
+	<option>New wave music</option>
+	<option>New wave of new wave</option>
+	<option>New Weird America</option>
+	<option>Nintendocore</option>
+	<option>Nisiotika</option>
+	<option>Nitzhonot</option>
+	<option>No wave</option>
+	<option>Noh</option>
+	<option>Noise music</option>
+	<option>Noise pop</option>
+	<option>Noise rock</option>
+	<option>Nordic folk music</option>
+	<option>Nortec</option>
+	<option>Norteño</option>
+	<option>Northern soul</option>
+	<option>Nu-disco</option>
+	<option>Nu-funk</option>
+	<option>Nu gaze</option>
+	<option>Nu jazz</option>
+	<option>Nu metal</option>
+	<option>Nu skool breaks</option>
+	<option>Nueva canción</option>
+	<option>Nuevo tango</option>
+	<option>Obscuro</option>
+	<option>Obikhod</option>
+	<option>Oi!</option>
+	<option>Old-school hip hop</option>
+	<option>Old Roman chant</option>
+	<option>Old-time music</option>
+	<option>Oldies and Classic hits</option>
+	<option>Olonkho</option>
+	<option>Old Time Radio</option>
+	<option>Ondo</option>
+	<option>Opera</option>
+	<option>Operatic pop</option>
+	<option>Operetta</option>
+	<option>Oratorio</option>
+	<option>Orchestral pop</option>
+	<option>Organ trio</option>
+	<option>Organic ambient music</option>
+	<option>Organum</option>
+	<option>Oriental metal</option>
+	<option>Orthodox</option>
+	<option>Ottava rima</option>
+	<option>Ottoman military band</option>
+	<option>Outlaw country</option>
+	<option>Outsider music</option>
+	<option>P-Funk</option>
+	<option>Pachanga</option>
+	<option>Pagan metal</option>
+	<option>Pagan rock</option>
+	<option>Pagode</option>
+	<option>Paisley Underground</option>
+	<option>Pakistani hip-hop</option>
+	<option>Palm wine music</option>
+	<option>Panambih</option>
+	<option>Panchai baja</option>
+	<option>Panchavadyam</option>
+	<option>Pansori</option>
+	<option>Paraguayan polka</option>
+	<option>Paranda music</option>
+	<option>Parranda</option>
+	<option>Parody music</option>
+	<option>Pambiche (Merengue estilo yanqui)</option>
+	<option>Parang</option>
+	<option>Partido alto</option>
+	<option>Pasacalle</option>
+	<option>Pasillo</option>
+	<option>Pasodoble</option>
+	<option>Payada</option>
+	<option>Peace Punk</option>
+	<option>Pelimanni music</option>
+	<option>Persian traditional music</option>
+	<option>Peruvian cumbia</option>
+	<option>Petenera</option>
+	<option>Peyote Song</option>
+	<option>Philadelphia soul</option>
+	<option>Phonk</option>
+	<option>Pibroch</option>
+	<option>Piedmont blues</option>
+	<option>Pilipino</option>
+	<option>Pimba</option>
+	<option>Pinoy rock</option>
+	<option>Pinpeat orchestra</option>
+	<option>Piphat</option>
+	<option>Pirate metal</option>
+	<option>Piyyutim</option>
+	<option>Plainsong</option>
+	<option>Plena</option>
+	<option>Pleng phua cheewit</option>
+	<option>Pleng Thai sakorn</option>
+	<option>Plugg music</option>
+	<option>PluggnB</option>
+	<option>Plus 8</option>
+	<option>Political hip hop</option>
+	<option>Polka</option>
+	<option>Polo</option>
+	<option>Polonaise</option>
+	<option>Pols</option>
+	<option>Polska</option>
+	<option>Pong lang</option>
+	<option>Pop folk</option>
+	<option>Pop music</option>
+	<option>Pop punk</option>
+	<option>Pop rap</option>
+	<option>Pop rock</option>
+	<option>Pop sunda</option>
+	<option>Popular music</option>
+	<option>Pornocore</option>
+	<option>Pornogrind</option>
+	<option>Porro</option>
+	<option>Post-bop</option>
+	<option>Post-Britpop</option>
+	<option>Post-dubstep</option>
+	<option>Post-disco</option>
+	<option>Post-grunge</option>
+	<option>Post-hardcore</option>
+	<option>Post-industrial</option>
+	<option>Post-metal</option>
+	<option>Post-minimalism</option>
+	<option>Postmodern music</option>
+	<option>Post-punk</option>
+	<option>Post-punk revival</option>
+	<option>Post-rock</option>
+	<option>Post-romanticism</option>
+	<option>Powada</option>
+	<option>Power electronics</option>
+	<option>Power metal</option>
+	<option>Power noise (or rhythmic noise)</option>
+	<option>Power pop</option>
+	<option>Power trio</option>
+	<option>Powerviolence</option>
+	<option>Pow-wow</option>
+	<option>Ppongtchak</option>
+	<option>Praise song</option>
+	<option>Program symphony</option>
+	<option>Progressive electronic music</option>
+	<option>Progressive folk music</option>
+	<option>Progressive house</option>
+	<option>Progressive metal</option>
+	<option>Progressive music</option>
+	<option>Progressive pop</option>
+	<option>Progressive rock</option>
+	<option>Progressive trance</option>
+	<option>Proibidão</option>
+	<option>Prostopinije</option>
+	<option>Proto-punk</option>
+	<option>Psybient</option>
+	<option>Psychedelic music</option>
+	<option>Psychedelic folk</option>
+	<option>Psychedelic funk</option>
+	<option>Psychedelic pop</option>
+	<option>Psychedelic rock</option>
+	<option>Psychedelic soul</option>
+	<option>Psychedelic trance (Psy-trance)</option>
+	<option>Psychobilly.</option>
+	<option>Psydub</option>
+	<option>Pub rock</option>
+	<option>Pungmul</option>
+	<option>Punk blues</option>
+	<option>Punk Cabaret</option>
+	<option>Punk jazz</option>
+	<option>Punk rock</option>
+	<option>Punta</option>
+	<option>Punta rock</option>
+	<option>Puya</option>
+	<option>Quan ho</option>
+	<option>Qasidah</option>
+	<option>Qasidah modern</option>
+	<option>Qawwali</option>
+	<option>Qin</option>
+	<option>Quadrille</option>
+	<option>Queercore</option>
+	<option>Quiet Storm</option>
+	<option>Raga rock</option>
+	<option>Raga</option>
+	<option>Rage music</option>
+	<option>Raggamuffin (Ragga)</option>
+	<option>Ragga Jungle</option>
+	<option>Ragtime</option>
+	<option>Rai</option>
+	<option>Raicore</option>
+	<option>Raï'n'B</option>
+	<option>Rake-and-scrape</option>
+	<option>Ramkbach</option>
+	<option>Ramvong</option>
+	<option>Ranchera</option>
+	<option>Rapping</option>
+	<option>Rapso</option>
+	<option>Rap metal</option>
+	<option>Rap rock</option>
+	<option>Rara music</option>
+	<option>Rare groove</option>
+	<option>Rasiya</option>
+	<option>Ravanahatha</option>
+	<option>Rave music</option>
+	<option>Rebetiko</option>
+	<option>Red Dirt (music)</option>
+	<option>reel</option>
+	<option>Reggae</option>
+	<option>Reggae fusion</option>
+	<option>Reggae highlife</option>
+	<option>Reggaeton</option>
+	<option>Rekilaulu</option>
+	<option>Religious music</option>
+	<option>Renaissance music</option>
+	<option>Retro</option>
+	<option>Requiem music</option>
+	<option>Rhapsody</option>
+	<option>Rhumba</option>
+	<option>Rhyming spiritual</option>
+	<option>Rhythm and blues</option>
+	<option>Rhythm & grime</option>
+	<option>Ricercar</option>
+	<option>Riddim</option>
+	<option>Rímur</option>
+	<option>Ringbang</option>
+	<option>Riot grrrl</option>
+	<option>RnBass</option>
+	<option>Road rap</option>
+	<option>Rock music</option>
+	<option>Rock opera</option>
+	<option>Rock and roll</option>
+	<option>Rock en español</option>
+	<option>Rockabilly</option>
+	<option>Rocksteady</option>
+	<option>Rococo</option>
+	<option>Rōkyoku</option>
+	<option>Romani music</option>
+	<option>Romantic period in music</option>
+	<option>Ronggeng</option>
+	<option>Roots reggae</option>
+	<option>Roots rock</option>
+	<option>Roots rock reggae</option>
+	<option>Rumba</option>
+	<option>Sabar</option>
+	<option>Sacred Harp</option>
+	<option>Sadcore</option>
+	<option>Salsa dura</option>
+	<option>Salsa music</option>
+	<option>Salsa romántica</option>
+	<option>Saltarello</option>
+	<option>Samba</option>
+	<option>Samba-canção</option>
+	<option>Samba-reggae</option>
+	<option>Samba rock</option>
+	<option>Sambai</option>
+	<option>Sambass</option>
+	<option>Sampledelia</option>
+	<option>Sampling</option>
+	<option>Sanjo</option>
+	<option>Sârbă</option>
+	<option>Sardana</option>
+	<option>Sato kagura</option>
+	<option>Sawt</option>
+	<option>Saya</option>
+	<option>Schlager music</option>
+	<option>Schottische</option>
+	<option>Scottish Baroque music</option>
+	<option>Scottish folk music</option>
+	<option>Scrumpy and Western</option>
+	<option>Screamo</option>
+	<option>Sea shanty</option>
+	<option>Sean-nós singing</option>
+	<option>Seapunk</option>
+	<option>Second Viennese School</option>
+	<option>Sega music</option>
+	<option>Seggae</option>
+	<option>Seis</option>
+	<option>Semba</option>
+	<option>Sephardic music</option>
+	<option>Serialism</option>
+	<option>Sertanejo music</option>
+	<option>Set dance</option>
+	<option>Sevdalinka</option>
+	<option>Sevillana</option>
+	<option>Shabda</option>
+	<option>Shalakho</option>
+	<option>Shan'ge</option>
+	<option>Shibuya-kei</option>
+	<option>Shidaiqu</option>
+	<option>Shima-uta</option>
+	<option>Shock rock</option>
+	<option>Shoegaze</option>
+	<option>Shōka</option>
+	<option>Shomyo</option>
+	<option>Shota</option>
+	<option>Show tune</option>
+	<option>Siguiriyas</option>
+	<option>Silat</option>
+	<option>Sinawi</option>
+	<option>Singer-songwriter.</option>
+	<option>Ska</option>
+	<option>Ska punk</option>
+	<option>Skald</option>
+	<option>Skate punk</option>
+	<option>Skweee</option>
+	<option>Skiffle</option>
+	<option>Skyladiko</option>
+	<option>Skullstep</option>
+	<option>Slack-key guitar (kihoalu)</option>
+	<option>Slängpolska</option>
+	<option>Slide music</option>
+	<option>Slowcore</option>
+	<option>Sludge metal</option>
+	<option>Smooth jazz</option>
+	<option>Smooth soul</option>
+	<option>Snap music</option>
+	<option>Snap&B</option>
+	<option>Soca music</option>
+	<option>Soft rock</option>
+	<option>Son-batá</option>
+	<option>Son cubano</option>
+	<option>Son montuno</option>
+	<option>Sonata</option>
+	<option>Songo music</option>
+	<option>Songo-salsa</option>
+	<option>Sophisti-pop</option>
+	<option>Soukous</option>
+	<option>Soul blues</option>
+	<option>Soul jazz</option>
+	<option>Soul music</option>
+	<option>Sound poetry</option>
+	<option>Soundtrack</option>
+	<option>Southern Gospel</option>
+	<option>Southern Gothic music</option>
+	<option>Southern Harmony</option>
+	<option>Southern hip hop</option>
+	<option>Southern metal</option>
+	<option>Southern rock</option>
+	<option>Southern soul</option>
+	<option>Sovietwave</option>
+	<option>Space age pop</option>
+	<option>Space disco</option>
+	<option>Space music</option>
+	<option>Space rock</option>
+	<option>Spectralism</option>
+	<option>Speedcore</option>
+	<option>Speed garage</option>
+	<option>Speed metal</option>
+	<option>Spirituals</option>
+	<option>Spoken word</option>
+	<option>Spouge</option>
+	<option>Sprechgesang</option>
+	<option>Square dance</option>
+	<option>Sri Lankan hip-hop</option>
+	<option>St. Louis blues</option>
+	<option>Steelband</option>
+	<option>Stenchcore</option>
+	<option>Stoner metal</option>
+	<option>Stoner rock</option>
+	<option>Straight edge music</option>
+	<option>Strathspey</option>
+	<option>Stride</option>
+	<option>String music</option>
+	<option>String quartet</option>
+	<option>Sufi music</option>
+	<option>Suite</option>
+	<option>Sunshine pop</option>
+	<option>Suomirock</option>
+	<option>Super Eurobeat</option>
+	<option>Surf music</option>
+	<option>Swamp blues</option>
+	<option>Swamp pop</option>
+	<option>Swamp rock</option>
+	<option>Swing</option>
+	<option>Swing music</option>
+	<option>Sygyt</option>
+	<option>Symphonic black metal</option>
+	<option>Symphonic metal</option>
+	<option>Symphonic poem</option>
+	<option>Symphonic rock</option>
+	<option>Symphony</option>
+	<option>Synth-pop</option>
+	<option>Synth-punk</option>
+	<option>Synthwave</option>
+	<option>Syrian chant</option>
+	<option>Taarab</option>
+	<option>Tai tu</option>
+	<option>Taiwanese opera</option>
+	<option>Taiwanese pop</option>
+	<option>Tala</option>
+	<option>Talempong</option>
+	<option>Talking blues</option>
+	<option>Tamborito</option>
+	<option>Tambu</option>
+	<option>Tamburitza</option>
+	<option>Tamil Christian keerthanai</option>
+	<option>Táncház</option>
+	<option>Tango music</option>
+	<option>Tanguk</option>
+	<option>Tappa</option>
+	<option>Taqwacore</option>
+	<option>Tarana</option>
+	<option>Tarantella</option>
+	<option>Tarantas</option>
+	<option>Tech house</option>
+	<option>Tech trance</option>
+	<option>Technical death metal</option>
+	<option>Technical metal</option>
+	<option>Techno</option>
+	<option>Technoid</option>
+	<option>Techstep</option>
+	<option>Techtonik</option>
+	<option>Tecno brega</option>
+	<option>Teen pop</option>
+	<option>Tejano music or "Tex-Mex"</option>
+	<option>Tembang sunda</option>
+	<option>Texas blues</option>
+	<option>Theatre music</option>
+	<option>Theme music</option>
+	<option>Thillana</option>
+	<option>Third Stream</option>
+	<option>Third wave ska.</option>
+	<option>Thirty-two-bar form.</option>
+	<option>Thrashcore.</option>
+	<option>Thrash metal</option>
+	<option>Thumri</option>
+	<option>Tibetan pop</option>
+	<option>Tientos</option>
+	<option>Timbila</option>
+	<option>Tin Pan Alley</option>
+	<option>Tinku</option>
+	<option>Toeshey</option>
+	<option>Togaku.</option>
+	<option>Tondero</option>
+	<option>T'ong guitar</option>
+	<option>Traditional bluegrass</option>
+	<option>Traditional Nordic dance music</option>
+	<option>Traditional pop</option>
+	<option>Trallalero</option>
+	<option>Trance music</option>
+	<option>Trap metal</option>
+	<option>Trap music (EDM)</option>
+	<option>Trap music (hip hop)</option>
+	<option>Tread rap</option>
+	<option>Tribal house</option>
+	<option>Trival</option>
+	<option>Trikitixa</option>
+	<option>Trip hop</option>
+	<option>Tropicalia</option>
+	<option>Tropical music</option>
+	<option>Tropical house</option>
+	<option>Tropipop</option>
+	<option>Truck-driving country</option>
+	<option>Tumba</option>
+	<option>Turbo-folk</option>
+	<option>Turntablism</option>
+	<option>Tuvan throat-singing</option>
+	<option>Twee pop</option>
+	<option>Twelve-bar blues</option>
+	<option>Twist (also a dance style, early 1960s)</option>
+	<option>Two-tone (usually spelled 2 Tone)</option>
+	<option>UK bass</option>
+	<option>UK drill</option>
+	<option>UK garage</option>
+	<option>UK hardcore</option>
+	<option>UK hard house</option>
+	<option>UK rap</option>
+	<option>Unblack metal</option>
+	<option>Underground music</option>
+	<option>Uplifting trance.</option>
+	<option>Urban contemporary music</option>
+	<option>Urban Cowboy</option>
+	<option>Urban Pasifika</option>
+	<option>Vallenato</option>
+	<option>Vaporwave</option>
+	<option>Vaudeville</option>
+	<option>Verbunkos</option>
+	<option>Verismo</option>
+	<option>Video game music</option>
+	<option>Viking metal</option>
+	<option>Villanella</option>
+	<option>Virelais</option>
+	<option>Visual kei</option>
+	<option>Visual music</option>
+	<option>Vocal house</option>
+	<option>Vocal jazz</option>
+	<option>Vocal music</option>
+	<option>Vocaloid</option>
+	<option>Volksmusik</option>
+	<option>Waiata</option>
+	<option>Waila (chicken scratch)</option>
+	<option>Walking bass</option>
+	<option>Wall of Sound</option>
+	<option>Waltz</option>
+	<option>Wangga</option>
+	<option>Warabe uta</option>
+	<option>Wassoulou music</option>
+	<option>War song</option>
+	<option>Waulking song</option>
+	<option>Were music</option>
+	<option>West Coast blues</option>
+	<option>West Coast hip hop</option>
+	<option>West Coast jazz</option>
+	<option>Western blues</option>
+	<option>Western swing</option>
+	<option>Witch house</option>
+	<option>Wizard rock</option>
+	<option>Women's music or womyn's music, wimmin's music</option>
+	<option>Wong shadow</option>
+	<option>Wonky</option>
+	<option>Work song</option>
+	<option>Worldbeat</option>
+	<option>World music</option>
+	<option>Wu-tang</option>
+	<option>Xenomania</option>
+	<option>Xoomii</option>
+	<option>Xote</option>
+	<option>Xhosa music</option>
+	<option>Xylophonecore</option>
+	<option>Yass</option>
+	<option>Yayue</option>
+	<option>Yé-yé</option>
+	<option>Yo-pop</option>
+	<option>Yodeling</option>
+	<option>Youth crew</option>
+	<option>Yukar</option>
+	<option>Zajal</option>
+	<option>Zamacueca</option>
+	<option>Zamba</option>
+	<option>Zamrock</option>
+	<option>Zapin</option>
+	<option>Zarzuela</option>
+	<option>Zeuhl</option>
+	<option>Zeibekiko</option>
+	<option>Zef</option>
+	<option>Ziglibithy</option>
+	<option>Znamenny chant</option>
+	<option>Zouglou</option>
+	<option>Zouk</option>
+	<option>Zouk Love</option>
+	<option>Zulu music</option>
+	<option>Zydeco</option>
+	</select><br/>
+	<br/>
+</li>
+
+<li id="qporn" hidden>
+	<b>No for real, what is your favorite music genre?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Earrape is not a music genre.
+	</details></small>
+	<select form="form" name="pgenre">
+	<option></option>
+	<option>les films en crypté sur canal +</option>
+	<option>magazines du haut des présentoirs du tabac presse</option>
+	<option>gonzo</option>
+	<option>camgirls</option>
+	<option>exhib</option>
+	<option>interracial</option>
+	<option>porno chic</option>
+	<option>hentais</option>
+	<option>erocosplays de personnages d'anime</option>
+	<option>Oh bah tu sais... un peu de tout</option>
+	</select><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>What is the gender you get gendered as by the people arround you who are unknowing of your gender identity?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Also known as gender expression.
+	</details></small>
+	<label><input form="form" type="radio" name="genex" value="0"/>I</label><br/>
+	<label><input form="form" type="radio" name="genex" value="1"/>You</label><br/>
+	<label><input form="form" type="radio" name="genex" value="2"/>He/She</label><br/>
+	<label><input form="form" type="radio" name="genex" value="3"/>We</label><br/>
+	<label><input form="form" type="radio" name="genex" value="4"/>Y'all</label><br/>
+	<label><input form="form" type="radio" name="genex" value="5"/>They</label><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>What is the result of 6 &divide; 2(1+2)?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Basic math is a basic skill that should be had by everyone human plus you.
+	</details></small>
+	<label><input form="form" type="radio" name="meth" value="0"/>-1/12</label><br/>
+	<label><input form="form" type="radio" name="meth" value="1"/>1</label><br/>
+	<label><input form="form" type="radio" name="meth" value="2"/>5</label><br/>
+	<label><input form="form" type="radio" name="meth" value="3"/>9</label><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>What's your name?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	My name is LGBTQIA+ identity/existential crisis quizz. I feel like at this point we should get to know each other. We'll be here for a bit.
+	</details></small>
+	<input form="form" type="number" name="name" placeholder="John Doe" min="0" max="65535" title="You can only use number keys while this field is focused; no letters, no backspace, no delete, no ctrl+r" onkeydown="ensurenumeric(event)"/><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>A man walks into a bar, you are in the bar, do you enter the man or does he enter you? Pick two.</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Suppose that every day, ten men go out for beer and the bill for all ten comes to $100.
+	If they paid their bill the way we pay our taxes, it would go something like this:<br/>
+	<ul>
+	<li>The first four men (the poorest) would pay nothing.</li>
+	<li>The fifth would pay $1.</li>
+	<li>The sixth would pay $3.</li>
+	<li>The seventh would pay $7.</li>
+	<li>The eighth would pay $12.</li>
+	<li>The ninth would pay $18.</li>
+	<li>The tenth man (the richest) would pay $59.</li>
+	</ul>
+	So, that's what they decided to do.<br/>
+	The ten men drank in the bar every day and seemed quite happy with the arrangement, until one day, the owner threw them a curve.
+	'Since you are all such good customers,' he said, 'I'm going to reduce the cost of your daily beer by $20.' Drinks for the ten now cost just $80.<br/>
+	The group still wanted to pay their bill the way we pay our taxes so the first four men were unaffected.
+	They would still drink for free.
+	But what about the other six men - the paying customers?
+	How could they divide the $20 windfall so that everyone would get his 'fair share?'<br/>
+	They realized that $20 divided by six is $3.33.
+	But if they subtracted that from everybody's share, then the fifth man and the sixth man would each end up being paid to drink their beer.<br/>
+	So, the bar owner suggested that it would be fair to reduce each man's bill by roughly the same amount, and he proceeded to work out the amounts each should pay.
+	And so:
+	<ul>
+	<li>The fifth man, like the first four, now paid nothing (100% savings).</li>
+	<li>The sixth now paid $2 instead of $3 (33% savings).</li>
+	<li>The seventh now paid $5 instead of $7 (28% savings).</li>
+	<li>The eighth now paid $9 instead of $12 (25% savings).</li>
+	<li>The ninth now paid $14 instead of $18 (22% savings).</li>
+	<li>The tenth now paid $49 instead of $59 (16% savings).</li>
+	</ul>
+	Each of the six was better off than before.
+	And the first four continued to drink for free.
+	But once outside the restaurant, the men began to compare their savings.<br/>
+	'I only got a dollar out of the $20,' declared the sixth man. He pointed to the tenth man, 'but he got $10!'<br/>
+	'Yeah, that's right,' exclaimed the fifth man. 'I only saved a dollar, too. It's unfair that he got ten times more than I got!'<br/>
+	'That's true!!' shouted the seventh man. 'Why should he get $10 back when I got only two? The wealthy get all the breaks!'<br/>
+	'Wait a minute,' yelled the first four men in unison. 'We didn't get anything at all. The system exploits the poor!'<br/>
+	The nine men surrounded the tenth and beat him up.
+	The next night the tenth man didn't show up for drinks so the nine sat down and had beers without him.
+	But when it came time to pay the bill, they discovered something important.
+	They didn't have enough money between all of them for even half of the bill!<br/>
+	And that, ladies and gentlemen, politicians, journalists and think tank professors, is how our tax system works!!
+	The people who pay the highest taxes get the most benefit from a tax reduction.
+	Tax them too much, attack them for being wealthy, and they just may not show up anymore.
+	In fact, they might start drinking overseas where the atmosphere is somewhat friendlier.<br/>
+	If you want a free copy of this parable simply click the download button to the right.<br/>
+	The author of this quizz disagrees with this story.
+	Because the tenth man is dead, all other men got back the rent money they were paying and had enough to pay more than the whole group was paying before the murder.
+	</details></small>
+	<label><input form="form" type="checkbox" name="enterom"/>I enter the man if you know what I mean</label><br/>
+	<label><input form="form" type="checkbox" name="enteriw"/>The man enters me, no homo I'm a woman</label><br/>
+	<label><input form="form" type="checkbox" name="enterow"/>Does he like pegging? 'Cause I sure wish he does</label><br/>
+	<label><input form="form" type="checkbox" name="enterim"/>My backdoor is always gaping open</label><br/>
+	<label><input form="form" type="checkbox" name="entern"/>Eww sex... gross, that's paedophilia</label><br/>
+	<label><input form="form" type="checkbox" name="enterb"/>Only if there is enough space for Jesus between us, 3some4tw</label><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>A bar walks AH! a woman AH! are you into?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	The legend states that you shall be asked this question, now only god knows whether you answered.
+	</details></small>
+	<input form="form" type="color" name="absurd" onclick="absurdclick = true"/><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>What is</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Why do they call it oven when you of in the cold food of out hot eat the food.
+	</details></small>
+	<ul>
+	<li><label><b>love? baby don't hurt me, don't hurt me, no more</b><input form="form" type="radio" name="what" value="0"/></label></li>
+	<li><label><b>the answer to life the universe and everything? 42</b><input form="form" type="radio" name="what" value="1"/></label></li>
+	<li><label><b>been going on? We know the game and we're gonna play it</b><input form="form" type="radio" name="what" value="2" onclick="document.getElementById('qrroll').hidden = false"/></label></li>
+	<li><label><b>a mind goblin? mind goblin deeznuts</b><input form="form" type="radio" name="what" value="3"/></label></li>
+	</ul><br/>
+</li>
+
+<li id="qrroll" hidden>
+	<b>Click the link.</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I seeing this?</summary>
+	You know what you did.
+	</details></small>
+	<a href="https://youtu.be/XfELJU1mRMg" target="_blank" onclick="rrclick = true">You know where this link leads to, you cannot finish the quizz without clicking it.</a><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>Is loving Jesus as a man gay?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	As a statistically christian and statistically man, you gotta answer this fundamental question that determines whether you will go in hell.
+	</details></small>
+	<label><input form="form" type="radio" name="gayjesus" value="0"/>Yes</label><br/>
+	<label><input form="form" type="radio" name="gayjesus" value="1"/>No, it's bisexual</label><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>Classify the following concepts</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	To determine your LGBTQIA+ identity/existential crisis quizz. This is what all this is about, did you already forget?
+	</details></small>
+	<table>
+	<thead><tr><th></th><th>&nbsp;Masculine&nbsp;</th><th>&nbsp;Feminine&nbsp;</th><th>&nbsp;Leftwing&nbsp;</th><th>&nbsp;Rightwing&nbsp;</th></tr></thead>
+	<tbody>
+	<tr><td>Submissive</td>
+		<td><input form="form" type="radio" name="sub" value="0"/></td>
+		<td><input form="form" type="radio" name="sub" value="1"/></td>
+		<td><input form="form" type="radio" name="sub" value="2"/></td>
+		<td><input form="form" type="radio" name="sub" value="3"/></td>
+	</tr>
+	<tr><td>Wokism</td>
+		<td><input form="form" type="radio" name="woke" value="0"/></td>
+		<td><input form="form" type="radio" name="woke" value="1"/></td>
+		<td><input form="form" type="radio" name="woke" value="2"/></td>
+		<td><input form="form" type="radio" name="woke" value="3"/></td>
+	</tr>
+	<tr><td>Merguez</td>
+		<td><input form="form" type="radio" name="cgt" value="0"/></td>
+		<td><input form="form" type="radio" name="cgt" value="1"/></td>
+		<td><input form="form" type="radio" name="cgt" value="2"/></td>
+		<td><input form="form" type="radio" name="cgt" value="3"/></td>
+	</tr>
+	<tr><td>Climate change</td>
+		<td><input form="form" type="radio" name="cchg" value="0"/></td>
+		<td><input form="form" type="radio" name="cchg" value="1"/></td>
+		<td><input form="form" type="radio" name="cchg" value="2"/></td>
+		<td><input form="form" type="radio" name="cchg" value="3"/></td>
+	</tr>
+	<tr><td>Science</td>
+		<td><input form="form" type="radio" name="sci" value="0"/></td>
+		<td><input form="form" type="radio" name="sci" value="1"/></td>
+		<td><input form="form" type="radio" name="sci" value="2"/></td>
+		<td><input form="form" type="radio" name="sci" value="3"/></td>
+	</tr>
+	<tr><td>Money</td>
+		<td><input form="form" type="radio" name="money" value="0"/></td>
+		<td><input form="form" type="radio" name="money" value="1"/></td>
+		<td><input form="form" type="radio" name="money" value="2"/></td>
+		<td><input form="form" type="radio" name="money" value="3"/></td>
+	</tr>
+	<tr><td>Feet</td>
+		<td><input form="form" type="radio" name="feet" value="0"/></td>
+		<td><input form="form" type="radio" name="feet" value="1"/></td>
+		<td><input form="form" type="radio" name="feet" value="2"/></td>
+		<td><input form="form" type="radio" name="feet" value="3"/></td>
+	</tr>
+	<tr><td>Security</td>
+		<td><input form="form" type="radio" name="secu" value="0"/></td>
+		<td><input form="form" type="radio" name="secu" value="1"/></td>
+		<td><input form="form" type="radio" name="secu" value="2"/></td>
+		<td><input form="form" type="radio" name="secu" value="3"/></td>
+	</tr>
+	<tr><td>Cake</td>
+		<td><input form="form" type="radio" name="cake" value="0"/></td>
+		<td><input form="form" type="radio" name="cake" value="1"/></td>
+		<td><input form="form" type="radio" name="cake" value="2"/></td>
+		<td><input form="form" type="radio" name="cake" value="3"/></td>
+	</tr>
+	<tr><td>Proselytism</td>
+		<td><input form="form" type="radio" name="prosel" value="0"/></td>
+		<td><input form="form" type="radio" name="prosel" value="1"/></td>
+		<td><input form="form" type="radio" name="prosel" value="2"/></td>
+		<td><input form="form" type="radio" name="prosel" value="3"/></td>
+	</tr>
+	<tr><td>Music</td>
+		<td><input form="form" type="radio" name="music" value="0"/></td>
+		<td><input form="form" type="radio" name="music" value="1"/></td>
+		<td><input form="form" type="radio" name="music" value="2"/></td>
+		<td><input form="form" type="radio" name="music" value="3"/></td>
+	</tr>
+	<tr><td>Sex</td>
+		<td><input form="form" type="radio" name="sexclass" value="0"/></td>
+		<td><input form="form" type="radio" name="sexclass" value="1"/></td>
+		<td><input form="form" type="radio" name="sexclass" value="2"/></td>
+		<td><input form="form" type="radio" name="sexclass" value="3"/></td>
+	</tr>
+	<tr><td>USB-C</td>
+		<td><input form="form" type="radio" name="usbc" value="0"/></td>
+		<td><input form="form" type="radio" name="usbc" value="1"/></td>
+		<td><input form="form" type="radio" name="usbc" value="2"/></td>
+		<td><input form="form" type="radio" name="usbc" value="3"/></td>
+	</tr>
+	<tr><td>Kitchen</td>
+		<td><input form="form" type="radio" name="kitch" value="0"/></td>
+		<td><input form="form" type="radio" name="kitch" value="1"/></td>
+		<td><input form="form" type="radio" name="kitch" value="2"/></td>
+		<td><input form="form" type="radio" name="kitch" value="3"/></td>
+	</tr>
+	<tr><td>Soaking</td>
+		<td><input form="form" type="radio" name="soak" value="0"/></td>
+		<td><input form="form" type="radio" name="soak" value="1"/></td>
+		<td><input form="form" type="radio" name="soak" value="2"/></td>
+		<td><input form="form" type="radio" name="soak" value="3"/></td>
+	</tr>
+	<tr><td>Sounding</td>
+		<td><input form="form" type="radio" name="sounding" value="0"/></td>
+		<td><input form="form" type="radio" name="sounding" value="1"/></td>
+		<td><input form="form" type="radio" name="sounding" value="2"/></td>
+		<td><input form="form" type="radio" name="sounding" value="3"/></td>
+	</tr>
+	<tr><td>LSD</td>
+		<td><input form="form" type="radio" name="lsd" value="0"/></td>
+		<td><input form="form" type="radio" name="lsd" value="1"/></td>
+		<td><input form="form" type="radio" name="lsd" value="2"/></td>
+		<td><input form="form" type="radio" name="lsd" value="3"/></td>
+	</tr>
+	<tr><td>Authority</td>
+		<td><input form="form" type="radio" name="authority" value="0"/></td>
+		<td><input form="form" type="radio" name="authority" value="1"/></td>
+		<td><input form="form" type="radio" name="authority" value="2"/></td>
+		<td><input form="form" type="radio" name="authority" value="3"/></td>
+	</tr>
+	<tr><td>Nurture</td>
+		<td><input form="form" type="radio" name="nurture" value="0"/></td>
+		<td><input form="form" type="radio" name="nurture" value="1"/></td>
+		<td><input form="form" type="radio" name="nurture" value="2"/></td>
+		<td><input form="form" type="radio" name="nurture" value="3"/></td>
+	</tr>
+	<tr><td>Nature</td>
+		<td><input form="form" type="radio" name="nature" value="0"/></td>
+		<td><input form="form" type="radio" name="nature" value="1"/></td>
+		<td><input form="form" type="radio" name="nature" value="2"/></td>
+		<td><input form="form" type="radio" name="nature" value="3"/></td>
+	</tr>
+	<tr><td>Communication</td>
+		<td><input form="form" type="radio" name="comm" value="0"/></td>
+		<td><input form="form" type="radio" name="comm" value="1"/></td>
+		<td><input form="form" type="radio" name="comm" value="2"/></td>
+		<td><input form="form" type="radio" name="comm" value="3"/></td>
+	</tr>
+	<tr><td>Self-confidence</td>
+		<td><input form="form" type="radio" name="selfcon" value="0"/></td>
+		<td><input form="form" type="radio" name="selfcon" value="1"/></td>
+		<td><input form="form" type="radio" name="selfcon" value="2"/></td>
+		<td><input form="form" type="radio" name="selfcon" value="3"/></td>
+	</tr>
+	<tr><td>Empathy</td>
+		<td><input form="form" type="radio" name="empath" value="0"/></td>
+		<td><input form="form" type="radio" name="empath" value="1"/></td>
+		<td><input form="form" type="radio" name="empath" value="2"/></td>
+		<td><input form="form" type="radio" name="empath" value="3"/></td>
+	</tr>
+	<tr><td>Charisma</td>
+		<td><input form="form" type="radio" name="charisma" value="0"/></td>
+		<td><input form="form" type="radio" name="charisma" value="1"/></td>
+		<td><input form="form" type="radio" name="charisma" value="2"/></td>
+		<td><input form="form" type="radio" name="charisma" value="3"/></td>
+	</tr>
+	<tr><td>Team spirit</td>
+		<td><input form="form" type="radio" name="teenspirit" value="0"/></td>
+		<td><input form="form" type="radio" name="teenspirit" value="1"/></td>
+		<td><input form="form" type="radio" name="teenspirit" value="2"/></td>
+		<td><input form="form" type="radio" name="teenspirit" value="3"/></td>
+	</tr>
+	<tr><td>Intelligence</td>
+		<td><input form="form" type="radio" name="intel" value="0"/></td>
+		<td><input form="form" type="radio" name="intel" value="1"/></td>
+		<td><input form="form" type="radio" name="intel" value="2"/></td>
+		<td><input form="form" type="radio" name="intel" value="3"/></td>
+	</tr>
+	</tbody>
+	</table>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>How much do you agree with the follwing statements</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Queer identities are often associated with other oppressions.
+	</details></small>
+	<table>
+	<thead><tr><th></th><th>&nbsp;Strongly agree&nbsp;</th><th>&nbsp;Slightly agree&nbsp;</th><th>&nbsp;Neutral&nbsp;</th><th>&nbsp;Slightly disagree&nbsp;</th><th>&nbsp;Strongly disagree&nbsp;</th></tr></thead>
+	<tbody>
+	<tr><td>I feel tingly when I see sports cars</td>
+		<td><input form="form" type="radio" name="stra" value="0"/></td>
+		<td><input form="form" type="radio" name="slia" value="0"/></td>
+		<td><input form="form" type="radio" name="neut" value="0"/></td>
+		<td><input form="form" type="radio" name="slid" value="0"/></td>
+		<td><input form="form" type="radio" name="strd" value="0"/></td>
+	</tr>
+	<tr><td>I wonder what a cucumber feels like</td>
+		<td><input form="form" type="radio" name="stra" value="1"/></td>
+		<td><input form="form" type="radio" name="slia" value="1"/></td>
+		<td><input form="form" type="radio" name="neut" value="1"/></td>
+		<td><input form="form" type="radio" name="slid" value="1"/></td>
+		<td><input form="form" type="radio" name="strd" value="1"/></td>
+	</tr>
+	<tr><td>I feel for horses</td>
+		<td><input form="form" type="radio" name="stra" value="2"/></td>
+		<td><input form="form" type="radio" name="slia" value="2"/></td>
+		<td><input form="form" type="radio" name="neut" value="2"/></td>
+		<td><input form="form" type="radio" name="slid" value="2"/></td>
+		<td><input form="form" type="radio" name="strd" value="2"/></td>
+	</tr>
+	<tr><td>Children are begging me with their eyes</td>
+		<td><input form="form" type="radio" name="stra" value="3"/></td>
+		<td><input form="form" type="radio" name="slia" value="3"/></td>
+		<td><input form="form" type="radio" name="neut" value="3"/></td>
+		<td><input form="form" type="radio" name="slid" value="3"/></td>
+		<td><input form="form" type="radio" name="strd" value="3"/></td>
+	</tr>
+	<tr><td>I hit on my close family</td>
+		<td><input form="form" type="radio" name="stra" value="4"/></td>
+		<td><input form="form" type="radio" name="slia" value="4"/></td>
+		<td><input form="form" type="radio" name="neut" value="4"/></td>
+		<td><input form="form" type="radio" name="slid" value="4"/></td>
+		<td><input form="form" type="radio" name="strd" value="4"/></td>
+	</tr>
+	<tr><td>Please hit me with your martinet</td>
+		<td><input form="form" type="radio" name="stra" value="5"/></td>
+		<td><input form="form" type="radio" name="slia" value="5"/></td>
+		<td><input form="form" type="radio" name="neut" value="5"/></td>
+		<td><input form="form" type="radio" name="slid" value="5"/></td>
+		<td><input form="form" type="radio" name="strd" value="5"/></td>
+	</tr>
+	<tr><td>Diapers feel nice</td>
+		<td><input form="form" type="radio" name="stra" value="6"/></td>
+		<td><input form="form" type="radio" name="slia" value="6"/></td>
+		<td><input form="form" type="radio" name="neut" value="6"/></td>
+		<td><input form="form" type="radio" name="slid" value="6"/></td>
+		<td><input form="form" type="radio" name="strd" value="6"/></td>
+	</tr>
+	<tr><td>I prefer using backdoors</td>
+		<td><input form="form" type="radio" name="stra" value="7"/></td>
+		<td><input form="form" type="radio" name="slia" value="7"/></td>
+		<td><input form="form" type="radio" name="neut" value="7"/></td>
+		<td><input form="form" type="radio" name="slid" value="7"/></td>
+		<td><input form="form" type="radio" name="strd" value="7"/></td>
+	</tr>
+	<tr><td>The more the merrier</td>
+		<td><input form="form" type="radio" name="stra" value="8"/></td>
+		<td><input form="form" type="radio" name="slia" value="8"/></td>
+		<td><input form="form" type="radio" name="neut" value="8"/></td>
+		<td><input form="form" type="radio" name="slid" value="8"/></td>
+		<td><input form="form" type="radio" name="strd" value="8"/></td>
+	</tr>
+	<tr><td>I like sitting in chairs</td>
+		<td><input form="form" type="radio" name="stra" value="9"/></td>
+		<td><input form="form" type="radio" name="slia" value="9"/></td>
+		<td><input form="form" type="radio" name="neut" value="9"/></td>
+		<td><input form="form" type="radio" name="slid" value="9"/></td>
+		<td><input form="form" type="radio" name="strd" value="9"/></td>
+	</tr>
+	<tr><td>The potential of being caught adds excitment</td>
+		<td><input form="form" type="radio" name="stra" value="10"/></td>
+		<td><input form="form" type="radio" name="slia" value="10"/></td>
+		<td><input form="form" type="radio" name="neut" value="10"/></td>
+		<td><input form="form" type="radio" name="slid" value="10"/></td>
+		<td><input form="form" type="radio" name="strd" value="10"/></td>
+	</tr>
+	<tr><td>Some body parts are really important</td>
+		<td><input form="form" type="radio" name="stra" value="11"/></td>
+		<td><input form="form" type="radio" name="slia" value="11"/></td>
+		<td><input form="form" type="radio" name="neut" value="11"/></td>
+		<td><input form="form" type="radio" name="slid" value="11"/></td>
+		<td><input form="form" type="radio" name="strd" value="11"/></td>
+	</tr>
+	<tr><td>I have good chemestry with people far from my age group</td>
+		<td><input form="form" type="radio" name="stra" value="12"/></td>
+		<td><input form="form" type="radio" name="slia" value="12"/></td>
+		<td><input form="form" type="radio" name="neut" value="12"/></td>
+		<td><input form="form" type="radio" name="slid" value="12"/></td>
+		<td><input form="form" type="radio" name="strd" value="12"/></td>
+	</tr>
+	<tr><td>I get off by paying in rent half of the minimal wage I am given by my corporate overlord who earns 50 times more money than me</td>
+		<td><input form="form" type="radio" name="stra" value="13"/></td>
+		<td><input form="form" type="radio" name="slia" value="13"/></td>
+		<td><input form="form" type="radio" name="neut" value="13"/></td>
+		<td><input form="form" type="radio" name="slid" value="13"/></td>
+		<td><input form="form" type="radio" name="strd" value="13"/></td>
+	</tr>
+	<tr><td>I wear a chocker</td>
+		<td><input form="form" type="radio" name="stra" value="14"/></td>
+		<td><input form="form" type="radio" name="slia" value="14"/></td>
+		<td><input form="form" type="radio" name="neut" value="14"/></td>
+		<td><input form="form" type="radio" name="slid" value="14"/></td>
+		<td><input form="form" type="radio" name="strd" value="14"/></td>
+	</tr>
+	<tr><td>My animalistic instincts are strong</td>
+		<td><input form="form" type="radio" name="stra" value="15"/></td>
+		<td><input form="form" type="radio" name="slia" value="15"/></td>
+		<td><input form="form" type="radio" name="neut" value="15"/></td>
+		<td><input form="form" type="radio" name="slid" value="15"/></td>
+		<td><input form="form" type="radio" name="strd" value="15"/></td>
+	</tr>
+	<tr><td>I hate genitalias</td>
+		<td><input form="form" type="radio" name="stra" value="16"/></td>
+		<td><input form="form" type="radio" name="slia" value="16"/></td>
+		<td><input form="form" type="radio" name="neut" value="16"/></td>
+		<td><input form="form" type="radio" name="slid" value="16"/></td>
+		<td><input form="form" type="radio" name="strd" value="16"/></td>
+	</tr>
+	<tr><td>Race is real</td>
+		<td><input form="form" type="radio" name="stra" value="17"/></td>
+		<td><input form="form" type="radio" name="slia" value="17"/></td>
+		<td><input form="form" type="radio" name="neut" value="17"/></td>
+		<td><input form="form" type="radio" name="slid" value="17"/></td>
+		<td><input form="form" type="radio" name="strd" value="17"/></td>
+	</tr>
+	<tr><td>I own candles</td>
+		<td><input form="form" type="radio" name="stra" value="18"/></td>
+		<td><input form="form" type="radio" name="slia" value="18"/></td>
+		<td><input form="form" type="radio" name="neut" value="18"/></td>
+		<td><input form="form" type="radio" name="slid" value="18"/></td>
+		<td><input form="form" type="radio" name="strd" value="18"/></td>
+	</tr>
+	<tr><td>Procreation is the goal of humanity</td>
+		<td><input form="form" type="radio" name="stra" value="19"/></td>
+		<td><input form="form" type="radio" name="slia" value="19"/></td>
+		<td><input form="form" type="radio" name="neut" value="19"/></td>
+		<td><input form="form" type="radio" name="slid" value="19"/></td>
+		<td><input form="form" type="radio" name="strd" value="19"/></td>
+	</tr>
+	<tr><td>The goal is the friends we made along the way</td>
+		<td><input form="form" type="radio" name="stra" value="20"/></td>
+		<td><input form="form" type="radio" name="slia" value="20"/></td>
+		<td><input form="form" type="radio" name="neut" value="20"/></td>
+		<td><input form="form" type="radio" name="slid" value="20"/></td>
+		<td><input form="form" type="radio" name="strd" value="20"/></td>
+	</tr>
+	<tr><td>Secretions are disgusting</td>
+		<td><input form="form" type="radio" name="stra" value="21"/></td>
+		<td><input form="form" type="radio" name="slia" value="21"/></td>
+		<td><input form="form" type="radio" name="neut" value="21"/></td>
+		<td><input form="form" type="radio" name="slid" value="21"/></td>
+		<td><input form="form" type="radio" name="strd" value="21"/></td>
+	</tr>
+	<tr><td>I like watersports</td>
+		<td><input form="form" type="radio" name="stra" value="22"/></td>
+		<td><input form="form" type="radio" name="slia" value="22"/></td>
+		<td><input form="form" type="radio" name="neut" value="22"/></td>
+		<td><input form="form" type="radio" name="slid" value="22"/></td>
+		<td><input form="form" type="radio" name="strd" value="22"/></td>
+	</tr>
+	<tr><td>I need people to tell me what to do</td>
+		<td><input form="form" type="radio" name="stra" value="23" onclick="document.getElementById('qnono').hidden = false"/></td>
+		<td><input form="form" type="radio" name="slia" value="23"/></td>
+		<td><input form="form" type="radio" name="neut" value="23"/></td>
+		<td><input form="form" type="radio" name="slid" value="23"/></td>
+		<td><input form="form" type="radio" name="strd" value="23"/></td>
+	</tr>
+	</tbody>
+	</table>
+	<br/>
+</li>
+
+<li id="qnono" hidden>
+	<b>Do this nonogram</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	You like to be told what to do. So this is not a question, do it.
+	</details></small>
+	<table>
+	<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>3</td><td></td><td>2</td></tr>
+	<tr><td></td><td></td><td></td><td>3</td><td>3</td><td>3</td><td>0</td><td>3</td><td>1</td><td>1</td></tr>
+	<tr><td></td><td>1</td><td>1</td><td><input form="form" type="checkbox" id="loss00"/></td><td><input form="form" type="checkbox" id="loss01"/></td><td><input form="form" type="checkbox" id="loss02"/></td><td><input form="form" type="checkbox" id="loss03"/></td><td><input form="form" type="checkbox" id="loss04"/></td><td><input form="form" type="checkbox" id="loss05"/></td><td><input form="form" type="checkbox" id="loss06"/></td></tr>
+	<tr><td>1</td><td>1</td><td>1</td><td><input form="form" type="checkbox" id="loss10"/></td><td><input form="form" type="checkbox" id="loss11"/></td><td><input form="form" type="checkbox" id="loss12"/></td><td><input form="form" type="checkbox" id="loss13"/></td><td><input form="form" type="checkbox" id="loss14"/></td><td><input form="form" type="checkbox" id="loss15"/></td><td><input form="form" type="checkbox" id="loss16"/></td></tr>
+	<tr><td>1</td><td>1</td><td>1</td><td><input form="form" type="checkbox" id="loss20"/></td><td><input form="form" type="checkbox" id="loss21"/></td><td><input form="form" type="checkbox" id="loss22"/></td><td><input form="form" type="checkbox" id="loss23"/></td><td><input form="form" type="checkbox" id="loss24"/></td><td><input form="form" type="checkbox" id="loss25"/></td><td><input form="form" type="checkbox" id="loss26"/></td></tr>
+	<tr><td></td><td></td><td>0</td><td><input form="form" type="checkbox" id="loss30"/></td><td><input form="form" type="checkbox" id="loss31"/></td><td><input form="form" type="checkbox" id="loss32"/></td><td><input form="form" type="checkbox" id="loss33"/></td><td><input form="form" type="checkbox" id="loss34"/></td><td><input form="form" type="checkbox" id="loss35"/></td><td><input form="form" type="checkbox" id="loss36"/></td></tr>
+	<tr><td>1</td><td>1</td><td>1</td><td><input form="form" type="checkbox" id="loss40"/></td><td><input form="form" type="checkbox" id="loss41"/></td><td><input form="form" type="checkbox" id="loss42"/></td><td><input form="form" type="checkbox" id="loss43"/></td><td><input form="form" type="checkbox" id="loss44"/></td><td><input form="form" type="checkbox" id="loss45"/></td><td><input form="form" type="checkbox" id="loss46"/></td></tr>
+	<tr><td>1</td><td>1</td><td>1</td><td><input form="form" type="checkbox" id="loss50"/></td><td><input form="form" type="checkbox" id="loss51"/></td><td><input form="form" type="checkbox" id="loss52"/></td><td><input form="form" type="checkbox" id="loss53"/></td><td><input form="form" type="checkbox" id="loss54"/></td><td><input form="form" type="checkbox" id="loss55"/></td><td><input form="form" type="checkbox" id="loss56"/></td></tr>
+	<tr><td>1</td><td>1</td><td>3</td><td><input form="form" type="checkbox" id="loss60"/></td><td><input form="form" type="checkbox" id="loss61"/></td><td><input form="form" type="checkbox" id="loss62"/></td><td><input form="form" type="checkbox" id="loss63"/></td><td><input form="form" type="checkbox" id="loss64"/></td><td><input form="form" type="checkbox" id="loss65"/></td><td><input form="form" type="checkbox" id="loss66"/></td></tr>
+	</table>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>What's your sex value?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	There is a distinction between sex and gender. First they are not the same word. Second their meaning is different. Third why are you asking, are you a cop?
+	</details></small>
+	<input form="form" type="range" name="sex" min="-128" max="127" onclick="sexclick = true" onchange="event.target.setAttribute('title', event.target.value)"/><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>What's your hobby?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Hobbies tend to be strictly gendered. Using novel technology in AI image recognition we can determine your gender based on your hubby.
+	</details></small>
+	<label for="hobby" id="lobby">Select your hobby in the list:</label><br/>
+	<input form="form" type="file" id="hobby" onchange="document.getElementById('lobby').innerText = 'Namek destruction in progress, please wait 5 minutes'"/><br/>
+	<br/>
+</li>
+
+<!-- TODO: names -->
+<li class="qmain" hidden>
+	<b>Watch and rate (out of 10) the following animes:</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Your taste in anime is invalid, this is just to prove this point.
+	</details></small>
+	<label>One Piece <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Land of the Lustrous <input form="form" type="number" onkeydown="event.preventDefault()" min="10" max="10"/></label><br/>
+	<label>Redo of Healer <input form="form" type="number" onkeydown="event.preventDefault()" max="10" step="0.000000001"/></label><br/>
+	<label>My Little Poney <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10" onchange="brownie(this)"/></label><br/>
+	<label>Call of the Night <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>2 girls 1 cup <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="0"/></label><br/>
+	<label>Koisenu Futari <input form="form" type="number" onkeydown="event.preventDefault()" min="5" max="10"/></label><br/>
+	<label>Maria Holic <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="5"/></label><br/>
+	<label>Moriyama Mariko <input form="form" type="number" onkeydown="event.preventDefault()" min="312113" max="312113"/></label><br/>
+	<label>Stop!! Hibari-kun! <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Ranma 1/2 <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10" step="0.5"/></label><br/>
+	<label>My Isekai Life <input form="form" type="number" onkeydown="event.preventDefault()" min="-20" max="-10"/></label><br/>
+	<label>Princess Jellyfish <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Ouran High School Host Club <input form="form" type="number" onkeydown="event.preventDefault()" min="3" max="7"/></label><br/>
+	<label>Peter Grill & The Philosopher's Time <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="2"/></label><br/>
+	<label>Senpai is an Otokonoko <input form="form" type="number" onkeydown="event.preventDefault()" min="8" max="8"/></label><br/>
+	<label>Kampfer <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Iya na Kao sare nagara Kozukuri sasete Moraitai <input form="form" type="number" onkeydown="event.preventDefault()" onchange="makeastep(this)"/></label><br/>
+	<label>Wandering Son <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="8"/></label><br/>
+	<label>Cheeky Angel <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Interspecies Reviewers <input form="form" type="number" onkeydown="event.preventDefault()" min="9" max="11"/></label><br/>
+	<label>Koe de Oshigoto! <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Yamada's First Time: B Gata H Kei <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Why the hell are you here, Teacher!? <input form="form" type="number" onkeydown="event.preventDefault()" min="10" max="20"/></label><br/>
+	<label>Ao-chan Can't Study! <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Onii-chan is done for <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Miru Tights <input form="form" type="number" onkeydown="event.preventDefault()" min="-1" max="0"/></label><br/>
+	<label>Looking up to Magical Girls <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<br/>
+</li>
+
+<li id="qfurry" hidden>
+	<b>Do you own a fursuit?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	C'mon, I know you do.
+	</details></small>
+	<div id="dlie1" hidden><label><input form="form" type="checkbox" id="lie1"/>I will tell the truth</label></div>
+	<div id="dlie2" hidden><label><input form="form" type="checkbox" id="lie2"/>I am telling the truth</label></div>
+	<div id="dlie3" hidden><label><input form="form" type="checkbox" id="lie3"/>I certify the truth of my statements</label></div>
+	<div id="dlie4" hidden><label><input form="form" type="checkbox" id="lie4"/>I am absolutely confident in my answer</label></div>
+	<div id="dlie5" hidden><label><input form="form" type="checkbox" id="lie5"/>Inshallah</label></div>
+	<div id="dlie6" hidden><label><input form="form" type="checkbox" id="lie6"/>I acknowledge that lying exposes me to legal pursuits</label></div>
+	<div id="dlie7" hidden><label><input form="form" type="checkbox" id="lie7"/>I am fully responsible of my choices</label></div>
+	<div id="dlie8" hidden><label><input form="form" type="checkbox" id="lie8"/>I vouch for the truth of the below declaration</label></div>
+	<label><input form="form" type="radio" name="fur" value="0" onclick="truth()"/>Yes, I do</label><br/>
+	<label><input form="form" type="radio" name="fur" value="1" onclick="lie(event)"/>No, I don't</label><br/>
+	<br/>
+</li>
+
+<li class="qmain" hidden>
+	<b>Write a 2000 words essay about all that is wrong with this quizz</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	Feedback is the most essential component of improvement. More important than taking feedback into consideration and reattempting to improve, so I won't do that.
+	</details></small>
+	<textarea form="form" id="essay" rows="8" cols="200"></textarea>
+	<br/>
+</li>
+
+</ol>
+
+<h2>Control panel</h2>
+<button onclick="computeres()">Submit</button> <button form="form" type="reset">Reset</button>
+
+<h2>Results</h2>
+<output id="result" form="form"></output>
+
+</body>
+</html>
