@@ -6,15 +6,15 @@
 <link rel="stylesheet" href="minimalism.css"/>
 <script type="text/javascript">
 	function start_quizz(ans) {
-		if (ans) document.getElementById("q0").setAttribute("hidden", "");
+		if (ans) document.getElementById("q0").hidden = true;
 		for (e of document.getElementsByClassName("qmain"))
-			e.removeAttribute("hidden");
+			e.hidden = false;
 	}
 	function pwnd() {
 		alert("Heh, you can't uncheck this and withdraw your consent. You got gotten got real good here.");
 	}
 	function faesth() {
-		document.getElementById("qaesth").removeAttribute("hidden");
+		document.getElementById("qaesth").hidden = false;
 	}
 	function ensurenumeric(ke) {
 		if (!(ke.key in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])) {
@@ -29,13 +29,13 @@
 		else clearTimeout(drowntimer);
 	}
 	function drown() {
-		document.getElementById("qdrown").removeAttribute("hidden");
+		document.getElementById("qdrown").hidden = false;
 	}
 	function mgenre(ev) {
 		if (ev.target.selectedIndex == 376)
-			document.getElementById("demisent").removeAttribute("hidden");
+			document.getElementById("demisent").hidden = false;
 		if (ev.target.selectedIndex == 423)
-			document.getElementById("qporn").removeAttribute("hidden");
+			document.getElementById("qporn").hidden = false;
 	}
 	function checksumm() {
 		let unfolded = true;
@@ -45,11 +45,11 @@
 				break;
 			}
 		}
-		if (unfolded) document.getElementById("qdetails").removeAttribute("hidden");
+		if (unfolded) document.getElementById("qdetails").hidden = false;
 	}
 	function brownie(ev) {
 		if (ev.target.value == "10")
-			document.getElementById("qfurry").removeAttribute("hidden");
+			document.getElementById("qfurry").hidden = false;
 	}
 	function makeastep(ev) {
 		event.target.outerHTML = "<input value='step on me daddy' disabled/>";
@@ -57,36 +57,38 @@
 	let lies = 0;
 	function truth(ev) {
 		lies = 0;
-		document.getElementById("dlie1").setAttribute("hidden", "");
+		document.getElementById("dlie1").hidden = true;
 		document.getElementById("lie1").checked = false;
-		document.getElementById("dlie2").setAttribute("hidden", "");
+		document.getElementById("dlie2").hidden = true;
 		document.getElementById("lie2").checked = false;
-		document.getElementById("dlie3").setAttribute("hidden", "");
+		document.getElementById("dlie3").hidden = true;
 		document.getElementById("lie3").checked = false;
-		document.getElementById("dlie4").setAttribute("hidden", "");
+		document.getElementById("dlie4").hidden = true;
 		document.getElementById("lie4").checked = false;
-		document.getElementById("dlie5").setAttribute("hidden", "");
+		document.getElementById("dlie5").hidden = true;
 		document.getElementById("lie5").checked = false;
-		document.getElementById("dlie6").setAttribute("hidden", "");
+		document.getElementById("dlie6").hidden = true;
 		document.getElementById("lie6").checked = false;
-		document.getElementById("dlie7").setAttribute("hidden", "");
+		document.getElementById("dlie7").hidden = true;
 		document.getElementById("lie7").checked = false;
-		document.getElementById("dlie8").setAttribute("hidden", "");
+		document.getElementById("dlie8").hidden = true;
 		document.getElementById("lie8").checked = false;
 	}
 	function lie(ev) {
 		if (lies == 0) {
 			lies += 1;
-			document.getElementById("dlie1").removeAttribute("hidden");
+			document.getElementById("dlie1").hidden = false;
 			ev.preventDefault();
 		} else if (lies < 8) {
 			if (document.getElementById("lie" + lies).checked) {
 				lies += 1;
-				document.getElementById("dlie" + lies).removeAttribute("hidden");
+				document.getElementById("dlie" + lies).hidden = false;
 			} else alert("Please certify that you are not lying.");
 			ev.preventDefault();
 		} else alert("LIAR!");
 	}
+	let absurdclick = false;
+	let rrclick = false;
 </script>
 <title>LGBTQIA+ identity/existential crisis quizz</title>
 </head>
@@ -104,9 +106,9 @@
 	<summary>Why am I being asked this question?</summary>
 	Your pronouns are required to display you sentences with correct grammatical gender agreement, and correct pronouns whenever the second person is used.
 	</details></small>
-	<label><input form="form" type="radio" name="0" onchange="start_quizz(true)"/>They</label><br/>
-	<label><input form="form" type="radio" name="0" onchange="start_quizz(true)"/>Them</label><br/>
-	<label><input form="form" type="radio" name="0" onchange="start_quizz(true)"/>I don't use pronouns</label><br/>
+	<label><input form="form" type="radio" name="0" onchange="start_quizz(true)" value="0"/>They</label><br/>
+	<label><input form="form" type="radio" name="0" onchange="start_quizz(true)" value="0"/>Them</label><br/>
+	<label><input form="form" type="radio" name="0" onchange="start_quizz(true)" value="1"/>I don't use pronouns</label><br/>
 	</form>
 	<p><button onclick="start_quizz(false)">Start quizz</button></p>
 </li>
@@ -125,10 +127,10 @@
 	This is a default question of the quizz, it is always asked.
 	It is of crucial importance to know whether you are able to read and comprehend what hypotheticals and counterfactual situations are for the rest of this quizz.
 	</details></small>
-	<label><input form="form" type="radio" name="hyp"/>Yes I am</label><br/>
-	<label><input form="form" type="radio" name="hyp"/>Supposedly, no I am not</label><br/>
-	<label><input form="form" type="radio" name="hyp" onclick="underwater(event)"/>blblblblblblbl</label><br/>
-	<label><input form="form" type="radio" name="hyp"/>Answer D (there is no correct answer)</label><br/>
+	<label><input form="form" type="radio" name="hyp" value="0"/>Yes I am</label><br/>
+	<label><input form="form" type="radio" name="hyp" value="1"/>Supposedly, no I am not</label><br/>
+	<label><input form="form" type="radio" name="hyp" value="2" onclick="underwater(event)"/>blblblblblblbl</label><br/>
+	<label><input form="form" type="radio" name="hyp" value="3"/>Answer D (there is no correct answer)</label><br/>
 	<br/>
 </li>
 
@@ -138,10 +140,10 @@
 	<summary>Why am I being asked this question?</summary>
 	You and your friend stayed underwater for too long. In short, you drowned.
 	</details></small>
-	<label><input form="form" type="checkbox" name="swim"/>I know how to crawl</label><br/>
-	<label><input form="form" type="checkbox" name="swim"/>I know how to stroke</label><br/>
-	<label><input form="form" type="checkbox" name="swim"/>I know how to corkscrew</label><br/>
-	<label><input form="form" type="checkbox" name="swim" onclick="window.open('https://youtu.be/PGNiXGX2nLU', '_blank')"/>I know how to meatspin</label><br/>
+	<label><input form="form" type="checkbox" name="swim" value="0"/>I know how to crawl</label><br/>
+	<label><input form="form" type="checkbox" name="swim" value="1"/>I know how to stroke</label><br/>
+	<label><input form="form" type="checkbox" name="swim" value="2"/>I know how to corkscrew</label><br/>
+	<label><input form="form" type="checkbox" name="swim" value="3" onclick="window.open('https://youtu.be/PGNiXGX2nLU', '_blank')"/>I know how to meatspin</label><br/>
 	<br/>
 </li>
 
@@ -152,11 +154,11 @@
 	Wait a bit there, the question wasn't asked yet.
 	</details></small>
 	<b>Men?</b><br/>
-	<label><input form="form" type="radio" name="aesth" onchange="faesth()"/>Yes</label><br/>
-	<label><input form="form" type="radio" name="aesth" onchange="faesth()"/>No</label><br/>
+	<label><input form="form" type="radio" name="aesth" onchange="faesth()" value="0"/>Yes</label><br/>
+	<label><input form="form" type="radio" name="aesth" onchange="faesth()" value="1"/>No</label><br/>
 	<b>Women?</b><br/>
-	<label><input form="form" type="radio" name="aesth" onchange="faesth()"/>Yes</label><br/>
-	<label><input form="form" type="radio" name="aesth" onchange="faesth()"/>No</label><br/>
+	<label><input form="form" type="radio" name="aesth" onchange="faesth()" value="2"/>Yes</label><br/>
+	<label><input form="form" type="radio" name="aesth" onchange="faesth()" value="3"/>No</label><br/>
 	<br/>
 </li>
 
@@ -166,9 +168,9 @@
 	<summary>Why am I being asked this question?</summary>
 	Just making sure you didn't answer nonsense at the previous question.
 	</details></small>
-	<label><input form="form" type="checkbox"/>Maybe</label><br/>
-	<label><input form="form" type="checkbox"/>Yes</label><br/>
-	<label><input form="form" type="checkbox"/>No</label><br/>
+	<label><input form="form" type="checkbox" name="aesm" onclick="window.open('https://en.wikipedia.org/wiki/Physical_attractiveness', '_blank')"/>Maybe</label><br/>
+	<label><input form="form" type="checkbox" name="aesy"/>Yes</label><br/>
+	<label><input form="form" type="checkbox" name="aesn"/>No</label><br/>
 	<br/>
 </li>
 
@@ -178,14 +180,14 @@
 	<summary>Why am I being asked this question?</summary>
 	You are allright, please tell you are allright.
 	</details></small>
-	<label><input type="radio" name="cookies" onclick="pwnd()"/>Yes, I consent to cookies and collection of my personal data for commercial purposes.</label><br/>
-	<div id="demisent" hidden><label><input type="radio" name="cookies"/>Because I know you better I started feeling things for you. So here is your "No, I do not consent to the above".</label><br/></div>
+	<label><input type="radio" name="cookies" value="0" onclick="pwnd()"/>Yes, I consent to cookies and collection of my personal data for commercial purposes.</label><br/>
+	<div id="demisent" hidden><label><input type="radio" name="cookies" value="1"/>Because I know you better I started feeling things for you. So here is your "No, I do not consent to the above".</label><br/></div>
 	<br/>
 </li>
 
 <li id="qdetails" hidden>
 	<b>Why am I being asked this question?</b><br/>
-	<input form="form" size="60" placeholder="A quiz is made of questions, what did you expect?"/><br/>
+	<input form="form" name="final" size="60" placeholder="A quiz is made of questions, what did you expect?"/><br/>
 	<br/>
 </li>
 
@@ -197,7 +199,7 @@
 	In most societies, there is a basic division between gender attributes associated with males and females, a gender binary to which most people adhere and which includes expectations of masculinity and femininity in all aspects of sex and gender: biological sex, gender identity, gender expression, and sexual orientation. Some people do not identify with some, or all, of the aspects of gender associated with their biological sex; some of those people are transgender, non-binary, or genderqueer. Some societies have third gender categories.<br/>
 	The 2012 book Introduction to Behavioral Science in Medicine says that with exceptions, "Gender identity develops surprisingly rapidly in the early childhood years, and in the majority of instances appears to become at least partially irreversible by the age of 3 or 4". The Endocrine Society has stated "Considerable scientific evidence has emerged demonstrating a durable biological element underlying gender identity. Individuals may make choices due to other factors in their lives, but there do not seem to be external forces that genuinely cause individuals to change gender identity." Social constructivists argue that gender identity, or the way it is expressed, are socially constructed, determined by cultural and social influences. Constructivism of this type is not necessarily incompatible with the existence of an innate gender identity, since it may be the expression of that gender that varies by culture.
 	</details></small>
-	<input form="form" placeholder="Pearl necklace" type="password"/><br/>
+	<input form="form" type="password" name="gender" placeholder="Pearl necklace"/><br/>
 	<br/>
 </li>
 
@@ -1685,7 +1687,7 @@
 	<summary>Why am I being asked this question?</summary>
 	Earrape is not a music genre.
 	</details></small>
-	<select form="form">
+	<select form="form" id="pgenre">
 	<option></option>
 	<option>les films en crypté sur canal +</option>
 	<option>magazines du haut des présentoirs du tabac presse</option>
@@ -1707,12 +1709,12 @@
 	<summary>Why am I being asked this question?</summary>
 	Also known as gender expression.
 	</details></small>
-	<label><input form="form" type="radio" name="genex"/>I</label><br/>
-	<label><input form="form" type="radio" name="genex"/>You</label><br/>
-	<label><input form="form" type="radio" name="genex"/>He/She</label><br/>
-	<label><input form="form" type="radio" name="genex"/>We</label><br/>
-	<label><input form="form" type="radio" name="genex"/>Y'all</label><br/>
-	<label><input form="form" type="radio" name="genex"/>They</label><br/>
+	<label><input form="form" type="radio" name="genex" value="0"/>I</label><br/>
+	<label><input form="form" type="radio" name="genex" value="1"/>You</label><br/>
+	<label><input form="form" type="radio" name="genex" value="2"/>He/She</label><br/>
+	<label><input form="form" type="radio" name="genex" value="3"/>We</label><br/>
+	<label><input form="form" type="radio" name="genex" value="4"/>Y'all</label><br/>
+	<label><input form="form" type="radio" name="genex" value="5"/>They</label><br/>
 	<br/>
 </li>
 
@@ -1722,10 +1724,10 @@
 	<summary>Why am I being asked this question?</summary>
 	Basic math is a basic skill that should be had by everyone human plus you.
 	</details></small>
-	<label><input form="form" type="radio" name="meth"/>-1/12</label><br/>
-	<label><input form="form" type="radio" name="meth"/>1</label><br/>
-	<label><input form="form" type="radio" name="meth"/>5</label><br/>
-	<label><input form="form" type="radio" name="meth"/>9</label><br/>
+	<label><input form="form" type="radio" name="meth" value="wrong"/>-1/12</label><br/>
+	<label><input form="form" type="radio" name="meth" value="wrong"/>1</label><br/>
+	<label><input form="form" type="radio" name="meth" value="correct"/>5</label><br/>
+	<label><input form="form" type="radio" name="meth" value="wrong"/>9</label><br/>
 	<br/>
 </li>
 
@@ -1735,7 +1737,7 @@
 	<summary>Why am I being asked this question?</summary>
 	My name is LGBTQIA+ identity/existential crisis quizz. I feel like at this point we should get to know each other. We'll be here for a bit.
 	</details></small>
-	<input form="form" type="number" id="name" placeholder="John Doe" min="0" title="You can only use number keys while this field is focused; no letters, no backspace, no delete, no ctrl+r" onkeydown="ensurenumeric(event)"/><br/>
+	<input form="form" type="number" name="name" placeholder="John Doe" min="0" max="65535" title="You can only use number keys while this field is focused; no letters, no backspace, no delete, no ctrl+r" onkeydown="ensurenumeric(event)"/><br/>
 	<br/>
 </li>
 
@@ -1766,9 +1768,9 @@
 	So, the bar owner suggested that it would be fair to reduce each man's bill by roughly the same amount, and he proceeded to work out the amounts each should pay.
 	And so:
 	<ul>
-	<li>The fifth man, like the first four, now paid nothing (100%savings).</li>
-	<li>The sixth now paid $2 instead of $3 (33%savings).</li>
-	<li>The seventh now paid $5 instead of $7 (28%savings).</li>
+	<li>The fifth man, like the first four, now paid nothing (100% savings).</li>
+	<li>The sixth now paid $2 instead of $3 (33% savings).</li>
+	<li>The seventh now paid $5 instead of $7 (28% savings).</li>
 	<li>The eighth now paid $9 instead of $12 (25% savings).</li>
 	<li>The ninth now paid $14 instead of $18 (22% savings).</li>
 	<li>The tenth now paid $49 instead of $59 (16% savings).</li>
@@ -1792,12 +1794,12 @@
 	The author of this quizz disagrees with this story.
 	Because the tenth man is dead, all other men got back the rent money they were paying and had enough to pay more than the whole group was paying before the murder.
 	</details></small>
-	<label><input form="form" type="checkbox"/>I enter the man if you know what I mean</label><br/>
-	<label><input form="form" type="checkbox"/>The man enters me, no homo I'm a woman</label><br/>
-	<label><input form="form" type="checkbox"/>Does he like pegging? 'Cause I sure wish he does</label><br/>
-	<label><input form="form" type="checkbox"/>My backdoor is always gaping open</label><br/>
-	<label><input form="form" type="checkbox"/>Eww sex... gross, that's paedophilia</label><br/>
-	<label><input form="form" type="checkbox"/>Only if there is enough space for Jesus between us, 3some4tw</label><br/>
+	<label><input form="form" type="checkbox" name="enterom"/>I enter the man if you know what I mean</label><br/>
+	<label><input form="form" type="checkbox" name="enteriw"/>The man enters me, no homo I'm a woman</label><br/>
+	<label><input form="form" type="checkbox" name="enterow"/>Does he like pegging? 'Cause I sure wish he does</label><br/>
+	<label><input form="form" type="checkbox" name="enterim"/>My backdoor is always gaping open</label><br/>
+	<label><input form="form" type="checkbox" name="entern"/>Eww sex... gross, that's paedophilia</label><br/>
+	<label><input form="form" type="checkbox" name="enterb"/>Only if there is enough space for Jesus between us, 3some4tw</label><br/>
 	<br/>
 </li>
 
@@ -1807,7 +1809,7 @@
 	<summary>Why am I being asked this question?</summary>
 	The legend states that you shall be asked this question, now only god knows whether you answered.
 	</details></small>
-	<input form="form" type="color"/><br/>
+	<input form="form" type="color" name="absurd" onclick="absurdclick = true"/><br/>
 	<br/>
 </li>
 
@@ -1818,10 +1820,10 @@
 	Why do they call it oven when you of in the cold food of out hot eat the food.
 	</details></small>
 	<ul>
-	<li><label><b>love? baby don't hurt me, don't hurt me, no more</b><input form="form" type="radio" name="what"/></label></li>
-	<li><label><b>the answer to life the universe and everything? 42</b><input form="form" type="radio" name="what"/></label></li>
-	<li><label><b>been going on? We know the game and we're gonna play it</b><input form="form" type="radio" name="what" onclick="document.getElementById('qrroll').removeAttribute('hidden')"/></label></li>
-	<li><label><b>a mind goblin? mind goblin deeznuts</b><input form="form" type="radio" name="what"/></label></li>
+	<li><label><b>love? baby don't hurt me, don't hurt me, no more</b><input form="form" type="radio" name="what" value="0"/></label></li>
+	<li><label><b>the answer to life the universe and everything? 42</b><input form="form" type="radio" name="what" value="1"/></label></li>
+	<li><label><b>been going on? We know the game and we're gonna play it</b><input form="form" type="radio" name="what" value="2" onclick="document.getElementById('qrroll').hidden = false"/></label></li>
+	<li><label><b>a mind goblin? mind goblin deeznuts</b><input form="form" type="radio" name="what" value="3"/></label></li>
 	</ul><br/>
 </li>
 
@@ -1831,7 +1833,7 @@
 	<summary>Why am I seeing this?</summary>
 	You know what you did.
 	</details></small>
-	<a href="https://youtu.be/XfELJU1mRMg" target="_blank" onclick="TODO">You know where this link leads to, you cannot finish the quizz without clicking it.</a><br/>
+	<a href="https://youtu.be/XfELJU1mRMg" target="_blank" onclick="rrclick = true">You know where this link leads to, you cannot finish the quizz without clicking it.</a><br/>
 	<br/>
 </li>
 
@@ -1841,10 +1843,12 @@
 	<summary>Why am I being asked this question?</summary>
 	As a statistically christian and statistically man, you gotta answer this fundamental question that determines whether you will go in hell.
 	</details></small>
-	<label><input form="form" type="radio" name="gayjesus"/>Yes</label><br/>
-	<label><input form="form" type="radio" name="gayjesus"/>No, it's bisexual</label><br/>
+	<label><input form="form" type="radio" name="gayjesus" value="0"/>Yes</label><br/>
+	<label><input form="form" type="radio" name="gayjesus" value="1"/>No, it's bisexual</label><br/>
 	<br/>
 </li>
+
+<!-- TODO: values -->
 
 <li class="qmain" hidden>
 	<b>Classify the following concepts</b>
@@ -1918,7 +1922,7 @@
 	<tr><td>The goal is the friends we made along the way</td><td><input form="form" type="radio" name="stra"/></td><td><input form="form" type="radio" name="slia"/></td><td><input form="form" type="radio" name="neut"/></td><td><input form="form" type="radio" name="slid"/></td><td><input form="form" type="radio" name="strd"/></td></tr>
 	<tr><td>Secretions are disgusting</td><td><input form="form" type="radio" name="stra"/></td><td><input form="form" type="radio" name="slia"/></td><td><input form="form" type="radio" name="neut"/></td><td><input form="form" type="radio" name="slid"/></td><td><input form="form" type="radio" name="strd"/></td></tr>
 	<tr><td>I like watersports</td><td><input form="form" type="radio" name="stra"/></td><td><input form="form" type="radio" name="slia"/></td><td><input form="form" type="radio" name="neut"/></td><td><input form="form" type="radio" name="slid"/></td><td><input form="form" type="radio" name="strd"/></td></tr>
-	<tr><td>I need people to tell me what to do</td><td><input form="form" type="radio" name="stra" onclick="document.getElementById('qnono').removeAttribute('hidden')"/></td><td><input form="form" type="radio" name="slia"/></td><td><input form="form" type="radio" name="neut"/></td><td><input form="form" type="radio" name="slid"/></td><td><input form="form" type="radio" name="strd"/></td></tr>
+	<tr><td>I need people to tell me what to do</td><td><input form="form" type="radio" name="stra" onclick="document.getElementById('qnono').hidden = false"/></td><td><input form="form" type="radio" name="slia"/></td><td><input form="form" type="radio" name="neut"/></td><td><input form="form" type="radio" name="slid"/></td><td><input form="form" type="radio" name="strd"/></td></tr>
 	</tbody>
 	</table>
 	<br/>
@@ -1950,7 +1954,7 @@
 	<summary>Why am I being asked this question?</summary>
 	There is a distinction between sex and gender. First they are not the same word. Second their meaning is different. Third why are you asking, are you a cop?
 	</details></small>
-	<input form="form" type="range" min="-128" max="127" onchange="event.target.setAttribute('title', event.target.value)"/><br/>
+	<input form="form" type="range" name="sex" min="-128" max="127" onchange="event.target.setAttribute('title', event.target.value)"/><br/>
 	<br/>
 </li>
 
@@ -1971,34 +1975,34 @@
 	<summary>Why am I being asked this question?</summary>
 	Your taste in anime is invalid, this is just to prove this point.
 	</details></small>
-	<label>One Piece<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Land of the Lustrous<input form="form" type="number" onkeydown="event.preventDefault()" min="10" max="10"/></label><br/>
-	<label>Redo of Healer<input form="form" type="number" onkeydown="event.preventDefault()" max="10" step="0.000000001"/></label><br/>
-	<label>My Little Poney<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10" onchange="brownie(event)"/></label><br/>
-	<label>Call of the Night<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>2 girls 1 cup<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="0"/></label><br/>
-	<label>Koisenu Futari<input form="form" type="number" onkeydown="event.preventDefault()" min="5" max="10"/></label><br/>
-	<label>Maria Holic<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="5"/></label><br/>
-	<label>Super Cock Showdown Cyan VS Kana<input form="form" type="number" onkeydown="event.preventDefault()" min="10" max="20"/></label><br/>
-	<label>Stop!! Hibari-kun!<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Ranma 1/2<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10" step="0.5"/></label><br/>
-	<label>My Isekai Life<input form="form" type="number" onkeydown="event.preventDefault()" min="-20" max="-10"/></label><br/>
-	<label>Princess Jellyfish<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Ouran High School Host Club<input form="form" type="number" onkeydown="event.preventDefault()" min="3" max="7"/></label><br/>
-	<label>Peter Grill & The Philosopher's Time<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="2"/></label><br/>
-	<label>Senpai is an Otokonoko<input form="form" type="number" onkeydown="event.preventDefault()" min="8" max="8"/></label><br/>
-	<label>Kampfer<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Iya na Kao sare nagara Kozukuri sasete Moraitai<input form="form" type="number" onkeydown="event.preventDefault()" onchange="makeastep(event)"/></label><br/>
-	<label>Wandering Son<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="8"/></label><br/>
-	<label>Cheeky Angel<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Interspecies Reviewers<input form="form" type="number" onkeydown="event.preventDefault()" min="9" max="11"/></label><br/>
-	<label>Koe de Oshigoto!<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Yamada's First Time: B Gata H Kei<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Why the hell are you here, Teacher!?<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Ao-chan Can't Study!<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Onii-chan is done for<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Miru Tights<input form="form" type="number" onkeydown="event.preventDefault()" min="-1" max="0"/></label><br/>
-	<label>Looking up to Magical Girls<input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>One Piece <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Land of the Lustrous <input form="form" type="number" onkeydown="event.preventDefault()" min="10" max="10"/></label><br/>
+	<label>Redo of Healer <input form="form" type="number" onkeydown="event.preventDefault()" max="10" step="0.000000001"/></label><br/>
+	<label>My Little Poney <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10" onchange="brownie(event)"/></label><br/>
+	<label>Call of the Night <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>2 girls 1 cup <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="0"/></label><br/>
+	<label>Koisenu Futari <input form="form" type="number" onkeydown="event.preventDefault()" min="5" max="10"/></label><br/>
+	<label>Maria Holic <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="5"/></label><br/>
+	<label>Moriyama Mariko <input form="form" type="number" onkeydown="event.preventDefault()" min="312113" max="312113"/></label><br/>
+	<label>Stop!! Hibari-kun! <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Ranma 1/2 <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10" step="0.5"/></label><br/>
+	<label>My Isekai Life <input form="form" type="number" onkeydown="event.preventDefault()" min="-20" max="-10"/></label><br/>
+	<label>Princess Jellyfish <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Ouran High School Host Club <input form="form" type="number" onkeydown="event.preventDefault()" min="3" max="7"/></label><br/>
+	<label>Peter Grill & The Philosopher's Time <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="2"/></label><br/>
+	<label>Senpai is an Otokonoko <input form="form" type="number" onkeydown="event.preventDefault()" min="8" max="8"/></label><br/>
+	<label>Kampfer <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Iya na Kao sare nagara Kozukuri sasete Moraitai <input form="form" type="number" onkeydown="event.preventDefault()" onchange="makeastep(event)"/></label><br/>
+	<label>Wandering Son <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="8"/></label><br/>
+	<label>Cheeky Angel <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Interspecies Reviewers <input form="form" type="number" onkeydown="event.preventDefault()" min="9" max="11"/></label><br/>
+	<label>Koe de Oshigoto! <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Yamada's First Time: B Gata H Kei <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Why the hell are you here, Teacher!? <input form="form" type="number" onkeydown="event.preventDefault()" min="10" max="20"/></label><br/>
+	<label>Ao-chan Can't Study! <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Onii-chan is done for <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Miru Tights <input form="form" type="number" onkeydown="event.preventDefault()" min="-1" max="0"/></label><br/>
+	<label>Looking up to Magical Girls <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
 	<br/>
 </li>
 
@@ -2016,8 +2020,8 @@
 	<div id="dlie6" hidden><label><input form="form" type="checkbox" id="lie6"/>I acknowledge that lying exposes me to legal pursuits</label></div>
 	<div id="dlie7" hidden><label><input form="form" type="checkbox" id="lie7"/>I am fully responsible of my choices</label></div>
 	<div id="dlie8" hidden><label><input form="form" type="checkbox" id="lie8"/>I vouch for the truth of the below declaration</label></div>
-	<label><input form="form" type="radio" name="fur" onclick="truth()"/>Yes, I do</label><br/>
-	<label><input form="form" type="radio" name="fur" onclick="lie(event)"/>No, I don't</label><br/>
+	<label><input form="form" type="radio" name="fur" value="0" onclick="truth()"/>Yes, I do</label><br/>
+	<label><input form="form" type="radio" name="fur" value="1" onclick="lie(event)"/>No, I don't</label><br/>
 	<br/>
 </li>
 
@@ -2027,7 +2031,7 @@
 	<summary>Why am I being asked this question?</summary>
 	Feedback is the most essential component of improvement. More important than taking feedback into consideration and reattempting to improve, so I won't do that.
 	</details></small>
-	<textarea form="form" rows="8" cols="200"></textarea>
+	<textarea form="form" id="essay" rows="8" cols="200"></textarea>
 	<br/>
 </li>
 
