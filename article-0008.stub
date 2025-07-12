@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="ascii"/>
+<link rel="stylesheet" href="minimalism.css"/>
+<title>There are several proofs of True</title>
+</head>
+<body>
+<p><i>Content warning: Math, Computer Science, Logic, Type Theory.</i></p>
+<nav>
+</nav>
+<!-- TODO: Write proper article -->
+<p>
+How many proofs of <code>True</code> are there?
+I will argue in this article that there are one, several, and both are true at the same time.
+All of it will be done by walking you through proofs with explaination and analyses of the consequences.<br/>
+This article assumes you know a bit about mathematics and functional programming.
+</p>
+<h3>Introduction</h3>
+<h4>What is <code>True</code>?</h4>
+<p>
+<code>True</code> is a proposition that is always true.
+Propositions are also types and are true if a value can be given the proposition as type.
+There are several ways to name and define the always true property.
+Here we will use the following definition: <code>True := I</code>.
+This notation means that <code>True</code> is defined as the type made of a single constructor called <code>I</code>.
+It is always true because <code>I</code> can always be built and is a value of type <code>True</code>.
+Though the exact definition is not relevant as long as it describes a type with a single element.
+This single element restriction is why it is sometimes also called <code>Unit</code> and <code>1</code>.<br/>
+Other interesting propositions are <code>False</code> the always false proposition, <code>Bool := T | F</code> the type of booleans with two constructors <code>T</code> and <code>F</code>, and <code>x = y</code> proposing that the values <code>x</code> and <code>y</code> are indistinguishable.
+</p>
+<h4>What is a proof?</h4>
+<p>
+In intuitionistic type theory, a proof of a proposition is a <dfn title="applied constructor">value</dfn> that can be typed with the proposition.<br/>
+Being a type theory, computations should also be given types.
+These computations are encoded into terms of which constructors and values are a subset.<br/>
+For these terms to indeed represent computations, there needs to be ways to evaluate or reduce terms.
+These evaluations/reductions should preserve the type otherwise the typing system is unhelpful and maybe even <dfn title="can prove a statement and its opposite / can prove False">inconsistent</dfn>.<br/>
+If evaluation doesn't change type of a term, then terms can also be viewed as proofs of their type, the same type as the value they reduce to.
+Terms that can be reduced don't count as new proofs however as they are indistinguishable, as in definitionally equal, from the value they evaluate to from the type theory point of view.<br/>
+Another well liked property is the possibility for the evaluation/reduction to be put into an algorithm that, no matter the order in which they are executed, terminates and give the same term (normal form).
+Termination, that is evaluation not being able to go on forever, is liked because closed terms evaluate to values that can easily be typed.
+Whereas non terminating terms can arguably be given any type, including <code>False</code> rendering the type theory inconsistent and therefore useless to prove statements.
+</p>
+<h4>What does it mean to have a single proof?</h4>
+<p>
+We can interpret having a single proof at two levels.<br/>
+The first level is the theoretical level (read "inside the theory of interest").
+One way to phrase a proposition stating that some proposition <code>P</code> has a single proof is <code>&exist;w: P, &forall;w': P, w' = w</code>.
+Meaning that there is a value <code>w</code> that can be typed with <code>P</code> such that any value <code>w'</code> that can be typed with <code>P</code> is indistinguishable from <code>w</code>.
+On the other hand, not having a single proof can be expressed by <code>&forall;w: P, &exist;w': P, w' &ne; w</code>, meaning that for any proof <code>w</code> of a proposition <code>P</code>, there is a proof <code>w'</code> of <code>P</code> distinguishable from <code>w</code>.<br/>
+The second level is the metatheoretical level (read "outside the theory of interest").
+A proposition has a single proof if there is a single value that can be typed with the proposition.
+By lifting the concept to terms with our definitional equality modulo evaluation, all terms that are equal modulo evaluation are considered the same proof.<br/>
+On the other hand, not having a single proof means there are 0 or more than 1 values or term (modulo evaluation) that can be typed with the proposition of interest.<br/>
+These two concept of single proofs depends heavily on the values (and therefore the primitive of the proof language, of which constructors are part) allowed to be part of the theory and the evaluation/reduction rules.
+</p>
+<h3>Proof(s) of <code>True</code>.</h3>
+<h4>The theory in which we are working.</h4>
+<p>
+<!-- TODO HERE: true, false, Bool, forall, lambda, arrow, exist, pair -->
+</p>
+<h4>The only one proof of <code>True</code>.</h4>
+<p>
+Having only one constructor, the obvious only proof of <code>True</code> is <code>I</code>.
+This include anything that evaluates to it like <code>(&lambda;x x) I</code>, <code>elim_Bool I I b</code> and <code>(&lambda;i i i I) (&lambda;f ((f &lambda;a&lambda;b&lambda;c ((ac) (bc))) &lambda;d&lambda;e d)</code>.<br/>
+Let's give a proof of the theoretical single proof proposition:
+<code>(I, &lambda;w elim_eq eq_refl)</code>
+</p>
+<h4>Another proof of <code>True</code>?!</h4>
+<p>
+</p>
+<h4>This is bullshit, I disagree.</h4>
+<p>
+<!-- ... + A proof of False + constructor =/= how many proofs there are? -->
+</p>
+<h3>The real topic of this article.</h3>
+<h4>How many proofs of <code>x = x</code> are there?</h4>
+<p>
+<!-- introduce equality type, explain how matching work, prove there is only one proof -->
+</p>
+<h4>How many proofs of <code>x = y</code> are there?</h4>
+<p>
+<!-- 0 or 1, fail to prove that statement -->
+</p>
+<h4>The sad reality.</h4>
+<p>
+</p>
+<h3>Analysis of the problem and its solutions.</h3>
+<h4>What went wrong?</h4>
+<p>
+<!-- matching introduces wrong assumptions in the evaluation algorithm -->
+<!-- number of proofs really depend on what reductions we are allowed to perform -->
+</p>
+<h4>Current solutions.</h4>
+<p>
+<!-- give up on evaluation, or give up on unicity, or give up on termination -->
+</p>
+<h4>Impossible worlds.</h4>
+<p>
+<!-- determining if we are in an impossible context -->
+<!-- determining if there is a single proof, equivalent to decidable type equality (by union type), equivalent to generalised decidable equality (by box types), so not decidable for type check -->
+<!-- determining if reduction terminates, if we are looping -->
+</p>
+<h4>What if?</h4>
+<p>
+<!-- controlled reduction -->
+<!-- best effort reduction and unicity -->
+<!-- different reductions for instance the transform "(P: T -> U) (False_rect T wFalse) -> False_rect U wFalse"
+     which is not enough because loop can be drawn from more limited things and tracing impossible knowledge doesn't help
+  -->
+</p>
+</body>
+</html>

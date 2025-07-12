@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="ascii"/>
+<link rel="stylesheet" href="minimalism.css"/>
+<title>Does GPT understand english?</title>
+</head>
+<body>
+<p><i>Content warning: Complicated.</i></p>
+<nav>
+</nav>
+<p>
+GPT is a kind of large language models popularised by OpenAI, an evil corporation that do not care about the desastrous consequences of the technology they develop, and that is very much not open in any shape or form.
+It made a buzz arround 2022 as a chatbot called ChatGPT, even though the technology and general perceived level of mastery of language was not groundbreaking to people working in AI.
+In this article we ask the question: Does GPT understand english? or more precisely do sufficiently performant large language model understand the input we give them?
+</p>
+<h3>More than you understand the question.</h3>
+<p>
+This question is often asked implicitely when some people state that these AI do not understand what they are told, to answer the fear instilled by sci-fi of AI decimating the human species.
+They shouldn't state with such confidence these wrong (as we will see in this article) statements.
+I do understand why they do that, they try to correct wrong views about AI, and it is very much the right thing to do.
+</p>
+<h4>Small digression about AI</h4>
+<p>
+What we call AI currently is very far from what sci-fi depicts it as or how people interpret what it is from the name.
+AI is a shorthand for artificial intelligence, so people think this is kind of similar to human intelligence but in a machine.
+AI is very far from that, it is intelligence and artificial but intelligence in this case does not have the same meaning as in human intelligence.
+Intelligence in Artificial Intelligence means a capacity to perform a task, that is a skill.
+In practise Artificial intelligence is the use of an algorithm that has parameters, and the value of these parameters are determined using a statistical method on real world data.
+In particular the result of the computation should highly depend on these real world data.
+One could argue that the name is not well chosen, it should be calles AS, Artificial Skills, or SM, Statistical Methods, but that is ignoring the fuzziness and unwell definedness of intelligence in the first place.<br/>
+One of the common fears of AI is it (sometimes as a single entity, even though AI designates a class of algorithms) deciding (as if it had conciousness) to exterminate the human species.
+This fear is unfounded as no single AI algorithm has the ability to evolve by itself and none have been given enough power and autonomy to be able to have exterminate humanity before action is taken place to switch it off.
+But this shouldn't give you trust in AI, the people using Artificial Intelligence do very detrimental to the human species with it.
+And this is not something that will happen suddenly and uncontrollably after a singularity, it is happening right now and has been for more than a decade now.
+Profit driven corporations such as Google, Meta or Microsoft steal your personal data to target you with more effective abusive and manipulative advertisment (a redundant expression) and make you more dependant of their services by making them more addictive to you.
+AI is also used in finance to optimize speculation, a parasite practice attempting to extract money from markets by buying and selling product without a need, production capacity or any intention to own products.
+All of these practices make the richs richer, the poors poorer, and the world actively worse.
+You should be affraid of these AI and act to make them illegal because they are way more dangerous and concrete than AI in sci-fi.
+</p>
+<h4>End of the digression</h4>
+<p>
+<!-- todo: how can the question be interpreted -->
+</p>
+</body>
+</html>
