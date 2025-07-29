@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="ascii"/>
+<link rel="stylesheet" href="minimalism.css"/>
+<title>Practically testing for term convertibility</title>
+</head>
+<body>
+<p><i>Content warning: Math, Computer Science, Logic, Lambda Calculus.</i></p>
+<nav>
+</nav>
+<p>
+Is 1 + 1 equal to 2?
+If we were to prove it the proof would look something like this:
+Define natural numbers, define 1, define 2, define +, compute 1 + 1 using rewrites, observe that the result is indeed 2.
+The exact proof would depend on the axioms of the theory in which it is written but the overall structure would follow the description.
+Some theories based on lambda calculus allow for computation to occur as a form of inbuilt rewrite.
+This article explores the equality derived in such a system by using inbuilt rewrites only, and in particular a simplified view of the case of the Rocq prover (formerly known as Coq).
+</p>
+<h3>Simplified look at the theory</h3>
+<h4>Terms and contexts</h4>
+<p>
+In the theory we will use, the objects manipulated are terms and contexts.
+They are defined as follows:<br/>
+<code>term :=</code>
+<dl>
+<dt>Abstraction:</dt><dd><code>variable. term</code></dd>
+<dt>Application:</dt><dd><code>term term</code></dd>
+<dt>Local variable:</dt><dd><code>variable</code></dd>
+<dt>Global variable:</dt><dd><code>global</code></dd>
+<dt>Constructor:</dt><dd><code>constructor</code></dd>
+<dt>Case:</dt><dd><code>case term { constructor. term | ... | constructor. term }</code></dd>
+<dt>Fixpoint:</dt><dd><code>fix variable variable. term</code></dd>
+</dl>
+with
+<ul>
+<li><code>variable := v1 | v2 | v3 | ...</code></li>
+<li><code>global := g1 | g2 | g3 | ...</code></li>
+<li><code>constructor := c1 | c2 | c3 | ...</code></li>
+</ul>
+and
+<code>context := global&larr;term; ... ; global&larr;term</code><br/>
+Parenthesis are used to disambiguate terms.<br/>
+A way to interpret terms is:
+<dl>
+<dt>Abstractions</dt><dd>introduce the local variable on the left of the dot to be used in the term on the right of the dot.</dd>
+<dt>Fixpoints</dt><dd>introduce two local variables to be used in the term on the right of the dot, the first refers to the fixpoint itself, and the second is used to prevent infinite rewrite loops in Rocq (fixpoints are the only loops allowed in Rocq).</dd>
+<dt>Local variables</dt><dd>refer to terms, which term depends on the term in which the variable is used.</dd>
+<dt>Applications</dt><dd>provide a term for the local variables to refer to when used arround abstractions and fixpoints.</dd>
+<dt>Global variables</dt><dd>refer to terms as described by the context, it is a way to shorten terms and avoid repetition.</dd>
+<dt>Constructors</dt><dd>are the data of terms, they accumulate other terms and select case branches.</dd>
+<dt>Cases</dt><dd>extract data out of constructors and do case analysis on terms by way of constructors.</dd>
+</dl>
+</p>
+<h5>Examples</h5>
+<p>
+Terms:
+<ul>
+<li><code>g1</code></li>
+<li><code>c1</code></li>
+<li><code>v1. v2. v1</code></li>
+<li><code>v1. (v1 v1)</code></li>
+<li><code>(g1 (c1 g2)) c2</code></li>
+<li><code>case c1 g1 { c1. v1. v1 | c2. g1 | c3. c3 }</code></li>
+<li><code>fix v1 v2. v3. case v2 { c1. v3 | c2. v4. ((v1 v4) (c2 v3)) }</code></li>
+</ul>
+Contexts (first one is not a typo, it is the empty context):
+<ul>
+<li></li>
+<li><code>g1&larr;c1 c2; g2&larr;g1 c3</code></li>
+</ul>
+</p>
+<h5>Related definitions</h5>
+<p>
+A subterm of a term <code>t</code> is any term that appears as a part of <code>t</code>.<br/>
+An occurence of a local variable <code>v</code> in a term <code>t</code> is bound if it occurs as a subterm of either <code>v. u</code> , <code>fix v w. u</code> , or <code>fix w v. u</code> , which itself occurs as a subterm of <code>t</code>; otherwise it is unbound.<br/>
+An open term is a term containing one or several unbound variables.
+A closed term is a term containing zero unbound variables.<br/>
+The real objects the theory which encode concepts like numbers are pairs of a closed term and a context made of closed term only, all of which only refers to globals in the context.
+</p>
+<h4>Reductions, expansions, conversions</h4>
+<p>
+Conversion, including reductions and expansions, are the inbuilt rewrites of the theory.
+Reductions are asymetric conversions on which a rewrite direction is imposed.
+Expansions are reductions with the opposite rewrite direction, so the inverse operation of reductions.
+Not all conversions are reductions or expansions.<br/>
+In the theory we will use, there is only one conversion that is not a reduction or expansion.
+It is called &alpha; or &alpha;-conversion.
+It is a rewrite defined on terms, contexts and pairs of terms and contexts.
+It is noted <code>t</code> &harr;<sub>&alpha;</sub> <code>u</code> where <code>t</code> and <code>u</code> are either both terms, both contexts, of both pairs of a term and a context.
+It consists in replacing all occurences of a variable by an other variable that is not used in the term and context, or all occurences of a global by an other global not used in the term and context.
+It can be applied on a subterm under the condition that the variable does not occur in the subterm (instead of the whole term + context), and this subterm is of the form <code>v. t</code> where <code>v</code> is the variable being renamed.<br/>
+A term is said to be &alpha;-convertible to another if there is a sequence of &alpha;-conversions that can rewrite the first term into the second.
+For instance <code>g1&larr;v1. v1, v1. v2. v1</code> is &alpha;-convertible to <code>g1&larr;v5. v5, v5. v1. v5</code> by replacing <code>v1</code> by <code>v5</code> then <code>v2</code> by <code>v1</code> (no longer in the term nor context because replaced by <code>v5</code>), it is also &alpha;-convertible to <code>g1&larr;v2. v2, v1. v2. v1</code> with the limited version.<br/>
+In the theory we will use there are also 5 reductions and their corresponding expansions.
+To help define two of the reductions we first define the parallel variable substitution of <code>v</code> by <code>u</code> in <code>t</code>, noted <code>t[v&larr;u]</code> where <code>t</code> and <code>u</code> are terms, and <code>v</code> is a variable or a global:<br/>
+The variable substitution of <code>v</code> by <code>u</code> in <code>t</code> &alpha;-convert <code>t</code> so that it has no bound variables in common with the unbound variables of <code>u</code>, then replaces all unbound occurences of <code>v</code> in the new <code>t</code> by <code>u</code>.
+For instance <code>((v1. v2. v1) v1)[v1&larr;g1]</code> is <code>(v1. v2. v1) g1</code> and <code>(v1. v2. (v1 v3))[v3&larr;v2]</code> is <code>v1. v4. (v1 v2)</code>.<br/>
+The 5 reductions are the following:
+<dl>
+<dt>&beta;:</dt><dd>Replace one occurence of <code>(v. t) u</code> by <code>t[v&larr;u]</code>,</dd>
+<dt>&delta;:</dt><dd>For a term context pair <code>&Gamma;, t</code> such that <code>&Gamma;</code> has <code>g&larr;u</code>, replace one occurences of <code>g</code> by <code>u</code>,</dd>
+<dt>&eta;:</dt><dd>Replace one occurence of <code>v. (t v)</code> by <code>t</code> if <code>v</code> doesn't occur unbound in <code>t</code>,</dd>
+<dt>&iota;-case:</dt><dd>Replace one occurence of <code>case ((consl terml1) ... termlm) { cons1. term1 | ... | consl. terml | ... | consk. termk }</code> by <code>((terml terml1) ... termlm)</code>,</dd>
+<dt>&iota;-fix:</dt><dd>Replace one occurence of <code>(fix var1 var2. term0) ((cons term1) ... termk)</code> by <code>term0[var1&larr;fix var1 var2. term0][var2&larr;(cons term1) ... termk]</code>.</dd>
+</dl>
+Each convertion realises the role of terms as explained in the interpretation of terms (except &eta;, it is necessary for the most important property of the theory used later):
+<dl>
+<dt>&alpha;</dt><dd>replaces variables in a way that emphasise the link of bound variables with their innermost corresponding enclosing abstraction or fixpoint and the independence with other abstractions and fixpoints,</dd>
+<dt>&beta;</dt><dd>eliminates abstractions, it cements the role of abstractions as a way to introduce local variables, and the role of application as a way to provide a term for local variables,</dd>
+<dt>&delta;</dt><dd>eliminates global variables, it cements the role of global variables as variables that refer to the context,</dd>
+<dt>&iota;-case</dt><dd>eliminates cases, it cements the role of cases as way to get data from constructors and do case analysis,</dd>
+<dt>&iota;-fix</dt><dd>eliminates fixpoints, it cements the role of fixpoints as a way to have abstractions that refer to themselves.</dd>
+</dl>
+The lack of rules for constructors cements its role as data as they can accumulate other terms through applications, terms which can then be retreived by using a case.
+</p>
+<h5>Examples</h5>
+<p>
+Example of an &eta;-reduction: <code>v1. (c1 v1)</code> &eta; reduces to <code>c1</code> (no other reduction is applicable on the first term).<br/>
+Example of other reductions:<br/>
+<code>g1&larr;c2 c1, ((fix v1 v2. v3. case v2 { c1. v3 | c2. v4. (c2 ((v1 v4) v3)) }) <b>g1</b>) g1</code><br/>
+&delta; reduces to
+<code>g1&larr;c2 c1, (<b>(fix v1 v2. v3. case v2 { c1. v3 | c2. v4. (c2 ((v1 v4) v3)) }) <i><s>g1</s>(c2 c1)</i></b>) g1</code><br/>
+&iota;-fix reduces to
+<code>g1&larr;c2 c1, (v3. <b>case <i><s>v2</s>c2 c1</i> { c1. v3 | c2. v4. (c2 ((<i><s>v1</s>(fix v1 v2. v3. case v2 { c1. v3 | c2. v4. (c2 ((v1 v4) v3)) })</i> v4) v3)) }</b>) g1</code><br/>
+&iota;-match reduces to
+<code>g1&larr;c2 c1, (v3. (<b>(v4. (c2 (((fix v1 v2. v3. case v2 { c1. v3 | c2. v4. (c2 ((v1 v4) v3)) }) v4) v3))) c1</b>)) g1</code><br/>
+&beta; reduces to
+<code>g1&larr;c2 c1, (v3. (c2 ((<b>(fix v1 v2. v3. case v2 { c1. v3 | c2. v4. (c2 ((v1 v4) v3)) }) <i><s>v4</s>c1</i></b>) v3))) g1</code><br/>
+&iota;-fix reduces to
+<code>g1&larr;c2 c1, (v3. (c2 (((v3. <b>case <i><s>v2</s>c1</i> { c1. v3 | c2. v4. (c2 ((<i><s>v1</s>(fix v1 v2. v3. case v2 { c1. v3 | c2. v4. (c2 ((v1 v4) v3)) })</i> v4) v3)) }</b>)) v3))) g1</code><br/>
+&iota;-match reduces to
+<code>g1&larr;c2 c1, (v3. (c2 (<b>(v3. v3) v3</b>))) g1</code><br/>
+&beta; reduces to
+<code>g1&larr;c2 c1, <b>(v3. (c2 <i><s>v3</s>v3</i>)) g1</b></code><br/>
+&beta; reduces to
+<code>g1&larr;c2 c1, c2 <i><s>v3</s><b>g1</b></i></code><br/>
+&delta; reduces to
+<code>g1&larr;c2 c1, c2 <i><s>g1</s>(c2 c1)</i></code>
+</p>
+<h3>Term equivalences</h3>
+<p>
+An equivalence relation is a classification of all objects in mutually exclusive categories.
+The categories used to classify objects are called equivalence classes.
+For instance the three non overlapping classes of integers divisible by 3, all integers directly above and all integers directly below form an equivalence relation.
+An other example is all integers can be classified in classes that contain only themselves, the equivalence relation it makes is the usual equality on integers.
+The reason to use equivalence relations is that 1 + 1 is obviously not the same as 2, so the best that can be done is to define an equivalence relation for which these two are in the same equivalence class, and for which other terms like 0, 1, and + that we do not want to be in the same equivalence class aren't; otherwise a single equivalence class for all term does the job.<br/>
+Several useful equivalence relations can be defined on terms.
+The first one, similarly to integers which can be classified in classes that contain only themselves, terms can be classified in classes that contain only themselves.
+The equivalence relation associated to these classes is referred to as physical equality.
+The second one is &alpha;-convertibility; it's been defined in a previous section.
+The third one, which is the one we are looking for, is called convertibility.
+We will spend the next section defining it.
+</p>
+<h4>Reduction</h4>
+<p>
+A term is said to reduce to an other term if there is a sequence of conversions (expansions excluded) that rewrites the first term into the second.
+Given a term, there are often several reductions that can be applied.
+When no reduction can be applied on a term, the term is called a value.
+Terms that cannot be reduced infinitely are called terminating.
+One of the most valuable properties of the theory we work with is that no matter the order of conversions, all values obtained by reducing a terminating term are &alpha;-convertible.
+It means that we can put all the terminating terms in the same equivalence class as all the &alpha;-convertible values they reduce to in order to get an equivalence relation on terminating terms.
+All other terms can have their own equivalence class to complete the equivalence relation.
+Independently of what we do for equivalence classes of non-terminating terms, an equivalence relation that classifies terminating terms as explained is called convertibility.<br/>
+Convertibility can put 1 + 1 and 2 in the same equivalence class as we will prove in the next section.
+</p>
+<h2>Proof that 1 + 1 is convertible to 2</h2>
+<p>
+Natural numbers are defined as being either <code>c1</code> or <code>c2 natural</code> where <code>natural</code> is a natural number.
+<code>c1</code> is 0, <code>c2 c1</code> is 1, <code>c2 (c2 c1)</code> is 2, and so on.
+Basically a number N is represented by N <code>c2</code> applied to <code>c1</code>.<br/>
+Addition on natural numbers is defined as <code>fix v1 v2. v3. case v2 { c1. v3 | c2. v4. (c2 ((v1 v4) v3)) }</code>.
+In this definition, <code>v1</code> is the addition, <code>v2</code> is the first number to be added and <code>v3</code> is the second.
+Addition starts by checking whether the first number is 0 or another number, if this number is zero then the result of the addition is the second number, otherwise it is 1 plus the addition of the first number minus 1 and the second number.
+Addition terminates because the first number eventually reaches 0 (<code>c1</code> by definition of natural numbers).
+And it is correct because each <code>c2</code> removed from the first number is put outside the addition, conserving the total amount of <code>c2</code>.<br/>
+With the definition of 1 in the context, 1 + 1 is <code>g1&larr;c2 c1, ((fix v1 v2. v3. case v2 { c1. v3 | c2. v4. (c2 ((v1 v4) v3)) }) g1) g1</code>.
+Reducing this term gives <code>g1&larr;c2 c1, c2 (c2 c1)</code>, that is 2, as shown in the reduction example above.<br/>
+This concludes the proof.<br/>
+From here on the context will always contain <code>g1&larr;fix v1 v2. v3. case v2 { c1. v3 | c2. v4. (c2 ((v1 v4) v3)) }</code>.
+</p>
+<h3>First algorithms to test convertibility</h3>
+<p>
+As shown in the previous proof, reducing terms to a value then checking for &alpha;-convertibility is a reasonable way to show convertibility.
+Fortunately the first part can be automated thanks to the order of reduction not mattering.
+For the second part <a href="https://en.wikipedia.org/wiki/De_Bruijn_index">there is a representation of term such that all &alpha;-convertible closed term and (potentially open) subterms are exactly the same</a>, so from now on we will consider &alpha;-convertibility as a simple and immediate equality test.
+Therefore, to automate the convertibility check the only thing that has to be done is to choose which reduction to perform until the term is no longer reducible.<br/>
+This gives us a first correct and working convertibility test algorithm, however it is not very efficient in some cases.<br/>
+To demonstrate this we will use an inefficient implementation of the fibonacci function that takes a long time to compute when the numbers used as an argument is big (like twenty).
+Because we will use this function for later examples, let's put it in the context as <code>g2</code>:
+<code>g2&larr;fix v1 v2. case v2 of { c1. c1 | c2. v3. ((g1 (v1 v3)) case v3 of { c1. c2 c1 | c2. v4. (v1 v4) }) }</code>.
+This fibonacci function <code>g2</code> satisfies the following equalities: g2 0 = 0, g2 1 = 1, g2 n = g2 (n - 1) + g2 (n - 2).<br/>
+Back to the example of inefficient convertibility test, <code>g2 40</code> is convertibles to <code>(g1 (g2 39)) (g2 38)</code>, but the algorithm will take a long time reducing both terms until the end no matter the reduction order chosen, not realizing that the following sequences of reductions transforms both into a common term (which makes them necessarily part of the same equivalence class):<br/>
+From <code>g2 40</code>, &delta;, &iota;-fix, &iota;-match, &beta;, &iota;-match, &beta;.<br/>
+From <code>(g1 (g2 39)) (g2 38)</code>, &delta;, &delta;.
+</p>
+<h3>Formulation of convertibility problems</h3>
+<p>
+Given two terms <code>t1</code> and <code>t2</code>, the general problem of finding a proof that they are convertible consists in finding a pair of sequence of reduction such that applying the members of the pair to the respective term gives two &alpha;-convertible terms, or two terms that for sure aren't convertible.
+A sequence of reduction names is generally not enough as there may be several location the reductions can be applied at.
+So the sequence of reduction has to provide the location in the term where the pattern to match is alongside the type of reduction.
+Then the &alpha;-convertibility check is easy as stated previously.
+As for the check that the terms are for sure not convertible, the following algorithm decides whether two terms are convertible, or not, or whether the terms need to be reduced further.<br/>
+If (sub)terms are:
+<ul>
+<!-- TODO HERE -->
+<li>Both abstractions <code>vl. tl</code> and <code>vr. tr</code>, they have the same convertibility as <code>tl</code> and <code>tr</code>,</li>
+<li>Both applications <code>tl0 tl1</code> and <code>tr0 tr1</code>, they are:
+	<ul>
+	<li>convertible if</li>
+	<li>not convertible if</li>
+	<li>convertible if</li>
+	</ul>
+</li>
+<li>Otherwise terms are not convertible</li>
+</ul>
+if head subterms are:
+<ul>
+<!-- TODO HERE -->
+<li></li>
+<li></li>
+<li>Otherwise terms are not fully reduced (not values)</li>
+</ul>
+In practice an algorithm that doesn't just reduce both terms blindly has to look at both terms, chose which one to reduce, where to reduce, and which reduction to apply.
+The sequence of reduction doesn't have to be stored as long as the reductions performed by the algorithm are correct.
+</p>
+<!-- TODO: Write proper article -->
+<h3>Reduction strategies</h3>
+<h3>Convertibility test algorithm used in Rocq</h3>
+<h2>Breaking the Rocq convertibility test algorithm</h2>
+<p>
+</p>
+</body>
+</html>
