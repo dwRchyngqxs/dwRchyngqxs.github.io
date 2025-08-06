@@ -89,7 +89,7 @@ That is the head of terms is reduced using beta, zeta, and iota reductions (all 
 Second, the reduced terms are tested for immediate convertibility.
 If immediate convertibility did not decide then either
 * the head of both terms are stuck: the algorithm is applied recursively on all subterms which prevented decidability of the immediate convertibility;
-* the head of only one of the term is not stuck: that head is delta reduced and the algorithm is reapplied on the obtained terms;
+* the head of only one of the term is not stuck: that term is put in whnf (with delta) and the algorithm is reapplied on the obtained terms;
 * the head of both terms aren't stuck and they are different global names: an oracle decides which head to delta reduce then the algorithm is reapplied on the obtained terms;
 * the head of both terms aren't stuck and they are the same global name: do as if both head were stuck, and if any of the subterm is not convertible then do as if both head aren't the same global;
 
@@ -100,8 +100,79 @@ The third one is to not perform delta reductions and assume that if the head are
 The second and third tricks are the main heuristics the algorithm employs.
 They can be really effective at cutting down computations compared to fully reducing terms:
 
-..
-  TODO HERE: examples
+.. coq::
+
+   (* Simulating what convertibility test would do *)
+   Goal length (1 :: 2 :: 3 :: 4 :: nil) = 1 + length (2 :: 3 :: 4 :: nil).
+     (* already in beta zeta iota weak head normal form *)
+     (* head do not match, oracle decides to delta reduce left *)
+     set (to_reduce := length (1 :: 2 :: 3 :: 4 :: nil)).
+     lazy delta [length] in to_reduce.
+     (* put in beta zeta iota whnf *)
+     lazy beta zeta fix in to_reduce; lazy match in to_reduce.
+     subst to_reduce.
+     (* head do not match, left head is fully stuck, put right in whnf *)
+     set (to_reduce := 1 + length (2 :: 3 :: 4 :: nil)).
+     lazy beta zeta iota delta [plus] in to_reduce.
+     (* head S matches, no immediate convertibility of
+       (delta expanded length) vs length,
+       left head is fully stuck, put right in whnf *)
+     lazy beta delta [length] in to_reduce.
+     subst to_reduce.
+     (* terms are immediately convertible *)
+   Abort.
+
+   (* Assuming a perfect oracle *)
+   Goal boom 26 = boom 25 + boom 25.
+     (* already in beta zeta iota weak head normal form  *)
+     (* head do not match, oracle decides to delta reduce left *)
+     set (to_reduce := boom 26).
+     lazy delta [boom] in to_reduce.
+     (* put in beta zeta iota whnf *)
+     lazy beta zeta fix in to_reduce; lazy match in to_reduce.
+     subst to_reduce.
+     (* head + matches, last argument are treated first,
+       (delta expanded boom) 25 vs boom 25: no immediate convertibility,
+       recursive call, put in beta zeta iota whnf *)
+     set (to_reduce := _ 25) at 3;
+       lazy beta zeta fix in to_reduce; lazy match in to_reduce;
+       subst to_reduce.
+     (* head do not match, oracle decides to delta reduce right *)
+     set (to_reduce := boom 25) at 2.
+     lazy delta [boom] in to_reduce.
+     (* put in beta zeta iota whnf *)
+     lazy beta zeta fix in to_reduce; lazy match in to_reduce.
+     subst to_reduce.
+     (* last argument are immediately convertible, return result *)
+     set (convertible := (if Nat.eqb 25 24 then 1 else 0) + _ 24 + _ 24).
+     (* back at head + matches, first argument are treated next,
+       no immediate convertibility of
+       (if Nat.eqb 26 24 then 1 else 0) + (delta expanded boom) 25 vs boom 25,
+       recursive call, already in beta zeta iota whnf
+       head do not mach, oracle decides to delta reduce left *)
+     set (to_reduce := plus) at 2; lazy delta [plus] in to_reduce; subst to_reduce.
+     (* already in whnf, new head is Nat.eqb,
+       doesn't match +, oracle decides to delta reduce left *)
+     set (to_reduce := if Nat.eqb 26 24 then 1 else 0).
+     lazy delta [Nat.eqb] in to_reduce.
+     (* put in beta zeta iota whnf *)
+     lazy beta zeta iota in to_reduce.
+     subst to_reduce.
+     (* still not whnf, I wish I could control reduction without all these set/subst ;) *)
+     set (to_reduce := _ 0);
+       lazy beta zeta fix in to_reduce; subst to_reduce; lazy beta match;
+       set (to_reduce := _ 25) at 1;
+       lazy beta zeta fix in to_reduce; lazy match in to_reduce;
+       subst to_reduce.
+     (* head do not match, ...
+       I skip this because we already did it above, terms are convertible.
+       The algorithm would have to do it again though. *)
+   Abort.
+
+   (* In reality, the oracle isn't this smart enough *)
+   Goal boom 26 = boom 25 + boom 25.
+     Timeout 30 reflexivity.
+   Abort.
 
 While this algorithm works well for these cases, I have some remarks about the heuristics.
 First, I do not know yet how the oracle works and did not investigate, let's assume for the rest of this post that it makes optimal choices.
@@ -212,4 +283,12 @@ The final missing part of the picture is how to represent a location in a term.
      | {| rlbI := x |} => x
      end.
 
-TODO HERE: Compression of location using moves up and down
+Terms are trees, so a location in a term can be expressed as a location in a tree.
+However, there is a more efficient representation relying on how common reduction strategies operate.
+Common reduction strategies don't move randomly in a term, in fact they do quite the opposite, they tend to focus on a subterm, do several reductions at the same place, then once they unfocus the subterm, they do not focus on it again.
+So they overall change location less often than they reduce, and these changes in location are very local.
+Which makes full tree location wasteful compared to relative movements.
+A sequence of reductions is then a sequence of either movements toward the root, movements toward a leaf, or reduction kinds with aditional data for the zeta reduction.
+This sequence is easy to replay with a zipper, and easy to record using inversion of control.
+Inversion of control has the added benefit of making reduction algorithms correct, although the set of reductions has to be carefully crafted to allow reductions similar to the ones performed as common optimisations.
+For instance replacing a single variable from context instead of a full beta or zeta reduction is a common optimisation.
