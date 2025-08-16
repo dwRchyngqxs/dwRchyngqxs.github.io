@@ -48,3 +48,49 @@
      Fail Timeout 10 (* not this though ¯\_(ツ)_/¯ *)
      set (does_not_work := _ 25).
    Abort.
+
+Single step reductions are as a tactic in ltac (ltac2 TBD), and as a reduction in `Eval reduction in term.` (vernacular) / `let ... := eval reduction in term in ...` (ltac).
+All examples will use the ltac tactic which supports occurence control.
+The basic use is `step reduction`:
+
+.. coq::
+
+   Goal let f := (fun x => max x) 5 in f 4 = let x := 5 in x.
+     step eta'. (* TODO swap eta and eta' *)
+     step zeta. (* all visible occurences by default *)
+     step delta. (* also works with primitives *)
+     step fix. (* use cofix for cofixes *)
+     step beta.
+     step match. (* also works with primitive projections. use uip for UIP (SProp inversion) *)
+     step beta at 2. (* specific occurence *)
+     step fix.
+     Fail step beta at 1 2. (* no overlapping occurences *)
+     Fail step beta at 3. (* m0 isn't applied *)
+     do 2 step beta; do 2 (step beta; step match); step match; step beta at 2.
+
+Please note that occurences do not count inside evar bodies nor cast types.
+Evar and casts can be eliminated using the `evar` and `cast` reductions.
+There are also advanced reductions and way of counting occurences:
+
+.. coq::
+
+     Fail step fix. (* error message is a bug, failure is intended *)
+     step fix'. (* make sure it is correct if you use it!!! as well as cofix' *)
+     Fail Timeout 3
+     repeat step fix'. (* esp. don't do this *)
+	 step cbv (* next reduction of a call-by-value strategy *)
+	 step cbn (* next reduction of a call-by-name strategy TODO *)
+	 step lazy (* next reduction of a lazy strategy TODO *)
+	 step head (* next reduction to get to a head normal form with call-by-name TODO *)
+   Abort.
+
+   Goal id (eq nat) (max (id 2) 3) 4.
+     step delta id at 1. (* Only selects first occurences of "id" *)
+     step delta id.
+	 (* I might consider adding that for match *)
+     step root. (* reduces at root of the term (TODO: rename current `head`) *)
+   Abort.
+
+There is also `eta` to eta expand the whole term, but it is not very usable on its own.
+Using it with `change` or `match goal with ...` is recommended.
+The last reduction is called `zeta_match` for let-bindings in match; it is safe to ignore if you don't know what that is or have not encountered it before.
