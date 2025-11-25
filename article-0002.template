@@ -54,52 +54,43 @@
 			document.getElementById("qfurry").hidden = false;
 	}
 	function makeastep(el) {
-		el.outerHTML = "<input value='step on me daddy' disabled/>";
+		el.outerHTML = "<input form='form' name='rinksnksm' value='step on me daddy' disabled/>";
 	}
 	let lies = 0;
 	function truth() {
 		lies = 0;
 		document.getElementById("dlie1").hidden = true;
-		document.getElementById("lie1").checked = false;
 		document.getElementById("dlie2").hidden = true;
-		document.getElementById("lie2").checked = false;
 		document.getElementById("dlie3").hidden = true;
-		document.getElementById("lie3").checked = false;
 		document.getElementById("dlie4").hidden = true;
-		document.getElementById("lie4").checked = false;
 		document.getElementById("dlie5").hidden = true;
-		document.getElementById("lie5").checked = false;
 		document.getElementById("dlie6").hidden = true;
-		document.getElementById("lie6").checked = false;
 		document.getElementById("dlie7").hidden = true;
-		document.getElementById("lie7").checked = false;
 		document.getElementById("dlie8").hidden = true;
-		document.getElementById("lie8").checked = false;
 	}
 	function lie(ev) {
+		let form = document.forms["form"];
 		if (lies == 0) {
 			lies += 1;
+			form["lie1"].checked = false;
 			document.getElementById("dlie1").hidden = false;
 			ev.preventDefault();
 		} else if (lies < 8) {
-			if (document.getElementById("lie" + lies).checked) {
+			if (form["lie" + lies].checked) {
 				lies += 1;
+				form["lie" + lies].checked = false;
 				document.getElementById("dlie" + lies).hidden = false;
 			} else alert("Please certify that you are not lying.");
 			ev.preventDefault();
 		} else {
 			for (let i = 1; i <= 8; i += 1) {
-				if (!document.getElementById("lie" + lies).checked) {
+				if (!form["lie" + i].checked) {
 					alert("LIAR!");
 					break;
 				}
 			}
 		}
 	}
-	// TODO: use hidden inputs instead of booleans so that they do not reset on refresh
-	let absurdclick = false;
-	let rrclick = false;
-	let sexclick = false;
 	function computeres() {
 		const total = 26;
 		let ans = 0;
@@ -107,9 +98,14 @@
 
 		ans += form["q0"].value != "";
 		ans += form["hyp"].value != "";
-		ans += form["crawl"].checked || form["stroke"].checked || form["corkscrew"].checked || form["spin"].checked;
+		ans += form["crawl"].checked
+			|| form["stroke"].checked
+			|| form["corkscrew"].checked
+			|| form["spin"].checked;
 		ans += form["aesth"].value != "";
-		ans += form["aesm"].checked || form["aesy"].checked || form["aesn"].checked;
+		ans += form["aesm"].checked
+			|| form["aesy"].checked
+			|| form["aesn"].checked;
 		let cookies = document.getElementsByName("cookies");
 		ans += cookies[0].checked || cookies[1].checked;
 		ans += form["final"].value != "";
@@ -117,15 +113,50 @@
 		ans += form["qmgenre"].selectedIndex != 0; 
 		ans += form["pgenre"].selectedIndex != 0;
 		ans += form["genex"].value != "";
-		ans += form["meth"].value != ""
+		ans += form["meth"].value != "";
 		ans += form["name"].value != "";
-		ans += form["enterom"].checked + form["enteriw"].checked + form["enterow"].checked + form["enterim"].checked + form["entern"].checked + form["enterb"].checked == 2 || form["enteriw"].checked;
-		ans += absurdclick;
+		ans += form["enteriw"].checked
+			|| 2 == form["enterom"].checked
+				+ form["enteriw"].checked
+				+ form["enterow"].checked
+				+ form["enterim"].checked
+				+ form["entern"].checked
+				+ form["enterb"].checked;
+		ans += form["absurdclick"].value != "";
 		ans += form["what"].value != "";
-		ans += rrclick;
+		ans += form["rrclick"].value != "";
 		ans += form["gayjesus"].value != "";
-		// ans += ; sub / woke / cgt / cchg / sci / money / feet / secu / cake / prosel / music / sexclass / usbc / kitch / soak / sounding / lsd / authority / nurture / nature / comm / selfcon / empath / charisma / teenspirit / intel
-		ans += form["stra"].value != "" && form["slia"].value != "" && form["neut"].value != "" && form["slid"].value != "" && form["strd"].value != "";
+		ans += form["sub"].value != ""
+			&& form["woke"].value != ""
+			&& form["cgt"].value != ""
+			&& form["cchg"].value != ""
+			&& form["sci"].value != ""
+			&& form["money"].value != ""
+			&& form["feet"].value != ""
+			&& form["secu"].value != ""
+			&& form["cake"].value != ""
+			&& form["prosel"].value != ""
+			&& form["music"].value != ""
+			&& form["sexclass"].value != ""
+			&& form["usbc"].value != ""
+			&& form["kitch"].value != ""
+			&& form["soak"].value != ""
+			&& form["sounding"].value != ""
+			&& form["lsd"].value != ""
+			&& form["authority"].value != ""
+			&& form["nurture"].value != ""
+			&& form["nature"].value != ""
+			&& form["comm"].value != ""
+			&& form["selfcon"].value != ""
+			&& form["empath"].value != ""
+			&& form["charisma"].value != ""
+			&& form["teenspirit"].value != ""
+			&& form["intel"].value != "";
+		ans += form["stra"].value != ""
+			&& form["slia"].value != ""
+			&& form["neut"].value != ""
+			&& form["slid"].value != ""
+			&& form["strd"].value != "";
 		let loss0 = 0;
 		for (let i = 0; i <= 3; i += 1)
 			for (let j = 0; j <= 6; j += 1)
@@ -135,10 +166,37 @@
 			for (let j = 0; j <= 6; j += 1)
 				loss1 = loss1 << 1 | document.getElementById(("loss" + i) + j).checked;
 		ans += loss0 == 76108416 && loss1 == 1387095;
-		ans += sexclick;
+		ans += form["sexclick"].value != "";
 		let hoyf = document.getElementById("hobby").files;
 		ans += hoyf.length != 0;
-		// ans += ; (rate stuff) TODO
+		ans += form["rop"].value != ""
+			&& form["rll"].value != ""
+			&& form["rroh"].value != ""
+			&& form["rmlp"].value != ""
+			&& form["rcotn"].value != ""
+			&& form["r2g1c"].value == "0"
+			&& form["rkf"].value != ""
+			&& form["rmh"].value != ""
+			&& form["rmm"].value == "312113"
+			&& form["rshk"].value != ""
+			&& form["rr12"].value != ""
+			&& form["rmil"].value != ""
+			&& form["rpj"].value != ""
+			&& form["rohshc"].value != ""
+			&& form["rpgtpt"].value != ""
+			&& form["rsiao"].value == "8"
+			&& form["rk"].value != ""
+			&& form["rinksnksm"].value == "step on me daddy"
+			&& form["rws"].value != ""
+			&& form["rca"].value != ""
+			&& form["rir"].value != ""
+			&& form["rkdo"].value != ""
+			&& form["ryft"].value != ""
+			&& form["rwyht"].value != ""
+			&& form["racs"].value != ""
+			&& form["roidf"].value != ""
+			&& form["rmt"].value != ""
+			&& form["rlutmg"].value != "";
 		ans += form["fur"].value != "";
 		let ess = document.getElementById("essay");
 		ans += ess.value != "";
@@ -146,7 +204,7 @@
 		let res = document.getElementById("result");
 		if (ans == total) {
 			// await crypto.subtle.digest("SHA-1", new ArrayBuffer(6));
-			res.innerText = "You completed the quiz, thank you for your participation in this study. Results computation is WIP, come back later. You can now print this webpage and frame them, or use them as wallpaper, or print them on toilet paper.";
+			res.innerText = "You completed the quiz, thank you for participating in this study. Results computation is WIP, come back later. You can now print this webpage and frame it, or use it as wallpaper, or print it on toilet paper.";
 		} else {
 			ess.value = "";
 			res.innerText = "You did not answer all questions, you only answered " + ans + " / " + total + " questions.";
@@ -175,6 +233,10 @@
 	</form>
 	<p><button onclick="start_quizz(false)">Start quizz</button></p>
 </li>
+
+<input form="form" type="hidden" name="absurdclick" value=""/>
+<input form="form" type="hidden" name="rrclick" value=""/>
+<input form="form" type="hidden" name="sexclick" value=""/>
 
 <li class="qmain" hidden>
 	<b>Suppose you are with your friends at the pool.
@@ -1800,6 +1862,7 @@
 	<summary>Why am I being asked this question?</summary>
 	My name is LGBTQIA+ identity/existential crisis quizz. I feel like at this point we should get to know each other. We'll be here for a bit.
 	</details></small>
+	<!-- TODO: special action for value 666 -->
 	<input form="form" type="number" name="name" placeholder="John Doe" min="0" max="65535" title="You can only use number keys while this field is focused; no letters, no backspace, no delete, no ctrl+r" onkeydown="ensurenumeric(event)"/><br/>
 	<br/>
 </li>
@@ -1855,7 +1918,15 @@
 	In fact, they might start drinking overseas where the atmosphere is somewhat friendlier.<br/>
 	If you want a free copy of this parable simply click the download button to the right.<br/>
 	The author of this quizz disagrees with this story.
-	Because the tenth man is dead, all other men got back the rent money they were paying and had enough to pay more than the whole group was paying before the murder.
+	Rich people evading taxes by moving out is in fact a politically manipulative empty threat used by rich people to avoid taxation.
+	Several things are wrong in this story.
+	First the richest man would pay about $10 because all the beer they drink would belong to their
+	beer import company which provides the bar in the first place.
+	This beer import company barely makes a profit because it bought the beer at a premium from a company still belonging to the richest man but located in a tax haven.
+	Part of the $10 come in part from the profit made by the beer company in the tax haven buying it for cheap from low wage workers in another country (therefore doesn't even benefit the 9 other men).
+	Another part of these $10 comes from the rent paid by the four poorest men.
+	The last part comes from the interest paid by the bartender on the mortgage he had to take to acquire the pub and all the furniture in it.
+	All of this money obviously makes up more than $10 which is why the richest man can get away with never working a job, and loosing money owning all the media to instigate conflict between the 9 other men as a distraction from real solution to the problem of his ever growing share of owning litterally everything at the expense of the others.
 	</details></small>
 	<label><input form="form" type="checkbox" name="enterom"/>I enter the man if you know what I mean</label><br/>
 	<label><input form="form" type="checkbox" name="enteriw"/>The man enters me, no homo I'm a woman</label><br/>
@@ -1872,7 +1943,7 @@
 	<summary>Why am I being asked this question?</summary>
 	The legend states that you shall be asked this question, now only god knows whether you answered.
 	</details></small>
-	<input form="form" type="color" name="absurd" onclick="absurdclick = true"/><br/>
+	<input form="form" type="color" name="absurd" onclick="document.forms['form']['absurdclick'].value = 'true'"/><br/>
 	<br/>
 </li>
 
@@ -1896,7 +1967,7 @@
 	<summary>Why am I seeing this?</summary>
 	You know what you did.
 	</details></small>
-	<a href="https://youtu.be/XfELJU1mRMg" target="_blank" onclick="rrclick = true">You know where this link leads to, you cannot finish the quizz without clicking it.</a><br/>
+	<a href="https://youtu.be/XfELJU1mRMg" target="_blank" onclick="document.forms['form']['rrclick'].value = 'true'">You know where this link leads to, you cannot finish the quizz without clicking it.</a><br/>
 	<br/>
 </li>
 
@@ -2289,7 +2360,7 @@
 	<summary>Why am I being asked this question?</summary>
 	There is a distinction between sex and gender. First they are not the same word. Second their meaning is different. Third why are you asking, are you a cop?
 	</details></small>
-	<input form="form" type="range" name="sex" min="-128" max="127" onclick="sexclick = true" onchange="event.target.setAttribute('title', event.target.value)"/><br/>
+	<input form="form" type="range" name="sex" min="-128" max="127" onclick="document.forms['form']['sexclick'].value = 'true'" onchange="event.target.setAttribute('title', event.target.value)"/><br/>
 	<br/>
 </li>
 
@@ -2304,41 +2375,40 @@
 	<br/>
 </li>
 
-<!-- TODO: names -->
 <li class="qmain" hidden>
 	<b>Watch and rate (out of 10) the following animes:</b>
 	<small><details onclick="checksumm(this)">
 	<summary>Why am I being asked this question?</summary>
 	Your taste in anime is invalid, this is just to prove this point.
 	</details></small>
-	<label>One Piece <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Land of the Lustrous <input form="form" type="number" onkeydown="event.preventDefault()" min="10" max="10"/></label><br/>
-	<label>Redo of Healer <input form="form" type="number" onkeydown="event.preventDefault()" max="10" step="0.000000001"/></label><br/>
-	<label>My Little Poney <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10" onchange="brownie(this)"/></label><br/>
-	<label>Call of the Night <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>2 girls 1 cup <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="0"/></label><br/>
-	<label>Koisenu Futari <input form="form" type="number" onkeydown="event.preventDefault()" min="5" max="10"/></label><br/>
-	<label>Maria Holic <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="5"/></label><br/>
-	<label>Moriyama Mariko <input form="form" type="number" onkeydown="event.preventDefault()" min="312113" max="312113"/></label><br/>
-	<label>Stop!! Hibari-kun! <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Ranma 1/2 <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10" step="0.5"/></label><br/>
-	<label>My Isekai Life <input form="form" type="number" onkeydown="event.preventDefault()" min="-20" max="-10"/></label><br/>
-	<label>Princess Jellyfish <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Ouran High School Host Club <input form="form" type="number" onkeydown="event.preventDefault()" min="3" max="7"/></label><br/>
-	<label>Peter Grill & The Philosopher's Time <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="2"/></label><br/>
-	<label>Senpai is an Otokonoko <input form="form" type="number" onkeydown="event.preventDefault()" min="8" max="8"/></label><br/>
-	<label>Kampfer <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Iya na Kao sare nagara Kozukuri sasete Moraitai <input form="form" type="number" onkeydown="event.preventDefault()" onchange="makeastep(this)"/></label><br/>
-	<label>Wandering Son <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="8"/></label><br/>
-	<label>Cheeky Angel <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Interspecies Reviewers <input form="form" type="number" onkeydown="event.preventDefault()" min="9" max="11"/></label><br/>
-	<label>Koe de Oshigoto! <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Yamada's First Time: B Gata H Kei <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Why the hell are you here, Teacher!? <input form="form" type="number" onkeydown="event.preventDefault()" min="10" max="20"/></label><br/>
-	<label>Ao-chan Can't Study! <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Onii-chan is done for <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
-	<label>Miru Tights <input form="form" type="number" onkeydown="event.preventDefault()" min="-1" max="0"/></label><br/>
-	<label>Looking up to Magical Girls <input form="form" type="number" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>One Piece <input form="form" type="number" name="rop" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Land of the Lustrous <input form="form" type="number" name="rll" onkeydown="event.preventDefault()" min="10" max="10"/></label><br/>
+	<label>Redo of Healer <input form="form" type="number" name="rroh" onkeydown="event.preventDefault()" max="10" step="0.000000001"/></label><br/>
+	<label>My Little Poney <input form="form" type="number" name="rmlp" onkeydown="event.preventDefault()" min="0" max="10" onchange="brownie(this)"/></label><br/>
+	<label>Call of the Night <input form="form" type="number" name="rcotn" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>2 girls 1 cup <input form="form" type="number" name="r2g1c" onkeydown="event.preventDefault()" min="0" max="0"/></label><br/>
+	<label>Koisenu Futari <input form="form" type="number" name="rkf" onkeydown="event.preventDefault()" min="5" max="10"/></label><br/>
+	<label>Maria Holic <input form="form" type="number" name="rmh" onkeydown="event.preventDefault()" min="0" max="5"/></label><br/>
+	<label>Moriyama Mariko <input form="form" type="number" name="rmm" onkeydown="event.preventDefault()" min="312113" max="312113"/></label><br/>
+	<label>Stop!! Hibari-kun! <input form="form" type="number" name="rshk" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Ranma 1/2 <input form="form" type="number" name="rr12" onkeydown="event.preventDefault()" min="0" max="10" step="0.5"/></label><br/>
+	<label>My Isekai Life <input form="form" type="number" name="rmil" onkeydown="event.preventDefault()" min="-20" max="-10"/></label><br/>
+	<label>Princess Jellyfish <input form="form" type="number" name="rpj" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Ouran High School Host Club <input form="form" type="number" name="rohshc" onkeydown="event.preventDefault()" min="3" max="7"/></label><br/>
+	<label>Peter Grill & The Philosopher's Time <input form="form" type="number" name="rpgtpt" onkeydown="event.preventDefault()" min="0" max="2"/></label><br/>
+	<label>Senpai is an Otokonoko <input form="form" type="number" name="rsiao" onkeydown="event.preventDefault()" min="8" max="8"/></label><br/>
+	<label>Kampfer <input form="form" type="number" name="rk" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Iya na Kao sare nagara Kozukuri sasete Moraitai <input form="form" type="number" name="rinksnksm" onkeydown="event.preventDefault()" onchange="makeastep(this)"/></label><br/>
+	<label>Wandering Son <input form="form" type="number" name="rws" onkeydown="event.preventDefault()" min="0" max="8"/></label><br/>
+	<label>Cheeky Angel <input form="form" type="number" name="rca" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Interspecies Reviewers <input form="form" type="number" name="rir" onkeydown="event.preventDefault()" min="9" max="11"/></label><br/>
+	<label>Koe de Oshigoto! <input form="form" type="number" name="rkdo" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Yamada's First Time: B Gata H Kei <input form="form" type="number" name="ryft" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Why the hell are you here, Teacher!? <input form="form" type="number" name="rwyht" onkeydown="event.preventDefault()" min="10" max="20"/></label><br/>
+	<label>Ao-chan Can't Study! <input form="form" type="number" name="racs" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Onii-chan is done for <input form="form" type="number" name="roidf" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
+	<label>Miru Tights <input form="form" type="number" name="rmt" onkeydown="event.preventDefault()" min="-1" max="0"/></label><br/>
+	<label>Looking up to Magical Girls <input form="form" type="number" name="rlutmg" onkeydown="event.preventDefault()" min="0" max="10"/></label><br/>
 	<br/>
 </li>
 
@@ -2348,14 +2418,14 @@
 	<summary>Why am I being asked this question?</summary>
 	C'mon, I know you do.
 	</details></small>
-	<div id="dlie1" hidden><label><input form="form" type="checkbox" id="lie1"/>I will tell the truth</label></div>
-	<div id="dlie2" hidden><label><input form="form" type="checkbox" id="lie2"/>I am telling the truth</label></div>
-	<div id="dlie3" hidden><label><input form="form" type="checkbox" id="lie3"/>I certify the truth of my statements</label></div>
-	<div id="dlie4" hidden><label><input form="form" type="checkbox" id="lie4"/>I am absolutely confident in my answer</label></div>
-	<div id="dlie5" hidden><label><input form="form" type="checkbox" id="lie5"/>Inshallah</label></div>
-	<div id="dlie6" hidden><label><input form="form" type="checkbox" id="lie6"/>I acknowledge that lying exposes me to legal pursuits</label></div>
-	<div id="dlie7" hidden><label><input form="form" type="checkbox" id="lie7"/>I am fully responsible of my choices</label></div>
-	<div id="dlie8" hidden><label><input form="form" type="checkbox" id="lie8"/>I vouch for the truth of the below declaration</label></div>
+	<div id="dlie1" hidden><label><input form="form" type="checkbox" name="lie1"/>I will tell the truth</label></div>
+	<div id="dlie2" hidden><label><input form="form" type="checkbox" name="lie2"/>I am telling the truth</label></div>
+	<div id="dlie3" hidden><label><input form="form" type="checkbox" name="lie3"/>I certify the truth of my statements</label></div>
+	<div id="dlie4" hidden><label><input form="form" type="checkbox" name="lie4"/>I am absolutely confident in my answer</label></div>
+	<div id="dlie5" hidden><label><input form="form" type="checkbox" name="lie5"/>Inshallah</label></div>
+	<div id="dlie6" hidden><label><input form="form" type="checkbox" name="lie6"/>I acknowledge that lying exposes me to legal pursuits</label></div>
+	<div id="dlie7" hidden><label><input form="form" type="checkbox" name="lie7"/>I am fully responsible of my choices</label></div>
+	<div id="dlie8" hidden><label><input form="form" type="checkbox" name="lie8"/>I vouch for the truth of the below declaration</label></div>
 	<label><input form="form" type="radio" name="fur" value="0" onclick="truth()"/>Yes, I do</label><br/>
 	<label><input form="form" type="radio" name="fur" value="1" onclick="lie(event)"/>No, I don't</label><br/>
 	<br/>
@@ -2374,6 +2444,7 @@
 </ol>
 
 <h2>Control panel</h2>
+<!-- TODO: hint unlock + profile computation -->
 <button onclick="computeres()">Submit</button> <button form="form" type="reset">Reset</button>
 
 <h2>Results</h2>
