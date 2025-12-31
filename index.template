@@ -19,9 +19,9 @@
 </head>
 <body style="margin: 8px; min-height: calc(100vh - 16px); display: flex; flex-direction: column;">
 <main>
-I am Quentin Corradi, a PhD student at Imperial College London. Currently interning at EPFL.<br/>
-I work on HLS and fuzzing stuff. But atm my project is on the rocq prover.
-More specifically I am currently working on <a href=https://github.com/dwRchyngqxs/rocq/tree/controlled_red>controlled reductions (give it a try)</a> for my internship, and <a href=https://github.com/ymherklotz/verismith>Verismith</a> for my PhD.
+I am Quentin Corradi, a PhD student at Imperial College London.<br/>
+I work on Verilog stuff for my PhD. Currently improving fuzzing of <a href=https://github.com/ymherklotz/verismith>Verismith</a>. I also have a few projects on the rocq prover.<br/>
+I am almost done working on <a href=https://github.com/dwRchyngqxs/rocq/tree/controlled_red>controlled reductions (give it a try)</a> from my past internship.
 <h2>Publications</h2>
 <a href=https://doi.org/10.1145/3678722.3685536>https://doi.org/10.1145/3678722.3685536</a>
 <h2>Non professional stuff</h2>

@@ -4,11 +4,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="ascii"/>
 <link rel="stylesheet" href="minimalism.css"/>
+<!-- TODO:
+  the captcha question is NP complete pbs
+  the captcha is checked only if triggered, except for the final completion
+  the captcha takes some random time to verify answer, and it expires 30s after completion
+-->
+<!-- TODO: astrology question -->
 <script type="text/javascript">
+	let progress = 0;
 	function start_quizz(ans) {
+		switch (progress) {
+		case 0:
+			for (e of document.getElementsByClassName("qmain"))
+				e.hidden = false;
+			progress += 1;
+			break;
+		case 1:
+			document.getElementById("qenby").hidden = false;
+			progress += 1;
+			break;
+		case 2:
+			if (document.forms["form"]["name"].value != "666") {
+				alert("Say my name.");
+				break;
+			}
+			document.getElementById("qhuman").hidden = false;
+			progress += 1;
+		case 3:
+			checkhumanity();
+			// check if captcha is needed, otherwise check senses question
+			// check the senses captcha to give hints (increasehelp)
+			break;
+		}
 		if (ans) document.getElementById("q0").hidden = true;
-		for (e of document.getElementsByClassName("qmain"))
-			e.hidden = false;
+	}
+	function checkhumanity() {
+		// TODO 10
+		// let humansenses = ...;
+		// if (!humansenses) document.getElementById("qcaptcha").hidden = false;
+		return document.forms["form"]["needcaptcha"].value == ""; // || captcha
+			// && humansenses;
 	}
 	function pwnd() {
 		alert("Heh, you can't uncheck this and withdraw your consent. You got gotten got real good here.");
@@ -21,6 +56,19 @@
 			ke.preventDefault();
 			alert("You can only use number keys when this field is focused. Did you read the tooltip?");
 		}
+	}
+	function increasehelp() {
+		let hint = document.forms["form"]["hint"];
+		let n = parseInt(hint.value);
+		// TODO: logic puzzle of complexity n
+		n += 1;
+		hint.value = n.toString();
+	}
+	function saymyname(el) {
+		if (el.value == "666") {
+			document.getElementById("startbtn").innerText = "Help me!";
+			document.body.background = "satan.png";
+		} else document.body.background = "";
 	}
 	let drowntimer;
 	function underwater(el) {
@@ -207,7 +255,16 @@
 			res.innerText = "You completed the quiz, thank you for participating in this study. Results computation is WIP, come back later. You can now print this webpage and frame it, or use it as wallpaper, or print it on toilet paper.";
 		} else {
 			ess.value = "";
-			res.innerText = "You did not answer all questions, you only answered " + ans + " / " + total + " questions.";
+			res.innerText = ".";
+			switch (form["hint"].value) {
+			default:
+				// TODO: think of hint levels
+				// TODO: question by question help (except basic and basic unlocks)
+			case "1":
+				res.innerText = ", you only answered " + ans + " / " + total;
+			case "0":
+				res.innerText = "You did not answer all questions" + res.innerText;
+			}
 		}
 	}
 </script>
@@ -230,13 +287,131 @@
 	<label><input form="form" type="radio" name="q0" onclick="start_quizz(true)" value="0"/>They</label><br/>
 	<label><input form="form" type="radio" name="q0" onclick="start_quizz(true)" value="0"/>Them</label><br/>
 	<label><input form="form" type="radio" name="q0" onclick="start_quizz(true)" value="1"/>I don't use pronouns</label><br/>
-	</form>
-	<p><button onclick="start_quizz(false)">Start quizz</button></p>
+	<p><button id="startbtn" onclick="start_quizz(false)">Start quizz</button></p>
 </li>
 
 <input form="form" type="hidden" name="absurdclick" value=""/>
 <input form="form" type="hidden" name="rrclick" value=""/>
 <input form="form" type="hidden" name="sexclick" value=""/>
+<input form="form" type="hidden" name="hint" value="0"/>
+<input form="form" type="hidden" name="needcaptcha" value=""/>
+
+<li id="qenby" hidden>
+	<b>If you were non-binary, which you aren't, what would be your non-binary gender?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	C'mon non-binary is the N in "LGBTQIA+", how could this quiz not mention it?
+	To give you some help with this question let's start from the beginning.
+
+	53x. Biological sex is a human category put on pluricellular organisms with two different size of gametes.
+	It is not the only reproduction system observable in nature, and organisms are not necessarily exclusively of one sex for their whole lifetime.
+	Now, humans that are of one biological sex tend to not be (or become) the other sex, even though there has been a documented case of <a href="https://doi.org/10.1002/bjs.1800690517">sequential or simultaneous hermaphroditism</a>.
+	This might not hold true depending on scientific progress.
+	Let's keep exceedingly rare cases and speculation on future sex change technology aside.
+	Humans can be(come) of no biological sex (non gamete producing) through injuries or at the other end of possibilies a normal process called menopause.
+	The other way is usually part of puberty.
+
+	Humans extend biological sex to include individuals that used to be or are expected to become of one biological sex.
+	These extended biological sexes are correlated with quantifiable traits such as sex organs, shape of some chromosomes, hormone levels, or facial hair among many other.
+	The correlation is, mind you, not perfect, and different set of traits can be present depending on the individuals.
+	Some individuals known as intersex show traits of both or none of the sexes.
+	The externally visible statistical traits are what makes up sexual dimorphism (the statistical difference between individuals of two different sexes).
+	In practise we use (<a href="https://en.wikipedia.org/wiki/Intersex_medical_interventions">and unfortunately also enforce</a>) some of these traits to determine the sex of individuals.
+	Most of these traits have co-evolved with sex-specific roles that benefit from them.
+	Although not all sex-specific roles are of that nature, because most are cultural and cultural change rate is faster than evolutionary body selection.
+	That is not to say that there are natural roles that individuals of one sex should take on, but on the opposite that history showed us that there is no reason for these roles to be intrinsically tied to sex.
+	This is where the notion of genders is defined.
+	Gender is all the empirical cultural differences that are statistically observable between individuals of differently identified sexes.
+
+	Gendered roles are not the only component of gender as there are other kind of cultural expectations such as behaviourial or appearence.
+	All these components and the external physical traits are what is used to infer an individual sex.
+	Then people tend to extend that to inference to gender and impose associated cultural expectations.
+	Gendered expectations play a big part in discriminations and particularly sexism so you should be able to identify them.
+	This identification should be performed critically as denying their existence is not helpful.
+	Here is an example: Assume there are objects to move, the gendered expectation is that male identified individuals should perform this task.
+	This is a gendered expectation as males are indeed on average stronger than females, but the most important factor in physical strength is exercise and to a way lesser extent testosterone level (which is a secondary sex caracteristic).
+	Here sex doesn't matter because what is really asked is for the stronger people to take on the task.
+	A stronger female should take part in the task, and a weaker male could abstain.
+	Physically impaired people should abstain no matter their sex.
+	The fact that in this example a female took on a masculine role and a male abstained from it doesn't make the female less feminine nor the male less masculine nor the physically impaired genderless.
+	Gender is descriptive, not prescriptive, you do not fail gender, you make it.
+
+	This last sentence and the whole description of gender seem to indicate that there are only two genders of which all (non intersex) individual fall into.
+	But it is a mistake to think so, because gender are statistical empirical categories meaning that an individual can significantly differ from the statistic normality in many ways.
+	Therefore the step where people extend the sex inference to gender and impose associated cultural expectations is wrong and also part of discrimination (can we call that genderism?).
+	One of the ways to not conform is to chose to refuse the gender associated with the sex an individual is expected to become or used to be and embrace the cultural expectations of another gender.
+	This is referred to as the individual being transgender.
+	Another way is to not conform exclusively to a gender associated with a sex.
+	This is what non binarity and non binary genders are.
+
+	...gendered clothes...
+	...performed vs self identified gender...
+	...grammatical gender as the last topic...
+
+	...list of possible nb genders...
+	...link to more resources...
+	TODO 1 educate on non-binarity,
+	[trevor project: https://www.thetrevorproject.org/resources/article/understanding-gender-identities-and-pronouns/]
+	a set of expectations, like how to act, talk, dress, feel emotion, and interact with other people
+	we don’t have to conform.
+	Nonbinary genders, like genderfluid, genderqueer, polygender, bigender, and many othersoThere
+	are many aspects of someone’s gender:
+
+	Gender Expression: The way in which people present or express their gender, including physical
+	appearance, clothing, hairstyles, and behavior. People can exert a certain degree of control
+	over their gender expression depending on their resources and environment.
+
+	Gender Identity: Our personal sense of what our own gender is. 
+
+	Perceived Gender: How the world sees and understands your gender.
+	[nonbinary wiki: https://nonbinary.wiki/wiki/Main_Page]
+	Nonbinary is a term that refers to people whose gender is not completely and exclusively male or
+	female. They can identify with not having gender at all, with both binary genders, with a third
+	identity, or an identity which can change over time.
+
+	Some of the more common identities under the nonbinary umbrella include:
+     Agender, also called genderless or non-gendered, means having no gender identity.
+     Androgyne (from Greek, meaning "man-woman") and has been used for many kinds of people who
+	don't fit into the gender binary. Even a century ago, some people who called themselves androgynes
+	saw themselves as a mix of male and female.
+     Bigender people feel they have two genders at the same time, or moving back and forth between
+	them at different times.
+     Genderfluid people move between different gender identities, and sometimes expressions, at
+	different times.
+     Gender neutral or neutrois can mean being genderless, or it can mean having a gender identity
+	that is not female, not male, and not a mix, but simply neutral.
+     Genderqueer: Any gender identity or expression which is queer, in and of itself. That is, a
+	gender which is transgressive and non-normative. This can be an umbrella term, or a specific
+	identity. The word comes from 1995.
+
+	[wikipedia: https://en.wikipedia.org/wiki/Non-binary]...
+	</details></small>
+	TODO 2 "checkbox" list as answer
+	TODO 3 removing the empty option triggers the aphantasia question
+	<br/>
+</li>
+
+<li id="qhuman" hidden>
+	<b>What are the human senses?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	TODO 4 educate about the lies of 5 senses
+	</details></small>
+	TODO 5 checkbox toggle buttons are impossible, find something else,
+	either toggleable radio, span, or progressbar
+	TODO 6 the captcha question also has the "I agree to the terms and conditions"
+	<br/>
+</li>
+
+<li id="qcaptcha" hidden>
+	<b>Question here?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	TODO 7
+	</details></small>
+	TODO 8 & 9
+	<br/>
+</li>
 
 <li class="qmain" hidden>
 	<b>Suppose you are with your friends at the pool.
@@ -272,6 +447,15 @@
 	<br/>
 </li>
 
+<li class="qaphantasia" hidden>
+	<b>What is your way of thinking?</b>
+	<small><details onclick="checksumm(this)">
+	<summary>Why am I being asked this question?</summary>
+	educate about aphantasia and take a nib at the "way of learning" neuromyth
+	</details></small>
+	sliders
+	<br/>
+</li>
 <li class="qmain" hidden>
 	<b>Are you aesthetically attracted to</b>
 	<small><details onclick="checksumm(this)">
@@ -1862,8 +2046,7 @@
 	<summary>Why am I being asked this question?</summary>
 	My name is LGBTQIA+ identity/existential crisis quizz. I feel like at this point we should get to know each other. We'll be here for a bit.
 	</details></small>
-	<!-- TODO: special action for value 666 -->
-	<input form="form" type="number" name="name" placeholder="John Doe" min="0" max="65535" title="You can only use number keys while this field is focused; no letters, no backspace, no delete, no ctrl+r" onkeydown="ensurenumeric(event)"/><br/>
+	<input form="form" type="number" name="name" placeholder="John Doe" min="0" max="65535" title="You can only use number keys while this field is focused; no letters, no backspace, no delete, no ctrl+r" onchange="saymyname(this)" onkeydown="ensurenumeric(event)"/><br/>
 	<br/>
 </li>
 
@@ -2444,7 +2627,8 @@
 </ol>
 
 <h2>Control panel</h2>
-<!-- TODO: hint unlock + profile computation -->
+<!-- TODO: hint unlock + proper hints + profile computation -->
+<!-- TODO: truth puzzle with independant radio buttons instead of checkboxes -->
 <button onclick="computeres()">Submit</button> <button form="form" type="reset">Reset</button>
 
 <h2>Results</h2>
