@@ -4,39 +4,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="ascii"/>
 <link rel="stylesheet" href="minimalism.css"/>
-<title>Why YOU should stop drinking alchool</title>
+<title>Use chaos order for your operations</title>
 </head>
 <body>
 <nav>
 </nav>
-<!-- TODO -->
-People do not feel concerned about drinking abuse, but in this article I am talking to YOU, YOU are
-concerned, especially if you think you are just an occasionnal/party drinker.
-You may think you do not need to read this article because the arguments are going to be completely missing the point or something.
-If you are confident in your opinion you shouldn't fear reading this article because if your opinion is right, none of the argument I will make can make you change opinion so read this article.
-If you are not this confident in your opinion so my argument can affect it, but you don't want it to change, then read this article because you might just realize you were wrong.
+<!-- TODO: A case against PEMDAS/BIDMAS -->
+Pemdas is about how to read expressions, on what sub expressions are operations applied, not about in which order to compute an expression.
+If we call that expression precedence and association rules instead of expression order it is more precise and coherent with the terminology of the domain dedicated to make sense of sequence of symbols: Parsing.
 
-Stopping alchoolism isn't a matter of willpower, because alchool has a dependency effect, an effect that you can feel only if you try not drinking.
-A chemical impact on your brain cannot be fought with willpower, alchool induces dependency and dependency is an urge.
-The urge to blink can be fought with willpower for about 10 seconds, then the urge becomes harder and harder to fight and overcomes any amount of willpower, then the body blinks several times to hydrate the cornea.
-The urge to drink alchool is the same, you can refrain from drinking alchool, but the longer you try, the harder it becomes, until no amount of willpower prevents you from spending an entire day binging any alchool you have in your house making a precedent and worsening your dependency on alchool.
+Pemdas is flawed anyways compared to how the most frequent users of operations use them.
+It is not the only rule and no specific rule is more valid than other.
+To be honest I read division with a stronger precedence than multiplication.
 
-Alchool is not good for your health.
-No amount of achool is in fact.
-Alchool at any dose increases the risk of: heart diseases, throat cancer, liver failure, mental issues and pathologies (including psychosis, dementia, depression, sleep troubles), violent behaviour including domestic violence, traffic accidents (even without driving), rape, abuse, drinking more (and eventually ethyl coma), drowning in your own (and sometimes others) puke, injuries due to irresponsible behaviours (including electric shocks, fracture, cuts), losing friends and relatives, picking fights, eating stuff you wouldn't ever when sober, an so on.
-You are not cool when tipsy or drunk.
-If you every tried staying sober during a party with alchool you may have noticed that drunk people are easy to spot: they are pushy, unconsiderate, unreliable, irresponsible, don't make sense and forget things really quickly; in short they are 14 year olds with memory issues, and everyone knows how 14 year olds are not cool.
-In fact a tipsydrunk person is a liability and a douche to sober people.
-These sober people are, within many others, the waiters, the bartenders, the bouncers, people in the streets, the persons in your group responsible for getting everyone safely home (if you don't have that then you really should, it truly is a life saver).
-Alchool makes you forget how bad it is.
-Alchool affects memory so you don't remember how bad you, your friends and the whole party was.
-It also makes you forget how much alchool you drank, what and how much other substances you took, who abused you in what way, who saved you from injuring yourself and others.
-You may not agree with this previous statement and say that you in fact remember all of these things, but you are wrong, human memory is very good at pretending it is reliable when almost all studies on human memory show the contrary (even without alchool).
-If you forget information in between two sentences in a conversation, and when you are drunk you do that, there is no way you can accurately count how much alchool you ingested, or any of what was mentionned before.
-You are not more sociable when tipsy or drunk.
-Study shows that the party ambiance is what makes you more sociable and talktative.
-Even if the effect is not as much as with alchool, being sociable and talktative is a skill that you can train and apply during parties without having the inconveniences of alchool.
-If a party needs alchool to be fun, then don't take part in it, because it means it is not fun at all and just an excuse to drink, satiating your dependency on alchool and making you more dependent on it.
-If you still want to have fun try board games, dancing, having interesting conversations, thinking about the state of your life, learning a new skill, playing sports, watching a movie, or any other fun activity that requires you not being drunk to enjoy.
+posts relying on pemdas ambiguity are there to farm engagement so don't engage with them.
+If you really want to share interesting stuff then share this article instead.
+No operation should be expressed in an ambiguous way.
+
+About operation order now.
+How pemdas is commonly misinterpreted is
+THE ONLY CORRECT WAY TO COMPUTE EXPRESSIONS IS THAT AT
+ANY POINT IN AN EXPRESSION WHERE THERE IS A CHOICE, WHAT SHOULD BE PRIORITIZED IS IN ORDER:
+PARENTHESIS, EXPONENTS, MULTIPLICATION AND DIVISIONS, ADDITION AND SUBTRACTIONS, THINGS ON THE LEFT OF OPERATIONS (not always remembered but for sure always taught)
+This order is, to say it politely, incomplete and utter shit.
+
+On the incompleteness
+
+On the utter shitness
+
+Better orders
+1- Minimizing intermediate state (rescheduling)
+2- Minimizing maximum number size (rewrites: assoc and comm, then other rewrites)
+3- Minimizing the number of complex operations (rewrites + partial computation)
+4- And the most used in practise: Chaos order (do whatever you want as long as it is still correct)
 </body>
 </html>

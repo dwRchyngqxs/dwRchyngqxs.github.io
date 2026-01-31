@@ -4,38 +4,94 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="ascii"/>
 <link rel="stylesheet" href="minimalism.css"/>
-<title>Use chaos order for your operations</title>
+<title>Gambler's fallacy fallacy fallacy...</title>
 </head>
 <body>
+<p><i>Content warning: Maths.</i></p>
 <nav>
 </nav>
-<!-- TODO: A case against PEMDAS/BIDMAS -->
-Pemdas is about how to read expressions, on what sub expressions are operations applied, not about in which order to compute an expression.
-If we call that expression precedence and association rules instead of expression order it is more precise and coherent with the terminology of the domain dedicated to make sense of sequence of symbols: Parsing.
-
-Pemdas is flawed anyways compared to how the most frequent users of operations use them.
-It is not the only rule and no specific rule is more valid than other.
-To be honest I read division with a stronger precedence than multiplication.
-
-posts relying on pemdas ambiguity are there to farm engagement so don't engage with them.
-If you really want to share interesting stuff then share this article instead.
-No operation should be expressed in an ambiguous way.
-
-About operation order now.
-How pemdas is commonly misinterpreted is
-THE ONLY CORRECT WAY TO COMPUTE EXPRESSIONS IS THAT AT
-ANY POINT IN AN EXPRESSION WHERE THERE IS A CHOICE, WHAT SHOULD BE PRIORITIZED IS IN ORDER:
-PARENTHESIS, EXPONENTS, MULTIPLICATION AND DIVISIONS, ADDITION AND SUBTRACTIONS, THINGS ON THE LEFT OF OPERATIONS (not always remembered but for sure always taught)
-This order is, to say it politely, incomplete and utter shit.
-
-On the incompleteness
-
-On the utter shitness
-
-Better orders
-1- Minimizing intermediate state (rescheduling)
-2- Minimizing maximum number size (rewrites: assoc and comm, then other rewrites)
-3- Minimizing the number of complex operations (rewrites + partial computation)
-4- And the most used in practise: Chaos order (do whatever you want as long as it is still correct)
+<p>
+Assume a gambler is trying to maximise the number of correct prediction on the outcome of a game repeated several times.
+The possible outcomes of the game are the same each time and each game is independent from the others.
+Examples of such a game are a coin toss, a die roll, a lottery, or the roulette.
+Assume also that the gambler wants to maximise the number of correct predictions.
+We will examine a few common hacks to do so.
+</p>
+<h3>Gambler's fallacy</h3>
+<p>
+The naive, non mathematics versed gamblers usually believe in the following hack:
+the most likely outcome is that which occurred the most.
+This hack is often called "reverse gambler's fallacy", but for shits and giggles we will call it "gambler's fallacy" here.
+It isn't necessarily wrong because, a consequence of the law of large numbers is that the frequency of an outcome converges to its probability, but this convergence can be slow.
+<!-- TODO NEXT: what does converging mean in this context -->
+In general, calling the outcome with the maximal theoretical probability is better, especially when the frequency didn't have enough time to converge in order to get an idea of the most likely outcome.
+<!-- TODO: go into convergence speed depending on probability and variance, and how many data do we need to have a reasonable chance of distinguishing the most likely outcome (based on delta of most likely outcomes and variance I think) -->
+<!-- Go into the finite case as it is more relevant and convincing, expectation of distance as n increases is fine too -->
+Actually, the real fallacy is to assume that getting an outcome somehow changes the theoretical probability of an independent game.
+The gambler subject to this fallacy will think that getting red at the roulette is more likely than not just because the ball ended up on red more often than not (remember there is a special not red nor black pocket).
+They may even go as far as argue that the probability of getting red is indeed higher than not getting red.
+</p>
+<h3>Gambler's fallacy fallacy</h3>
+<p>
+The wiser, lightly versed into mathematics gambler usually believe in the following hack:
+outcomes which frequency doesn't match their probability are more or less likely to occur depending on whether the frequency is higher or lower than the probability.
+This hack which is wrong is often called "gambler's fallacy", but for poops and chuckles we will call it "gambler's fallacy fallacy" here.
+The outcome of one games is independent of all other games, so by definition the probabilities cannot change.
+The gambler subject to this fallacy will think that getting 6 on a die roll is more likely than not just because 6 occurred less than 1/6th of the time.
+They usually believe in this hack for one of the two reasons.
+Either they interpret the meaning of probabilities wrong.
+They think of probabilities with language such as "rolling a 6 happens 1/6th of the times", and believe that not rolling a 6 five times ensures a 6 on the next roll as if faces of a dice were pulled out of a deck of card.
+Usually this radical version of the gambler's fallacy is more common to people less comfortable with mathematics.
+Or they interpret the law of large numbers wrong.
+There are three versions of it going from a straight up compensation (in the most radical case) and convergence towards 0 (in the tamest case) of the difference between the expected number of occurrences and the actual number of occurrences, to a rebalancing of the frequencies at an undeterminate point down the line for an opaque reason such as "it's just how randomness works".
+The different misinterpretations of the law of large numbers sit on a spectrum that I think is correlated with how comfortable with mathematics the person holding the belief is.
+The more reasonable version even being believed by people working in science fields close to mathematics.
+These misinterpretations often match how the law of large numbers is taught whether in school or in science communication and I'm sick of people making it seem like there is a magic compensation happening.
+THERE IS NO MAGIC FREQUENCY/PROBABILITY BALANCE TRICK, all there is is the counterintuitiveness of limits and infinity.
+Please allow me to give a proper and complete explainer once and for all.
+<!-- TODO: explain what happens, 2d walk, variance of 2d walk, probability that it gets to 0 at any point in the future, divided by n tends to 0, convergence can ignore any number (1million?) of abnormal past results (the same outcome) as this finite amount gets divided by n so tends to 0, the chance of closing the gap at any point is the same as doubling it -->
+<!-- Go into the finite case as it is more relevant and convincing, frequency will be an average of the current frequency and theoretical frequency ponderated by attempts -->
+If you have to only keep one point from this article, please let it be: THERE IS NO MAGIC FREQUENCY/PROBABILITY BALANCE TRICK; ALTHOUGH THE PROBABILITY OF BALANCING IS 1, THE EXPECTD NUMBER OF ATTEMPT BEFORE BALANCING IS INFINITE.
+</p>
+<h3>Gambler's fallacy fallacy fallacy</h3>
+<p>
+The mathematician aware of the gambler's fallacy fallacy usually believes in the following hack:
+the best strategy is to always bet on an outcome with the highest probability independently of the history of outcomes.
+This hack is widely accepted to be true by people versed in mathematics but not in the field of probability/statistics, but is in fact wrong.
+While it may seems like I contradict myself here, I didn't claim that this strategy is the best in all cases.
+The cases in which it is the best strategy are when the theoretical probability is likely to be the true probability beyond reasonable doubt.
+A case in which it isn't the best strategy is if after 23 coin tosses the result is always the same, and there is reasonable doubt about the coin being balanced or the result being reported correctly.
+Basically what we believe to be the true probability should be adjusted depending on the previous results according to Bayes formula.
+The previous sentence is commonly misinterpreted in two ways which are equivalent to the gambler's fallacy:
+<!-- TODO NEXT 1: draft -> paragraphs -->
+<!-- previous results have an impact on probability (it only has impact on our assessment of the probability) -->
+<!-- continual adjustment of probability (theoretical probability should only be ditched when there is reasonable doubt that it is wrong) -->
+What a reasonable doubt is depends on how unlikely the assumption of a fair game is, which can be assessed with p-value.
+The p-value is the likelihood of having the history of outcomes that we got assuming fair randomness.
+After 23 coin tosses the p-value is 0.00000012 which means any history of outcomes is enough to reject the hypothesis that the coin toss is fair, balanced, and random.
+A more likely hypothesis is that the sequence was predetermined, reality is a lie, and we just don't know which universe of the multiverse of coin toss we are in.
+Indeed, assuming this hypothesis the probability of the history of outcomes is 1, which is much better.
+Sorry for this slight lapse in my judgement, let's get back on track.
+The p-value is the likelihood of having an history of outcomes which makes the frequency at least far from the probability as the probability we got assuming fair randomness.
+<!-- TODO: give an example of computing a p-value -->
+<!-- TODO HERE: take a shot at the wrong interpretation of p-value -->
+</p>
+<h3>Limits, or potential Gambler's fallacy fallacy fallacy fallacies</h3>
+<p>
+<!-- TODO NEXT 2: order -> draft -> paragraphs -->
+<!-- If there are several maximaly likely outcomes it doesn't really matter which is predicted, let people be wrong to motivate a choice that doesn't matter, it's not worth fighting over -->
+<!-- IId variables, deck of card doesn't apply, but if the number of attempts is way lower than the pool it may apply as an approximation, the iid hypothesis isn't even necessary but I didn't investigate these cases -->
+<!-- It may not be aplicable if the game depends on your prediction -->
+<!-- if theoretical probability should be ditched, there can be reasonable doubt that there is a probability and the game host is not just maximally screwing us and we should just stop from participating -->
+<!-- Does the game even have a probability for outcomes? if the game outcomes follow sequences of exponentially increasing length then there is no such thing as a probability of an outcome (the probability does not converge) -->
+<!-- these may seem stupid hypothetical but if your game isn't a simple coin toss or die roll there about it not being iidmay be a decent case to be made that the law of large numbers doesn't apply -->
+<!-- Games like stock exchange -->
+</p>
+<h3>Conclusion</h3>
+<p>
+Probabilities are just a model of subjective ignorance, and in our case ignorance of the future.
+To the people in the future, all there is are events that happend or didn't.
+And in the end, the house always wins.
+</p>
 </body>
 </html>
