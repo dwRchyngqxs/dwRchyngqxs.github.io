@@ -301,8 +301,7 @@
 	<small><details onclick="checksumm(this)">
 	<summary>Why am I being asked this question?</summary>
 	C'mon non-binary is the N in "LGBTQIA+", how could this quiz not mention it?
-	To give you some help with this question I wrote a blog post <a href="article-0004.html">here</a>.
-	Other resources are <a href="https://www.thetrevorproject.org/resources/article/understanding-gender-identities-and-pronouns/">the trevor project</a>, <a href="https://nonbinary.wiki/wiki/Main_Page">the nonbinary wiki</a>, and <a href="https://en.wikipedia.org/wiki/Non-binary">the wikipedia page</a>.
+	To give you some help with this question I wrote a blog post <a href="article-0004.html" target="_blank">here</a>.
 	</details></small>
 	TODO 1 "checkbox" list as answer
 	TODO 2 removing the empty option triggers the aphantasia question
