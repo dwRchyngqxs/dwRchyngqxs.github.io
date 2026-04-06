@@ -4,38 +4,115 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="ascii"/>
 <link rel="stylesheet" href="minimalism.css"/>
-<title>Use chaos order for your operations</title>
+<title>How to speak loud and clear without straining your voice from an ESL perspective</title>
 </head>
 <body>
+<p><i>Content warning: Exercises, Anatomy.</i></p>
 <nav>
 </nav>
-<!-- TODO: A case against PEMDAS/BIDMAS -->
-Pemdas is about how to read expressions, on what sub expressions are operations applied, not about in which order to compute an expression.
-If we call that expression precedence and association rules instead of expression order it is more precise and coherent with the terminology of the domain dedicated to make sense of sequence of symbols: Parsing.
-
-Pemdas is flawed anyways compared to how the most frequent users of operations use them.
-It is not the only rule and no specific rule is more valid than other.
-To be honest I read division with a stronger precedence than multiplication.
-
-posts relying on pemdas ambiguity are there to farm engagement so don't engage with them.
-If you really want to share interesting stuff then share this article instead.
-No operation should be expressed in an ambiguous way.
-
-About operation order now.
-How pemdas is commonly misinterpreted is
-THE ONLY CORRECT WAY TO COMPUTE EXPRESSIONS IS THAT AT
-ANY POINT IN AN EXPRESSION WHERE THERE IS A CHOICE, WHAT SHOULD BE PRIORITIZED IS IN ORDER:
-PARENTHESIS, EXPONENTS, MULTIPLICATION AND DIVISIONS, ADDITION AND SUBTRACTIONS, THINGS ON THE LEFT OF OPERATIONS (not always remembered but for sure always taught)
-This order is, to say it politely, incomplete and utter shit.
-
-On the incompleteness
-
-On the utter shitness
-
-Better orders
-1- Minimizing intermediate state (rescheduling)
-2- Minimizing maximum number size (rewrites: assoc and comm, then other rewrites)
-3- Minimizing the number of complex operations (rewrites + partial computation)
-4- And the most used in practise: Chaos order (do whatever you want as long as it is still correct)
+<p>
+Whether it is for meetings, presentations, or conversations, speaking with appropriate volume and clarity to be heard is an essential skill that is not usually taught.
+Most of the time people assume others can just "raise their voice" and will ask assuming it is enough.
+If you receive these comments often, you are probably finding them unhelpful because if you could know how lound you should be and were able to sustain speaking that loud you would probably already be doing it.
+Obviously the exception is people insecure about their voice, in which case sorry, this is not for you.
+The only thing I can say is that people would rather hear you speak with a shitty voice that struggle to decode what you are saying.<br/>
+In this article we will see how to increase your volume and sustain that volume without straining your voice.
+And no, pushing more air (including screaming) is NOT the answer, it will be more straining and can injure you.
+Pushing more air is one really fucking stupid way to permanently injure your vocal cords.
+</p>
+<h3>How to know how loud you should be</h3>
+<ol>
+<li>Initially, judge the volume by estimating distance with the furthest people who should be able to hear you, adjust for ambiant noise and presence of objects in the environment, and go louder than this.</li>
+<li>
+	Directly ask "am I loud enough, are you hearing me well?".
+	It is not a strange question, especially when giving presentations or in meetings.
+</li>
+<li>
+	People may simply tell you that you are not loud enough or they cannot hear you.
+	But be careful with this one, people will often stop asking if they do not hear significant improvement after asking once or twice.
+</li>
+<li>
+	Look at people body language, and how they answer you.
+	Do they seem to be struggling to understand what you say? If so, you should probably speak louder.
+	Do they seem attacked, surprised, or preparing for when you speak? If so, you should probably speak quieter.
+</li>
+</ol>
+<h3>How to increase loudness</h3>
+<h4>Trick 1: Open your mouth</h4>
+<p>
+Your voice comes out of your body from your mouth and nose.
+If your mouth is mostly closed it will impede on the volume amplification your mouth is able to provide.
+Mostly closed here can be measured with the horizontal and vertical distance of your mouth hole.
+Usually vertical distance is the problem, if the distance is smaller than the width of one fingers you should definitely open you mouth more.<br/>
+Try speaking normally with two fingers in front of your mouth, what is the vertical distance between your lips when saying vowels?
+Then try speaking slowly but opening your mouth by widening the gap between your lower and upper teeth so that your lips are about open to the width of two fingers.
+This feels strange, exaggerated, and may even be tiring on the jaw, but this is what you should aim at.
+Your jaw is a muscle you can train so use this at you advantage and do this exercise regularly.<br/>
+When you feel like you are reaching the correct amount of opening, try increasing the speed you are speaking while maitaining mostly the same opening on vowels.
+Continue increasing the speed gradually until you reach what seems to be a decent speech pace.
+Speak like that when you can, your jaw should be less tired after some time.<br/>
+Congratulations! You are no longer mumbling.
+Not only should it increase you volume, it should also increase the clarity of your enunciation.
+</p>
+<h4>Trick 2: Close your vocal cords</h4>
+<p>
+Vocal cords are not strings but flaps.
+They produce sounds when air is passing between them and making them vibrate.
+The closer they are to each other, the less air flow you need to make them vibrate.
+Air flow is one of the main factor of vocal fatigue, so not only will closing your cords more make you louder, it will also make you able to sustain an equivalent volume longer than with a bigger opening.
+If you have a whispery voice, that is a component of the sound of your voice similar to a whisper or a sigh, you will benefit from this trick the most.
+On the contrary if you have a rattly/crackly voice you might just have too much closure, or more likely not enough support but that's for another section.<br/>
+While keeping your mouth open (see trick 1) in the same position and without moving your lips or tongue, say any vowel, then whisper it, sigh it, and finally exhale silently.
+The difference between these sounds is your vocal cords closure and maybe air flow.
+Now inhale and with the same restrictions as the previous exercise try slowly going from a silent exhale to saying the chosen vowel.
+Be careful to not push too much air as you will need less and less air flow to keep the same loundness when closing your vocal cords.
+Do this until you feel you have a better control over your closure and can transition smoothly.<br/>
+Now redo the previous exercise starting from a whisper, to saying the vowel and try still closing further until your voice is rattly/crackly or no sound comes out.
+This time pay extra care to not push too much air to get sound when your voice becomes rattly/crackly as this can quickly cause vocal cords injury.
+On top of that watch the position of your tongue as it can be the reason you are no longer getting sound, again, your tongue shouldn't move.
+Repeat this exercise until you feel you can consistently get to a rattly/crackly sound.<br/>
+Now you can control vocal cords closure, so be sure to set your closure level to eliminate whisperiness and optimise air flow against loudness, then speak like this for some time.
+It can get tiring but not on your voice hopefully; vocal cords closure is controlled by a muscle that can be train so you should take advantage of this.<br/>
+Congratulations! You are no longer whispering.
+Not only should it increase you volume, it should also reduce the air flow you need.
+Later we will safely adjust air flow for loudness; at some point whisperiness can come back or strain can appear, so be sure you are in control of vocal cords closure and can train to adjust it.
+</p>
+<h4>Trick 3: Breathe</h4>
+<p>
+Producing sound requires air, and air pressure is better controlled if your lungs are neither near full or near empty.
+On top of that breathing through the nose is recommended over breathing through the mouth (unless you are singing, but this is not the goal here even if most tricks here can be used for singing too).
+This means you should inhale enough air through your nose frequently enough, and not try to cram as much words as possible on a single breathing cycle.<br/>
+TODO HERE: exercise (how to know you are doing it wrong and how to do it right)
+transform the sentence below into an exercise/diagnostic or merge with first paragraph
+If you fall short of air in the middle of sentences, rattling/crackling appears near the end of your sentences, or you are spending air quickly you will benefit from this trick.
+</p>
+<h4>Trick 4: Use a pitch in the middle of your range</h4>
+<p>
+Loudness decreases at constant effort as pitch approaches the limits of our range.
+Equivalently to get the same loudness you need to spend more energy and are at higher risk of injury at the edges of your range.<br/>
+Try saying a word normally and lock in on a non diphtong vowel (ex: perpendiiiii), then increase your pitch, go back to normal and lower your pitch.
+While doing so, if you need to inhale, be sure to restart the sound the same way you stopped; you may switch register otherwise.
+Did you notice change in loudness or effort?
+How far can you go?
+Is there a direction you can go significantly easier than the other?
+If so, you should change your base pitch to that easier spot.<br/>
+Try remembering this pitch.
+Then try speaking and moving to that pitch after the first word, then adjusting every word after that.
+If you adjust in one word at most, try starting at the loud pitch now.<br/>
+You don't have to always speak with this pitch, but when you think loud you should think about this pitch.
+</p>
+<h4>Trick 5: Bring in support</h4>
+<p>
+TODO NEXT BEGIN
+</p>
+<h4>Trick 6: Be a trumpet, use twang</h4>
+<p>
+Congratulations! You are fucking annoyingly loud, this is ridiculous.
+</p>
+<h3>Bonus: ESL people will thank you for this</h3>
+<p>
+Fucking stupidly boomy and explosive consonants, annoyingly resonant fricatives. And how to make
+them with your mouth.
+</p>
 </body>
 </html>

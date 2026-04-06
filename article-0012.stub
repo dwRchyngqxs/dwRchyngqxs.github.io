@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="ascii"/>
+<link rel="stylesheet" href="minimalism.css"/>
+<title>Use chaos order for your operations</title>
+</head>
+<body>
+<nav>
+</nav>
+<!-- TODO: A case against PEMDAS/BIDMAS -->
+Pemdas is about how to read expressions, on what sub expressions are operations applied, not about in which order to compute an expression.
+If we call that expression precedence and association rules instead of expression order it is more precise and coherent with the terminology of the domain dedicated to make sense of sequence of symbols: Parsing.
+
+Pemdas is flawed anyways compared to how the most frequent users of operations use them.
+It is not the only rule and no specific rule is more valid than other.
+To be honest I read division with a stronger precedence than multiplication.
+
+posts relying on pemdas ambiguity are there to farm engagement so don't engage with them.
+If you really want to share interesting stuff then share this article instead.
+No operation should be expressed in an ambiguous way.
+
+About operation order now.
+How pemdas is commonly misinterpreted is
+THE ONLY CORRECT WAY TO COMPUTE EXPRESSIONS IS THAT AT
+ANY POINT IN AN EXPRESSION WHERE THERE IS A CHOICE, WHAT SHOULD BE PRIORITIZED IS IN ORDER:
+PARENTHESIS, EXPONENTS, MULTIPLICATION AND DIVISIONS, ADDITION AND SUBTRACTIONS, THINGS ON THE LEFT OF OPERATIONS (not always remembered but for sure always taught)
+This order is, to say it politely, incomplete and utter shit.
+
+On the incompleteness
+
+On the utter shitness
+
+Better orders
+1- Minimizing intermediate state (rescheduling)
+2- Minimizing maximum number size (rewrites: assoc and comm, then other rewrites)
+3- Minimizing the number of complex operations (rewrites + partial computation)
+4- And the most used in practise: Chaos order (do whatever you want as long as it is still correct)
+</body>
+</html>
