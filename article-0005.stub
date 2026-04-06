@@ -7,22 +7,60 @@
 <title>Gambler's fallacy fallacy fallacy...</title>
 </head>
 <body>
-<p><i>Content warning: Maths.</i></p>
+<p><i>Content warning: Maths, with skippable really scary math.</i></p>
 <nav>
 </nav>
 <p>
-Assume a gambler is trying to maximise the number of correct prediction on the outcome of a game repeated several times.
-The possible outcomes of the game are the same each time and each game is independent from the others.
+Assume a gambler is trying to maximise the number of correct prediction on the outcomes of a game repeated several times.
+The possible outcomes of the game are the same each time, and each game is independent from the others.
 Examples of such a game are a coin toss, a die roll, a lottery, or the roulette.
-Assume also that the gambler wants to maximise the number of correct predictions.
+Assume also that the gambler wants to maximise the number of correct predictions, and the predictions are limited to a single outcome.
 We will examine a few common hacks to do so.
 </p>
+<h3>I hate maths</h3>
+<p>
+While this topic is deeply tied to maths and its language will be used where possible, the maths will be explained in english and this whole post can be read skipping all the proofs and gory details.
+It is also a statistics/probability topic which is one of my weak points because it features hard to parse notations for me.
+Hence, I will use the formalism that makes sense to me.
+The formalism not be standard, so it is explained in the rest of this section.
+</p>
+<ul>
+<li>The universe is <math><mi>&Omega;</mi></math>; it is the set of all possible infinites sequence of games.</li>
+<li>The set of game outcomes is <math><mi>&Oscr;</mi></math>.</li>
+<li>The outcome of the nth game is <math><msub><mi>O</mi><mi>n</mi></msub><mo>:</mo><mi>&Omega;</mi><mo>&rarr;</mo><mi>&Oscr;</mi></math>.</li>
+<li>The set of events is <math><mi>&Eopf;</mi></math>; it is the set of subsets of the universe <math><mi>&Eopf;</mi><mo>&coloneq;</mo><mi>&Pscr;</mi><mo>(</mo><mi>&Omega;</mi><mo>)</mo></math>.</li>
+<li>The probability function is <math><mi>P</mi><mo>:</mo><mi>&Eopf;</mi><mo>&rarr;</mo><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo></math>.</li>
+<li>The probability of an outcome is <math><msub><mi>p</mi><mi>o</mi></msub></mo>&brvbar;</mo><mi>o</mi><mo>&isin;</mo><mi>&Oscr;</mi></math>.</li>
+<li>
+	Events can be written as logical formulas in places an event would be expected.
+	These logical formulas can contain random variables (functions taking a single argument in <math><mi>&Omega;</mi></math>) without their argument specified, and all the arguments are filled with the same implicit value.
+	Such a logical formula stands for the set of all <math><mi>&omega;</mi></math> satisfying the formula when it is given as an argument to all the random variables.
+	For instance the formula <math><msub><mi>O</mi><mn>1</mn></msub><mo>=</mo><msub><mi>O</mi><mn>2</mn></msub></math> (the outcome of game 1 is the same as that of game 2) stands for the event <math displaystyle=true><mrow><mo>{</mo><mi>&omega;</mi><mo>&isin;</mo><mi>&Omega;</mi><mo>&brvbar;</mo><mrow><msub><mi>O</mi><mn>1</mn></msub><mo>(</mo><mi>&omega;</mi><mo>)</mo><mo>=</mo><msub><mi>O</mi><mn>2</mn></msub><mo>(</mo><mi>&omega;</mi><mo>)</mo></mrow><mo>}</mo></mrow></math> (all the sequence of games where the outcome of the first game is the same as the outcome of the second game).
+</li>
+</ul>
 <h3>Gambler's fallacy</h3>
 <p>
 The naive, non mathematics versed gamblers usually believe in the following hack:
 the most likely outcome is that which occurred the most.
 This hack is often called "reverse gambler's fallacy", but for shits and giggles we will call it "gambler's fallacy" here.
-It isn't necessarily wrong because, a consequence of the law of large numbers is that the frequency of an outcome converges to its probability, but this convergence can be slow.
+This hack isn't necessarily wrong: a consequence of the law of large numbers is that the frequency of an outcome converges to its probability, but this convergence can be slow.<br/>
+There are several definition of convergence, but the previous statement holds for all of them.
+Here are the definitions from strongest to weakest (meaning each statement implied the next ones):
+</p>
+TODO HERE: (you can use the title attribute for tooltips)
+<details>
+	<summary>Almost sure convergence</summary>
+	<math displaystyle=true><mrow><mi>P</mi><mo>(</mo><mo>&forall;</mo><mi>o</mi><mo>&isin;</mo><mi>&Oscr;</mi><mo>,</mo><munder><mi>lim</mi><mrow><mi>n</mi><mo>&rarr;</mo><mrow><mo>+</mo><mi>&infin;</mi></mrow></mrow></munder><mfrac><msubsup><mi>S</mi><mi>n</mi><mi>o</mi></msubsup><mi>n</mi></mfrac><mo>=</mo><msub><mi>p</mi><mi>o</mi></msub><mo>)</mo><mo>=</mo><mi>1</mi></mrow></math>
+</details>
+<details>
+	<summary>Convergence in probability</summary>
+	<math displaystyle=true><mrow><mo>&forall;</mo><mi>&epsilon;</mi><mo>&gt;</mo><mn>0</mn><mo>,</mo><munder><mi>lim</mi><mrow><mi>n</mi><mo>&rarr;</mo><mrow><mo>+</mo><mi>&infin;</mi></mrow></mrow></munder><mi>P</mi><mo>(</mo><mo>&forall;</mo><mi>o</mi><mo>&isin;</mo><mi>&Oscr;</mi><mo>,</mo><mrow><mo>|</mo><mfrac><msubsup><mi>S</mi><mi>n</mi><mi>o</mi></msubsup><mi>n</mi></mfrac><mo>-</mo><msub><mi>p</mi><mi>o</mi></msub><mo>|</mo></mrow><mo>&lt;</mo><mi>&epsilon;</mi><mo>)</mo><mo>=</mo><mn>1</mn></mrow></math>
+</details>
+<details>
+	<summary>Convergence in distribution</summary>
+	<math displaystyle=true><mo>&forall;</mo><mi>o</mi><mo>&isin;</mo><mi>&Oscr;</mi><mo>,</mo><munder><mi>lim</mi><mrow><mi>n</mi><mo>&rarr;</mo><mrow><mo>+</mo><mi>&infin;</mi></mrow></mrow></munder><mfrac><msubsup><mi>S</mi><mi>n</mi><mi>o</mi></msubsup><mi>n</mi></mfrac><mo>=</mo><msub><mi>p</mi><mi>o</mi></msub></math>
+</details>
+<p>
 <!-- TODO NEXT: what does converging mean in this context -->
 In general, calling the outcome with the maximal theoretical probability is better, especially when the frequency didn't have enough time to converge in order to get an idea of the most likely outcome.
 <!-- TODO: go into convergence speed depending on probability and variance, and how many data do we need to have a reasonable chance of distinguishing the most likely outcome (based on delta of most likely outcomes and variance I think) -->
