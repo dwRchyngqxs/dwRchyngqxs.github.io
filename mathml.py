@@ -1,5 +1,25 @@
 #!/bin/python
 
+r"""
+Syntax:
+whitespace are ignored but can be used as separators
+identitifiers (only alphabetic, separates at the next non alphabetic)
+&htmlsymbol; (only alphabetic, final semicolon optional, some common synonyms are mapped, see word_table)
+>, <, <=, >=, <=>, =>, ->, !=, ~= are shortcuts for symbols (see symbol_table)
+. translates to middle dot
+` becomes root (`2$ = sqrt(2), `$2 = sqrt(2), `32 = cubic root of 2)
+" encloses pure text (mtext)
+@ starts a group (mrow)
+? starts a table
+´ goes to the next cell
+\ goes to the next row/line
+$ ends stuff taking multiple arguments (groups, tables, roots, subscripts, subperscripts)
+/ in infix makes a fraction with element around
+_ in infix makes the next element a subscript or under (depending on sensible rules) of the previous element
+^ in infix makes the next element a superscript of above (depending on sensible rules) of the previous element
+enclose in mrow to force under/above, make an empty under/above (_$ or ^$) then a new subscript/superscript to get a subscript or superscript (ex: lim_$_@n->@+&infin$$) on something which would otherwise do an under/above
+"""
+
 from enum import IntEnum
 from sys import stdin
 
