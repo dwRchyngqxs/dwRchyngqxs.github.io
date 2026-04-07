@@ -1,2 +1,1 @@
-@P(&forall&epsilon>0,&exists n&isin&naturals,&forall m>n,|F_m^o-p_o|<&epsilon)$ = 1
-	&le; @P(&bigcup_@n=1$^@+&infin${&omega&isin&Omega¦&forall m>n,|F_m^o-p_o|<&epsilon})$
+@P(&forall &epsilon>0, &exists n&in&naturals, &forall m>n, @|F^o_m - p_o|$<&epsilon)$ <= @P(&bigcup_@n=1$^@+&infin$ @{ &omega&in&Omega ¦ &forall m>n, @|F^o_m(&omega) - p_o|$<&epsilon }$)$

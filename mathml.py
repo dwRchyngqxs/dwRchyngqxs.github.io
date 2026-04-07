@@ -16,12 +16,12 @@ identitifiers (only alphabetic, separates at the next non alphabetic)
 $ ends stuff taking multiple arguments (groups, tables, roots, subscripts, subperscripts)
 / in infix makes a fraction with element around
 _ in infix makes the next element a subscript or under (depending on sensible rules) of the previous element
-^ in infix makes the next element a superscript of above (depending on sensible rules) of the previous element
-enclose in mrow to force under/above, make an empty under/above (_$ or ^$) then a new subscript/superscript to get a subscript or superscript (ex: lim_$_@n->@+&infin$$) on something which would otherwise do an under/above
+^ in infix makes the next element a superscript of over (depending on sensible rules) of the previous element
+enclose in mrow to force under/over, make an empty under/over (_$ or ^$) then a new subscript/superscript to get a subscript or superscript (ex: lim_$_@n->@+&infin$$) on something which would otherwise do an under/over
 """
 
 from enum import IntEnum
-from sys import stdin
+from sys import stdin, argv
 
 html_symbols = {
 	"isin": True,
@@ -38,7 +38,7 @@ html_symbols = {
 	"equiv": True,
 	"coloneq": None,
 	"forall": None,
-	"exists": None,
+	"exist": None,
 	"bigcup": True,
 	"bigcap": True,
 	"sum": True,
@@ -63,6 +63,7 @@ word_table = {
 	"geq": "ge",
 	"neq": "ne",
 	"approx": "asymp",
+	"exists": "exist",
 	"d": "DifferentialD",
 	"Equiv": "hArr",
 	"Implies": "rArr",
@@ -94,26 +95,36 @@ class Mtag(IntEnum):
 	SQRT = 4
 	TABLE = 5
 	FRAC = 6
-	UNDERABOVE = 7
+	UNDEROVER = 7
 	SUBSUP = 8
 	SUBUNDER = 9
-	SUPABOVE = 10
+	SUPOVER = 10
 
-aboveunder_tag = ["aboveunder", "under", "above"]
+underover_tag = ["underover", "under", "over"]
 subsup_tag = ["subsup", "sub", "sup"]
 
 class Parser:
 	def __init__(self):
+		self._read = []
 		self._stack = [(Mtag.TOP, [])]
 		self._partial = []
-		self._underabove = None
+		self._underover = None
 		self._state = self._initial_state
 
+	def _print_status(self):
+		print("read:", "".join(self._read))
+		print("partial:", "".join(self._partial))
+		print("stack:")
+		for x in self._stack:
+			print(x[0], " ## ".join("".join(xi) for xi in x[1:]))
+		print()
+
 	def __call__(self, chr: str):
+		self._read.append(chr)
 		self._state(chr)
 
-	def _emit(self, underabove: bool, *args):
-		self._underabove = underabove
+	def _emit(self, underover: bool, *args):
+		self._underover = underover
 		self._partial = args
 		self._state = self._infix_state
 
@@ -155,10 +166,10 @@ class Parser:
 			case Mtag.SUBUNDER:
 				self._stack.pop()
 				self._stack[-1][-2].extend(data)
-			case Mtag.SUPABOVE:
+			case Mtag.SUPOVER:
 				self._stack.pop()
 				self._stack[-1][-1].extend(data)
-		tag, base, su, sa = self._stack.pop()
+		tag, base, su, sa = self._stack[-1]
 		match len(su) != 0, len(sa) != 0:
 			case True, True:
 				key = 0
@@ -168,15 +179,17 @@ class Parser:
 				key = 2
 			case False, False:
 				if tag is Mtag.SUBSUP:
+					self._stack.pop()
 					self._stack[-1][-1].extend(base)
 					return self._reduce(hard)
 				return emit(False,
 					*(base[1:-1] if base[0] == "<mrow>" and base[-1] == "</mrow>" else base)
 				)
-		if tag is Mtag.UNDERABOVE:
-			tag = aboveunder_tag[key]
+		if tag is Mtag.UNDEROVER:
+			tag = underover_tag[key]
 			return emit(False, "<m", tag, ">", *base, *su, *sa, "</m", tag, ">")
 		tag = subsup_tag[key]
+		self._stack.pop()
 		self._stack[-1][-1].extend(["<m", tag, ">", *base, *su, *sa, "</m", tag, ">"])
 		self._reduce(hard)
 
@@ -234,7 +247,7 @@ class Parser:
 			self._partial.append(chr)
 			return
 		w = "".join(self._partial)
-		is_operator, self._underabove = (True, html_symbols[w]) \
+		is_operator, self._underover = (True, html_symbols[w]) \
 			if w in html_symbols else (False, False)
 		tag = "o" if is_operator else "i"
 		self._partial = ["<m", tag, ">", "&", word_table.get(w, w), ";", "</m", tag, ">"]
@@ -285,13 +298,13 @@ class Parser:
 			self._reduce(True)
 			return self._initial_state(chr)
 		toptag = self._stack[-1][0]
-		newtag = Mtag.SUBUNDER if chr == "_" else Mtag.SUPABOVE
-		if toptag not in (Mtag.SUBUNDER, Mtag.SUPABOVE):
-			parenttag = Mtag.UNDERABOVE if self._underabove else Mtag.SUBSUP
+		newtag = Mtag.SUBUNDER if chr == "_" else Mtag.SUPOVER
+		if toptag not in (Mtag.SUBUNDER, Mtag.SUPOVER):
+			parenttag = Mtag.UNDEROVER if self._underover else Mtag.SUBSUP
 			self._stack.append((parenttag, partial, [], []))
 			self._stack.append((newtag, []))
 			return
-		# special cases SUBUNDER/SUPABOVE: does not associate the way you think
+		# special cases SUBUNDER/SUPOVER: does not associate the way you think
 		self._stack.pop()
 		self._stack[-1][-2 if toptag is Mtag.SUBUNDER else -1].extend(partial)
 		if not self._stack[-1][-2 if newtag is Mtag.SUBUNDER else -1]:
@@ -308,23 +321,31 @@ class Parser:
 				key = 2
 			case False, False:
 				assert False
-		parenttag = (subsup_tag if toptag is Mtag.SUBSUP else aboveunder_tag)[key]
+		parenttag = (subsup_tag if toptag is Mtag.SUBSUP else underover_tag)[key]
 		partial = ["<m", parenttag, ">", *base, *su, *sa, "</m", parenttag, ">"]
 		self._stack.append((Mtag.SUBSUP, partial, [], []))
 		self._stack.append((newtag, []))
 
 	def finish(self) -> str:
-		while self._stack[-1][0] is not Mtag.TOP:
+		self._stack[-1][-1].extend(self._partial)
+		self._partial = []
+		while len(self._stack) > 1:
 			self._reduce(True) # faster
-			if self._stack[-1][0] is Mtag.TOP:
+			if len(self._stack) == 1:
 				break
 			self._reduce(False) # safer
 			self._stack[-1][-1].extend(self._partial)
+			self._partial = []
 		return "".join(self._stack[0][1])
 
 parser = Parser()
 
-while chin := stdin.read(1):
+file = open(argv[1]) if len(argv) > 1 else stdin
+
+while chin := file.read(1):
 	parser(chin)
 
-print(parser.finish())
+xml = parser.finish()
+print("<math displaystyle=true>", end="")
+print(xml, end="")
+print("</math>")
