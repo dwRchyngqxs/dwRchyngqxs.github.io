@@ -348,7 +348,7 @@ class Parser:
 		self._stack.append((Mtag.SUBSUP, partial, [], []))
 		self._stack.append((newtag, []))
 
-	def finish(self) -> str:
+	def finish(self) -> tuple[str, str]:
 		self._stack[-1][-1].extend(self._partial)
 		self._partial = []
 		while len(self._stack) > 1:
@@ -360,12 +360,13 @@ class Parser:
 			self._partial = []
 		return "".join(self._desc), "".join(self._stack[0][1])
 
-parser = Parser()
+def main(file: str | None) -> tuple[str, str]:
+	fd = stdin if file is None else open(file)
+	while chin := file.read(1):
+		parser(chin)
+	return parser.finish()
 
-file = open(argv[1]) if len(argv) > 1 else stdin
-
-while chin := file.read(1):
-	parser(chin)
-
-desc, xml = parser.finish()
-print(f"<math displaystyle=true title=\"", desc, "\">", xml, "</math>", sep="")
+if __name__ == "__main__":
+	parser = Parser()
+	desc, xml = main(None if len(argv) == 1 else argv[1])
+	print(f"<math displaystyle=true title=\"", desc, "\">", xml, "</math>", sep="")
