@@ -5,7 +5,7 @@ Syntax:
 whitespaces are ignored but can be used as separators
 identitifiers (only alphabetic, separate at the next non alphabetic)
 &htmlsymbol; (only alphabetic, final semicolon optional, some common synonyms are mapped, see word_table)
->, <, <=, >=, <=>, =>, ->, !=, ~= are shortcuts for symbols (see symbol_table)
+>, <, <=, >=, <=>, =>, ->, !=, ~=, := are shortcuts for symbols (see symbol_table)
 . translates to middle dot
 ` becomes root (`2$ = sqrt(2), `$2 = sqrt(2), `32 = cubic root of 2)
 " encloses pure text (mtext)
@@ -79,7 +79,7 @@ word_table = {
 	"inf": "infin"
 }
 # list of symbols starting a long symbol (shouldn't be modified)
-compound_symbol = "<>-!=~"
+compound_symbol = {"<", ">", "-", "!", "=", "~", ":"}
 # table of long symbols requiring a translation
 symbol_table = {
 	">": "&gt;",
@@ -91,6 +91,7 @@ symbol_table = {
 	"!=": "&ne;",
 	"=>": "&rArr;",
 	"~=": "&approx;",
+	":=": "&coloneq;",
 }
 
 class Mtag(IntEnum):
@@ -142,7 +143,7 @@ class Parser:
 		self._stack.pop()
 		self._emit(*args)
 
-	# hard is a stupid name, True means next character is for sure none of the infixes, False means $
+	# Hard is a stupid name, True means next character is for sure none of the infixes, False means $
 	def _reduce(self, hard: bool):
 		emit = self._hard_emit if hard else self._soft_emit
 		restack = (lambda *_: ()) if hard else self._soft_emit
@@ -308,33 +309,30 @@ class Parser:
 			self._desc.append(chr)
 			return
 		self._state = self._initial_state
-		partial = self._partial
+		partial = list(self._partial)
 		self._partial = []
-		if chr == "/":
-			self._desc.append(chr)
-			self._stack.append((Mtag.FRAC, partial))
-			return
-		if chr not in ("^", "_"):
+		if chr not in ("^", "_", "/"):
 			self._stack[-1][-1].extend(partial)
 			self._reduce(True)
 			return self._initial_state(chr)
 		self._desc.append(chr)
 		toptag = self._stack[-1][0]
-		newtag = Mtag.SUBUNDER if chr == "_" else Mtag.SUPOVER
 		if toptag not in (Mtag.SUBUNDER, Mtag.SUPOVER):
-			parenttag = Mtag.UNDEROVER if self._underover else Mtag.SUBSUP
-			self._stack.append((parenttag, partial, [], []))
-			self._stack.append((newtag, []))
+			if chr == "/":
+				self._stack.append((Mtag.FRAC, partial))
+				return
+			self._stack.append((Mtag.UNDEROVER if self._underover else Mtag.SUBSUP, partial, [], []))
+			self._stack.append((Mtag.SUBUNDER if chr == "_" else Mtag.SUPOVER, []))
 			return
-		# special cases SUBUNDER/SUPOVER: does not associate the way you think
+		# Finish current ^_
 		self._stack.pop()
-		self._stack[-1][-2 if toptag is Mtag.SUBUNDER else -1].extend(partial)
-		if not self._stack[-1][-2 if newtag is Mtag.SUBUNDER else -1]:
-			self._stack.append((newtag, []))
+		self._stack[-1][-1 if toptag is Mtag.SUPOVER else -2].extend(partial)
+		if not (chr == "/" or self._stack[-1][-2 if chr == "_" else -1]):
+			self._stack.append((Mtag.SUBUNDER if chr == "_" else Mtag.SUPOVER, []))
 			return
-		# reduce
-		toptag, su, sa = self._stack.pop()
-		match su, sa:
+		# manual reduce
+		toptag, base, su, sa = self._stack.pop()
+		match len(su) != 0, len(sa) != 0:
 			case True, True:
 				key = 0
 			case True, False:
@@ -345,11 +343,14 @@ class Parser:
 				assert False
 		parenttag = (subsup_tag if toptag is Mtag.SUBSUP else underover_tag)[key]
 		partial = ["<m", parenttag, ">", *base, *su, *sa, "</m", parenttag, ">"]
+		if chr == "/":
+			self._stack.append((Mtag.FRAC, partial))
+			return
 		self._stack.append((Mtag.SUBSUP, partial, [], []))
-		self._stack.append((newtag, []))
+		self._stack.append((Mtag.SUBUNDER if chr == "_" else Mtag.SUPOVER, []))
 
 	def finish(self) -> tuple[str, str]:
-		self._stack[-1][-1].extend(self._partial)
+		self("")
 		self._partial = []
 		while len(self._stack) > 1:
 			self._reduce(True) # faster and doesn't put stuff in _partial
@@ -362,7 +363,7 @@ class Parser:
 
 def main(file: str | None) -> tuple[str, str]:
 	fd = stdin if file is None else open(file)
-	while chin := file.read(1):
+	while chin := fd.read(1):
 		parser(chin)
 	return parser.finish()
 

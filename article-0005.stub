@@ -25,21 +25,21 @@ Hence, I will use the formalism that makes sense to me.
 The formalism not be standard, so it is explained in the rest of this section.
 </p>
 <ul>
-<li>The set of reals is <math><mi>&real;</mi></math>; segments of reals are noted inside brackets.</li>
-<li>The indicator function (or Iverson bracket if you prefer) is <math><mi>&Iopf;</mi></math>, it takes a logical formula and evaluates to 1 if the formula is true and 0 otherwise.</li>
-<li>The universe is <math><mi>&Omega;</mi></math>; it is the set of all possible infinites sequence of games.</li>
-<li>A random variables on set <math><mi>X</mi></math> is a function in <math><mi>&Omega;</mi><mo>&rarr;</mo><mi>X</mi></math>.</li>
-<li>The set of game outcomes is <math><mi>&Oscr;</mi></math>.</li>
-<li>The outcome of the nth game is <math><msub><mi>O</mi><mi>n</mi></msub><mo>:</mo><mi>&Omega;</mi><mo>&rarr;</mo><mi>&Oscr;</mi></math>.</li>
-<li>The set of events is <math><mi>&Eopf;</mi></math>; it is the set of subsets of the universe <math><mi>&Eopf;</mi><mo>&coloneq;</mo><mi>&Pscr;</mi><mo>(</mo><mi>&Omega;</mi><mo>)</mo></math>.</li>
-<li>The probability function is <math><mi>P</mi><mo>:</mo><mi>&Eopf;</mi><mo>&rarr;</mo><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo></math>.</li>
-<li>The probability of an outcome is <math><msub><mi>p</mi><mi>o</mi></msub></mo>¦</mo><mi>o</mi><mo>&isin;</mo><mi>&Oscr;</mi></math>.</li>
+<li>The set of reals is <math>&real;</math>; segments of reals are noted inside brackets.</li>
+<li>The indicator function (or Iverson bracket if you prefer) is <math>&Iopf;</math>, it takes a logical formula and evaluates to 1 if the formula is true and 0 otherwise.</li>
+<li>The universe is <math>&Omega;</math>; it is the set of all possible infinites sequence of games.</li>
+<li>A random variables on set <math>X</math> is a function in <math>&Omega->X</math>.</li>
+<li>The set of game outcomes is <math>&Oscr;</math>.</li>
+<li>The outcome of the nth game is <math>O_n: &Omega->&Oscr;</math>.</li>
+<li>The set of events is <math>&Eopf;</math>; it is the set of subsets of the universe <math>&Eopf := &Pscr(&Omega)</math>.</li>
+<li>The probability function is <math displaystyle=true>P: &Eopf->@[0,1]$</math>.</li>
+<li>The probability of an outcome is <math>p_o ¦ o&in&Oscr;</math>.</li>
 <li>When defining random variables, we will shorten the notation by not applying other random variables in their definition as they are always all the same as the argument of the random variable we are defining.</li>
 <li>
 	Events can be written as logical formulas in places an event would be expected.
-	These logical formulas can contain random variables (functions taking a single argument in <math><mi>&Omega;</mi></math>) without their argument specified, and all the arguments are filled with the same implicit value.
-	Such a logical formula stands for the set of all <math><mi>&omega;</mi></math> satisfying the formula when it is given as an argument to all the random variables.
-	For instance the formula <math><msub><mi>O</mi><mn>1</mn></msub><mo>=</mo><msub><mi>O</mi><mn>2</mn></msub></math> (the outcome of game 1 is the same as that of game 2) stands for the event <math displaystyle=true><mrow><mo>{</mo><mi>&omega;</mi><mo>&isin;</mo><mi>&Omega;</mi><mo>¦</mo><mrow><msub><mi>O</mi><mn>1</mn></msub><mo>(</mo><mi>&omega;</mi><mo>)</mo><mo>=</mo><msub><mi>O</mi><mn>2</mn></msub><mo>(</mo><mi>&omega;</mi><mo>)</mo></mrow><mo>}</mo></mrow></math> (all the sequence of games where the outcome of the first game is the same as the outcome of the second game).
+	These logical formulas can contain random variables (functions taking a single argument in <math>&Omega;</math>) without their argument specified, and all the arguments are filled with the same implicit value.
+	Such a logical formula stands for the set of all <math>&omega;</math> satisfying the formula when it is given as an argument to all the random variables.
+	For instance the formula <math>O_1=O_2</math> (the outcome of game 1 is the same as that of game 2) stands for the event <math displaystyle=true>@{&omega&in&Omega ¦ @O_1(&omega)=O_2(&omega)$}$</math> (all the sequence of games where the outcome of the first game is the same as the outcome of the second game).
 </li>
 </ul>
 <h3>Gambler's fallacy</h3>
@@ -53,13 +53,13 @@ Here are the definitions from weakest to strongest (meaning each statement is im
 </p>
 <details><summary>Common definitions</summary>
 	<ul>
-	<li>Let <math displaystyle=true><mi>o</mi><mo>&isin;</mo><mi>&Oscr;</mi></math> be the outcome we are interesed in.</li>
-	<li>We pose therandom variable <math displaystyle=true><msubsup><mi>S</mi><mi>n</mi><mi>o</mi></msubsup><mo>&coloneq;</mo><munderover><mo>&sum;</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mrow><mi>&Iopf;</mi><mo>(</mo><msub><mi>O</mi><mi>k</mi></msub><mo>=</mo><mi>o</mi><mo>)</mo></mrow></math> counting the number of successful predictions after game <math><mi>n</mi></math>.</li>
-	<li>We pose the random variable <math displaystyle=true><msubsup><mi>F</mi><mi>n</mi><mi>o</mi></msubsup><mo>&coloneq;</mo><mfrac><msubsup><mi>S</mi><mi>n</mi><mi>o</mi></msubsup><mi>n</mi></mfrac></math>, the observed frequency after game <math><mi>n</mi></math>.</li>
+	<li>Let <math displaystyle=true>o&in&Oscr;</math> be the outcome we are interesed in.</li>
+	<li>We pose therandom variable <math displaystyle=true>S^o_n := &sum_@k=1$^n @&Iopf(O_k=o)$</math> counting the number of successful predictions after game <math><mi>n</mi></math>.</li>
+	<li>We pose the random variable <math displaystyle=true>F^o_n := S^o_n/n</math>, the observed frequency after game <math>n</math>.</li>
 	</ul>
 </details>
 <details><summary>Convergence in distribution</summary>
-	The frequency of the outcome we are interested in converging in distribution to the probability of that outcome is defined as <math displaystyle=true><mo>&forall;</mo><mi>x</mi><mo>&isin;</mo><mi>&real;</mi><mo>,</mo><munder><mi>lim</mi><mrow><mi>n</mi><mo>&rarr;</mo><mrow><mo>+</mo><mi>&infin;</mi></mrow></mrow></munder><mrow><mi>P</mi><mo>(</mo><msubsup><mi>F</mi><mi>n</mi><mi>o</mi></msubsup><mo>&le;</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mrow><mi>&Iopf;</mi><mo>(</mo><msub><mi>p</mi><mi>o</mi></msub><mo>&le;</mo><mi>x</mi><mo>)</mo></mrow></math>.<br/>
+	The frequency of the outcome we are interested in converging in distribution to the probability of that outcome is defined as <math displaystyle=true>&forall;x&in&real, lim_@n->@+&inf$$ @P(F^o_n <= x)$ = @&Iopf(p_o <= x)$</math>.<br/>
 	The definition captures the "probability of the different values of the frequency we can get after game n" converging to 1 (=we will get this value) if that value is the probability of the outcome, and 0 (=we won't get this value) otherwise when the number of games n reaches to infinity.
 	If you were to draw a graph of the probability (vertical axis) of getting a frequency equal to x (x is the horizontal axis) after n games, as n increases that graph would look more and more similar to being at 0 on the vertical axis everywhere on the horizontal axis, except it would be 1 on the vertical axis at the probability of the outcome we are interested in on the horizontal axis.<br/>
 	Please note that the probability of each frequency value can go to it's limit at its own pace.
@@ -67,11 +67,11 @@ Here are the definitions from weakest to strongest (meaning each statement is im
 	In other terms, with this definition there is NO GURANTEE that if you were to choose a vertical distance, there would be a number of games after which the curve is always within that vertical distance of 0 everywhere and 1 at the outcome probability.
 </details>
 <details><summary>Convergence in probability</summary>
-	The frequency of the outcome we are interested in converging in probability to the probability of that outcome is defined as <math displaystyle=true><mrow><mo>&forall;</mo><mi>&epsilon;</mi><mo>&gt;</mo><mn>0</mn><mo>,</mo><munder><mi>lim</mi><mrow><mi>n</mi><mo>&rarr;</mo><mrow><mo>+</mo><mi>&infin;</mi></mrow></mrow></munder><mi>P</mi><mo>(</mo><mrow><mo>|</mo><msubsup><mi>F</mi><mi>n</mi><mi>o</mi></msubsup><mo>-</mo><msub><mi>p</mi><mi>o</mi></msub><mo>|</mo></mrow><mo>&lt;</mo><mi>&epsilon;</mi><mo>)</mo><mo>=</mo><mn>1</mn></mrow></math>.<br/>
+	The frequency of the outcome we are interested in converging in probability to the probability of that outcome is defined as <math displaystyle=true>&forall&epsilon>0, lim_@n->@+&inf$$ @P(@|F^o_n - p_o|$ <= &epsilon)@ = 1</math>.<br/>
 	The definition captures ??? TODO HERE
 </details>
 <details><summary>Almost sure convergence</summary>
-	The frequency of the outcome we are interested in converging almost surely to the probability of that outcome is defined as <math displaystyle=true><mrow><mi>P</mi><mo>(</mo><munder><mi>lim</mi><mrow><mi>n</mi><mo>&rarr;</mo><mrow><mo>+</mo><mi>&infin;</mi></mrow></mrow></munder><msubsup><mi>F</mi><mi>n</mi><mi>o</mi></msubsup><mo>=</mo><msub><mi>p</mi><mi>o</mi></msub><mo>)</mo><mo>=</mo><mi>1</mi></mrow></math>.<br/>
+	The frequency of the outcome we are interested in converging almost surely to the probability of that outcome is defined as <math displaystyle=true>@P(lim_@n->@+&inf$$ F^o_n = p_o)$ = 1</math>.<br/>
 	The definition captures ??? TODO HERE
 </details>
 <details><summary>Proof of the implications</summary>

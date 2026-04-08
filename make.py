@@ -12,7 +12,7 @@ math = compile(r"<math(.*?)>(.*?)</math>")
 buildpath = Path("static")
 cachepath = Path(".cache")
 cachepath.mkdir(exist_ok=True)
-smt = Path("make.py").stat().st_mtime
+smt = max(Path("make.py").stat().st_mtime, Path("mathml.py").stat().st_mtime)
 
 def repl_math(match: Match):
 	parser = Parser()

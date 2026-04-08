@@ -1,1 +1,1 @@
-@P(&forall&epsilon>0, &exists;n&in&naturals, &forall;m>n, @|F^o_m - p_o|$<&epsilon)$ <= @P(&bigcup_@n=1$^@+&inf$ @{ &omega&in&Omega ¦ &forall;m>n, @|F^o_m(&omega) - p_o|$<&iota }$)$
+@P(&forall&epsilon>0, &exists;n&in&naturals, &forall;m>n, @|S^o_m/m - p_o|$<&epsilon)$ <= @P(&bigcup_@n=1$^@+&inf$ { &omega&in&Omega ¦ &forall;m>n, @|@S^o_m(&omega)$/m - p_o|$<&iota })$
