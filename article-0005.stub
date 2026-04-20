@@ -59,24 +59,100 @@ Here are the definitions from weakest to strongest (meaning each statement is im
 	</ul>
 </details>
 <details><summary>Convergence in distribution</summary>
-	The frequency of the outcome we are interested in converging in distribution to the probability of that outcome is defined as <math displaystyle=true>&forall;x&in&real, lim_@n->@+&inf$$ @P(F^o_n <= x)$ = @&Iopf(p_o <= x)$</math>.<br/>
-	The definition captures the "probability of the different values of the frequency we can get after game n" converging to 1 (=we will get this value) if that value is the probability of the outcome, and 0 (=we won't get this value) otherwise when the number of games n reaches to infinity.
-	If you were to draw a graph of the probability (vertical axis) of getting a frequency equal to x (x is the horizontal axis) after n games, as n increases that graph would look more and more similar to being at 0 on the vertical axis everywhere on the horizontal axis, except it would be 1 on the vertical axis at the probability of the outcome we are interested in on the horizontal axis.<br/>
-	Please note that the probability of each frequency value can go to it's limit at its own pace.
-	The only requirement (definition of limit) is the probability of getting this frequency (vertical axis) never strays farther than any arbitrarily value we may choose (so a vertical variation limit) and it does so after some number of games which may be different for each value of the frequency (horizontal axis).
-	In other terms, with this definition there is NO GURANTEE that if you were to choose a vertical distance, there would be a number of games after which the curve is always within that vertical distance of 0 everywhere and 1 at the outcome probability.
+	The frequency of the outcome we are interested in converging in distribution to the probability of that outcome is defined as <math displaystyle=true>&forall;x&in&real-{p_o}, lim_@n->@+&inf$$ @P(F^o_n <= x)$ = @&Iopf(p_o <= x)$</math>.<br/>
+	The definition captures the "probability of the different values of the frequency we can get after game n" converging to 0 (=we won't get this value) everywhere except at the theoretical probability of the outcome we are interested in when the number of games n reaches to infinity.
+	If you were to draw a graph of the probability distribution (vertical axis) of getting a frequency equal to x (x is the horizontal axis) after n games, as n increases the area between the graph and the horizontal line at 0 would go to 0 if you considered any horizontal portion not including the theoretical probability, and to 1 if you include the probability.<br/>
+	Please note that the area under the curve for any portion can go to it's limit at its own pace.
+	The only requirement (definition of limit) is the area is never bigger than any arbitrarily value we may choose after some number of games which may be different for each horizontal portion of the curve.
 </details>
 <details><summary>Convergence in probability</summary>
-	The frequency of the outcome we are interested in converging in probability to the probability of that outcome is defined as <math displaystyle=true>&forall&epsilon>0, lim_@n->@+&inf$$ @P(@|F^o_n - p_o|$ <= &epsilon)@ = 1</math>.<br/>
-	The definition captures ??? TODO HERE
+	The frequency of the outcome we are interested in converging in probability to the probability of that outcome is defined as <math displaystyle=true>&forall&epsilon>0, lim_@n->@+&inf$$ @P(@|F^o_n - p_o|$ < &epsilon)@ = 1</math>.<br/>
+	The definition captures the probability of "the frequency being no further from the probability than any arbitrarily small value" converging to 1 (=this will definitely happend).
+	If you were to trace the same graph as before and choose any horizontal distance from the probability of the outcome you are interested in, the area between the curve and the horizontal line at 0 will go to 0 as the number of game increases whereas the area within this distance goes to 1.<br/>
+	Convergence in probability to a constant is equivalent to convergence in distribution, as I prove below.
+</details>
+<details><summary>Proof of equivalence between convergence in distribution and convergence in probability to a constant</summary>
+	<ul>
+	<li>We start by rewriting the Convergence in probability:
+		<ul>
+		<li><math displaystyle=true>
+			0 = 1 - 1 = 1 - lim_@n->@+&inf$$ @P(@|F^o_n - p_o|$ < &epsilon)$
+			= lim_@n->@+&inf$$ @P(@|F^o_n - p_o|$ >= &epsilon)$
+			>= lim_@n->@+&inf$$ @P(@|F^o_n - p_o|$ > &epsilon)$
+			=_@"case on" F^o_n <= p_o$ lim_@n->@+&inf$$ @P({&omega ¦ F^o_n - p_o > &epsilon} &cup {&omega ¦ p_o - F^o_n > &epsilon})$
+			= lim_@n->@+&inf$$ @P(F^o_n - p_o > &epsilon)$ + @P(p_o - F^o_n > &epsilon)$
+			>= lim_@n->@+&inf$$ 0 + 0 = 0
+		</math></li>
+		<li>All of the terms above are in <math>[0, 0]</math> and are therefore all equal to 0.</li>
+		<li>Hence we have <math displaystyle=true>&forall&epsilon>0, lim_@n->@+&inf$$ @P(F^o_n - p_o > &epsilon)$ + @P(p_o - F^o_n > &epsilon)$ = 0</math>.</li>
+		<li>For the sum of those sequences to converge to 0, each individual sequence must converge to 0.</li>
+		<li>Thus <math displaystyle=true>&forall&epsilon>0, lim_@n->@+&inf$$ @P(F^o_n - p_o > &epsilon)$ = 0 &and lim_@n->@+&inf$$ @P(p_o - F^o_n > &epsilon)$ = 0</math></li>
+		</ul>
+	</li>
+	<li>Forward direction: let <math>&epsilon>0</math>.
+		<ul>
+		<li>We have <math displaystyle=true>p_o + &epsilon &in&reals-{p_o}</math> and <math displaystyle=true>p_o - &epsilon &in&reals-{p_o}</math>.</li>
+		<li>Therefore by Convergence in distribution we have:
+			<ol>
+			<li><math displaystyle=true>lim_@n->@+&inf$$ @P(F^o_n <= p_o + &epsilon)$ = @&Iopf(p_o <= p_o + &epsilon)$ = 1</math></li>
+			<li><math displaystyle=true>lim_@n->@+&inf$$ @P(F^o_n <= p_o - &epsilon)$ = @&Iopf(p_o <= p_o - &epsilon)$ = 0</math></li>
+			</ol>
+		</li>
+		<li>Then we do:
+			<ul>
+			<li><math displaystyle=true>
+				0 = 1 - 1 =_1 1 - lim_@n->@+&inf$$ @P(F^o_n <= p_o + &epsilon)$
+				= lim_@n->@+&inf$$ @P(F^o_n > p_o + &epsilon)$
+				= lim_@n->@+&inf$$ @P(F^o_n - p_o > &epsilon)$
+			</math></li>
+			<li><math displaystyle=true>
+				0 =_2 lim_@n->@+&inf$$ @P(F^o_n <= p_o - &epsilon)$
+				= lim_@n->@+&inf$$ @P(-F^o_n > &epsilon - p_o)$ = @P(p_o - F^o_n > &epsilon)$
+			</math></li>
+			</ul>
+		</li>
+		<li>Thus we have Convergence in probability.</li>
+		</ul>
+	</li>
+	<li>Backward direction: let <math displaystyle=true>x&in&reals-{p_o}</math>.
+		<ul>
+		<li>We have <math displaystyle=true>@|x - p_o|$ > 0</math></li>
+		<li>Hence Convergence in probability gives us:
+			<ol>
+			<li><math displaystyle=true>lim_@n->@+&inf$$ @P(F^o_n - p_o > @|p_o - x|$)$ = 0</math></li>
+			<li><math displaystyle=true>lim_@n->@+&inf$$ @P(p_o - F^o_n > @|p_o - x|$)$ = 0</math></li>
+			</ol>
+		</li>
+		<li>Then we do a case analysis on <math displaystyle=true>p_o <= x</math>.
+			<dl>
+			<dt><math displaystyle=true>p_o <= x</math> (<math displaystyle=true>@|p_o - x|$ = x - p_o</math>):</dt>
+			<dd><math displaystyle=true>TODO HERE
+				@&Iopf(p_o <= x)$ =_@p_o <= x$ 1 = 1 - 0
+				=_1 1 - lim_@n->@+&inf$$ @P(F^o_n - p_o > x - p_o)$
+				= 1 - lim_@n->@+&inf$$ @P(F^o_n > x)$ = lim_@n->@+&inf$$ @P(F^o_n <= x)$
+			</math></dd>
+			<dt><math displaystyle=true>p_o > x</math> (<math displaystyle=true>@|p_o - x|$ = p_o - x</math>):</dt>
+			<dd><math displaystyle=true>
+				@&Iopf(p_o <= x)$ =_@p_o > x$ 0 =_2 lim_@n->@+&inf$$ @P(p_o - F^o_n > |p_o - x|)$
+				=_@p_o > x$ lim_@n->@+&inf$$ @P(p_o - F^o_n > p_o - x)$
+				= lim_@n->@+&inf$$ @P(-F^o_n > -x)$ = lim_@n->@+&inf$$ @P(F^o_n <= x)$
+			</math></dd>
+			</dl>
+		</li>
+		<li>Thus we have Convergence in distribution.</li>
+	</ul>
 </details>
 <details><summary>Almost sure convergence</summary>
 	The frequency of the outcome we are interested in converging almost surely to the probability of that outcome is defined as <math displaystyle=true>@P(lim_@n->@+&inf$$ F^o_n = p_o)$ = 1</math>.<br/>
-	The definition captures ??? TODO HERE
+	The definition captures the probability of "the frequency converging to the theoretical probability" being 1 (=will happend).
+	It does not mean that you cannot find a sequence of game outcomes that makes the frequence different from the theoretical probability, but that the proportion of all of these sequences ponderated by their probability all together amount to nothing compared to the sequences where the frequency converges to the theoretical probability.<br/>
+	Almost sure convergence implies convergence in probability, and we have almost sure convergence of the frequency to the theoretical probability, as I prove below in that order.
 </details>
-<details><summary>Proof of the implications</summary>
+<details><summary>Proof of almost sure convergence implies convergence in probability</summary>
+	<li>
+	</li>
 </details>
-<details><summary>Proof of convergence</summary>
+<details><summary>Proof of almost sure convergence</summary>
 </details>
 <details><summary>Convergence speed</summary>
 </details>
